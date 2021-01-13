@@ -15,7 +15,10 @@ router.get('/', ensureGuest, (req, res) => {
 //Dashboard
 router.get('/dashboard', ensureAuth, async (req,res) => {
     try {
-        const stories = await Story.find({ user: req.user.id}).lean()
+        const stories = await Story.find({ user: req.user.id})
+        .populate('user')
+        .sort({ createdAt: 'desc' })
+        .lean()
         res.render('dashboard', {
             name: req.user.firstName,
             profileimage:req.user.image,
