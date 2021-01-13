@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col s12" style="background-image: linear-gradient(180deg, rgb(138, 137, 137), rgba(18, 34, 49, 0.616)); height:50vh">
+        <div class="container">
+            <div class="profile-header">
+                <div class="card-profile">
+                
+                     <img src="/img/cover.jpg" alt="" class="poster-profile">
+                 
+                    </div>
+                    <img src="{{profileimage}}" class="circle responsive-img img-profile center " style="position:relative"><br>
+                        <span class="card-title profile"><h4>{{displayName}}</h4></span>
+                            
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container ">
+        <div class="prof-container">
+            <ul id="tabs-swipe-demo" class="tabs">
+            <li class="tab col s3"><a href="#test-swipe-1">Test 1</a></li>
+            <li class="tab col s3"><a class="active" href="#test-swipe-2">Test 2</a></li>
+            <li class="tab col s3"><a href="#test-swipe-3">Test 3</a></li>
+            </ul>
+            <div id="test-swipe-1" class="col s12 blue">
+                <h6>Dashboard</h6>
+        <h3>Welcome {{name}} </h3>
+        <p>Here are your stories</p>
+        {{#if stories}}
+            <table class="striped">
+                <thead>
+                    <tr>
+                        
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each stories}}
+                        <tr>
+                            
+                            <td> {{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}} </td>
+                            <td><span class="dash-status">{{status}}</span></td>
+                            <td>
+                                <a href="/stories/edit/{{_id}}" class="btn btn-float">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <form action="/stories/{{_id}}" method="POST" id="delete-form">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn red">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{else}}
+            <p>You have not created any story</p>
+        {{/if}}
+            </div>
+            <div id="test-swipe-2" class="col s12 red">Test 2</div>
+            <div id="test-swipe-3" class="col s12 green">Test 3</div>
+                    
+        
+        </div>
+        
+    </div>
+</div>

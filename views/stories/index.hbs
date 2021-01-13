@@ -1,0 +1,96 @@
+
+<div class="row">
+    
+    <div class="col s12 m4 l3">
+             <div class="card top-m-1 center">
+                 <div class="poster-main">
+                     <img src="/img/cover.jpg" alt="" class="poster-main-img">
+                 </div>
+                 
+            
+                <img src="{{profileimage}}" class="circle responsive-img img-small center" style="position:relative"><br>
+                <span class="card-title center">{{displayName}}</span>
+            </div>
+           
+            <ul class="collapsible top-m-1">
+            <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li class="divider" tabindex="-1"></li>
+            <li>
+            <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li class="divider" tabindex="-1"></li>
+
+            <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+        </ul>
+        
+    </div>
+
+    
+    <div class="col s12 m4 l6">
+       <div class="row">
+           <div class="container">
+              <h4 style="color: aliceblue;">News Feed</h4>
+           </div>
+       </div>
+    
+        <div class="row">
+            {{#each stories}}
+                <div class="container" >
+                    <div class="card">
+                        <div class="card-image red">
+                            {{{editIcon user ../user _id}}}
+                          
+                        </div>
+                        <div class="chip res">
+                                <img src="{{user.image}}" alt="">
+                                <a class="name-color" href="/stories/user/{{user._id}}"> {{user.displayName}} </a>
+                        </div>
+                        
+                       
+                        <div class="card-content">
+                            <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                            <span class="card-date capitalize">&bull; {{status}} </span>
+                            <p> {{stripTags (truncate body 150)}} </p>
+                            <a href="/stories/{{_id}}">View More</a>
+                            <br>
+    
+                        </div>
+
+                        <div class="card-action">
+                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp left"><i class="material-icons">thumb_up</i> </a>4.9k
+                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp center"><i class="material-icons">comment</i></a>4.9k
+                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp float"><i class="material-icons">share</i></a>4.9k
+
+
+                        </div>
+                        
+                    </div>
+                </div>
+
+            {{else}}
+                <p>No stories to display</p>
+
+            {{/each}}
+        </div>
+    </div>
+
+
+     <div class="col s12 m4 l3">
+         <div class="top-right-stories">
+            <h6 style="color: aliceblue;">Stories</h6>
+
+                
+         </div>
+        <div class="med-right-chat-active">
+              <h6 style="color: aliceblue;">Active Users</h6>
+                
+        </div>
+    </div>
+  </div>
