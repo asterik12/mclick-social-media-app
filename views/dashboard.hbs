@@ -1,16 +1,36 @@
 <div class="row">
     <div class="col s12" style="background-image: linear-gradient(180deg, rgb(138, 137, 137), rgba(18, 34, 49, 0.616)); height:50vh">
         <div class="container">
-            <div class="profile-header">
+            
                 <div class="card-profile">
                 
                      <img src="/img/cover.jpg" alt="" class="poster-profile">
                  
                     </div>
-                    <img src="{{profileimage}}" class="circle responsive-img img-profile center " style="position:relative"><br>
-                        <span class="card-title profile"></span><h4 class="profile-name">{{displayName}}</h4></span>
+                    
+                         <div style="padding-top: 15%;">
+                             <div class="content">
                             
-            </div>
+                            <div class="content-overlay circle"></div>
+                            <img class="content-image circle" src="{{profileimage}}">
+       
+                            <div class="content-details fadeIn-bottom">
+                                <h3 class="content-title">
+                                    <a href="{{profileimage}}" class="btn-floating btn-small waves-effect waves-light htp">&#128065;</a>
+                                    <a class="btn-floating btn-small waves-effect waves-light htp"><i class="material-icons">edit</i></a>
+      
+                                </h3>
+                                
+                            </div>
+                            
+                            
+                        </div>
+                         </div>
+
+                        <span class="card-title profile center"><h4 class="profile-name">{{displayName}}</h4></span>
+
+                        
+            
             
         </div>
     </div>
@@ -66,8 +86,10 @@
 
                                         <form action="/stories/{{_id}}" method="POST" id="delete-form">
                                             <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="btn red">
+                                            <button type="submit" class="btn red" onclick="M.toast({html: 'Post deleted successfully'})">
                                                 <i class="fas fa-trash"></i>
+
+
                                             </button>
                                         </form>
 
@@ -95,7 +117,12 @@
                     <div class="card">
                         <div class="card-image red">
                             {{{editIcon user ../user _id}}}
-                          
+                                <form action="/stories/{{_id}}" method="POST" id="delete-form">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="btn-floating btn-small waves-effect waves-light htp right">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                         </div>
                         <div class="chip res">
                                 <img src="{{user.image}}" alt="">
