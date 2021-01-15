@@ -9,6 +9,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const connectDB = require('./config/db')
 const morgan = require('morgan')
+const flash = require('connect-flash')
 const { resolve } = require('path')
 const { Cookie } = require('express-session')
 const { Mongoose } = require('mongoose')
@@ -27,6 +28,11 @@ const app = express()
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
+//flash configure
+
+  
+    app.use(flash());
+
 //method override
 app.use(
     methodOverride(function (req, res) {
@@ -44,7 +50,9 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon, select } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon, select, checklength } = require('./helpers/hbs')
+
+
 
 //Handlebars
 app.engine(
@@ -56,6 +64,7 @@ app.engine(
             truncate,
             editIcon,
             select,
+            checklength,
         },
         defaultLayout: 'main', 
         extname: '.hbs'
@@ -100,3 +109,6 @@ app.listen(
     PORT, 
     console.log(`Server running in ${process.env.NODE_ENV} node on port ${PORT}`)
     )
+
+
+

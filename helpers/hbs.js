@@ -2,7 +2,7 @@ const moment = require('moment')
 
 module.exports = {
     formatDate: function(date, format){
-        return moment(date).format(format)
+        return moment(date).fromNow()
     },
     truncate: function (str, len) {
         if (str.length > len && str.length > 0) {
@@ -42,4 +42,13 @@ module.exports = {
             ' selected="selected"$&'
           )
       },
+      checklength: function (v1, v2) {
+            if (v1.length>v2) {     
+                return `<p class="notification">${v1}</p>`;
+            }
+            
+        },
+    
+
+
 }

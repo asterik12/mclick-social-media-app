@@ -23,6 +23,7 @@ router.get('/dashboard', ensureAuth, async (req,res) => {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
+            messages:req.flash('info'),
             stories
         })
     } catch (err){ 

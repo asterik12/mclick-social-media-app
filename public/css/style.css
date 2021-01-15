@@ -365,4 +365,28 @@ sdf
     font-size: 13px !important;
 }
 
+/* notification */
+.notification {
+    padding: 10px;
+    border-radius: 3px;
+    width: max-content;
+    background-color: rgb(41, 40, 40);
+    color: rgb(228, 228, 228);
+    box-shadow: 1px 1px 1px rgba(15, 15, 15, 0.781);
+    position: absolute;
+    top: 15vh;
+    height: 5vh;
+    float: right;
+    box-sizing: border-box;
+    animation-name: notify;
+    animation-duration: 2s;
+    visibility: hidden;
+  }
+  @keyframes notify {
+    
+    0% {right: 0px;}
+    80% {right: 90px;visibility: visible;}
+    100% {right: 0; opacity: 0.9;visibility: visible;}
+
+  }
 

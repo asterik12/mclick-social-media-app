@@ -126,6 +126,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
 router.delete('/:id', ensureAuth, async (req, res) => {
     try {
          await Story.remove({_id: req.params.id})
+         req.flash('info', 'Post Deleted Successfuly')
          res.redirect('/dashboard')
     } catch (err) {
         console.error(err)
