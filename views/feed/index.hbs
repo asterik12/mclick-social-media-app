@@ -34,6 +34,76 @@
 
     
     <div class="col s12 m4 l6">
+
+        <div class="row">
+            <div class="container">
+                <div class="card">
+                    <div class="post-container">
+
+
+                        <!-- Modal Structure -->
+                        <div id="post" class="modal">
+                            <div class="modal-content">
+                            <a href="" class="modal-close btn right waves-effect waves-green btn-flat"> &times;</a>
+   
+                            <p style="color: rgb(236, 236, 236); font-size:24px">Create Post</p>
+                            <div class="chip res">
+                                <img src="{{profileimage}}" alt="">
+                                <a class="name-color" href="/feed/user/{{user._id}}"> {{displayName}} </a>
+                             </div>
+                            <form action="/feed" method="POST" >
+                                <div class="row">
+                                    <div class="input-field-post">
+                                        <select class="browser-default" name="status">
+                                            <option id="op-post" value="public"  selected > Public</option>
+                                            <option id="op-post" value="private" >Private</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field-text">
+                                        <textarea id="body" class="dark-theme" name="body" placeholder=" What's on your mind, {{name}}? "></textarea>
+                                    </div>
+
+                                </div>
+
+                                
+
+                                <div class="row">
+                                    <input type="submit" value="Post" class="btn col s12 htp">
+                                </div>
+                            </form>
+                            </div>
+                            
+                        </div>        
+                        <a href="#post" class="btn post waves-effect waves-light htp modal-trigger pad-1" ><i class="fas fa-edit"></i> What's on your mind, {{name}} ? </a>
+
+                        
+                
+        
+          
+
+                    </div>
+                    <ul class="post-footer-bar">
+        
+                        <li class="post-f-btn waves-effect waves-light"><a href="/feed"><i class="material-icons med center">add_a_photo</i></a></li>
+                        <li class="post-f-btn waves-effect waves-light"><a href="collapsible.html"><i class="material-icons med center">ondemand_video</i></a></li>
+                        <li class="post-f-btn waves-effect waves-light"><a href="sass.html"><i class="material-icons med center">mood</i></a></li>
+                     </ul>
+                    
+                
+
+                    
+                
+                </div>
+
+                
+            </div>
+            
+        </div>
+
+
        <div class="row">
            <div class="container">
               <h4 style="color: aliceblue;">News Feed</h4>
@@ -46,11 +116,11 @@
                     <div class="card">
                         <div class="card-image red">
                             {{{editIcon user ../user _id}}}
-                          
+                           
                         </div>
                         <div class="chip res">
                                 <img src="{{user.image}}" alt="">
-                                <a class="name-color" href="/stories/user/{{user._id}}"> {{user.displayName}} </a>
+                                <a class="name-color" href="/feed/user/{{user._id}}"> {{user.displayName}} </a>
                         </div>
                         
                        
@@ -58,7 +128,7 @@
                             <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
                             <span class="card-date capitalize">&bull; {{status}} </span>
                             <p> {{stripTags (truncate body 150)}} </p>
-                            <a href="/stories/{{_id}}">View More</a>
+                            <a href="/feed/{{_id}}">View More</a>
                             <br>
     
                         </div>
@@ -94,3 +164,5 @@
         </div>
     </div>
   </div>
+
+     

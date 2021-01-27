@@ -6,8 +6,21 @@ const Story = require('../models/Story')
 
 
 //show add page
-router.get('/add', ensureAuth, (req, res) => {
-    res.render('stories/add')
+router.get('/add', ensureAuth, async (req, res) => {
+    try {
+        const stories = await Story.find({ user: req.user.id})
+        .populate('user')
+        .lean()
+        res.render('feed/add', {
+            name: req.user.firstName,
+            profileimage:req.user.image,
+            displayName:req.user.displayName,
+            stories
+        })
+    } catch (err){ 
+        console.error(err)
+        res.render('error/505')
+    }
 })
 
 
@@ -16,7 +29,8 @@ router.post('/', ensureAuth, async (req, res) => {
     try {
         req.body.user = req.user.id
         await Story.create(req.body)
-        res.redirect('/dashboard')
+        req.flash('info', 'Posted Successfully')
+        res.redirect('/profile')
     } catch (err) {
         console.error(err)
         res.render('error/500')
@@ -31,7 +45,7 @@ router.get('/', ensureAuth, async (req, res) => {
         .populate('user')
         .sort({ createdAt: 'desc' })
         .lean()
-        res.render('stories/index', {
+        res.render('feed/index', {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
@@ -41,6 +55,7 @@ router.get('/', ensureAuth, async (req, res) => {
        console.error(err)
        res.render('error/500')
    }
+
 })
 
 
@@ -54,7 +69,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
         if(!story){
             return res.render('error/404')
         }
-        res.render('stories/show', {
+        res.render('feed/show', {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
@@ -83,7 +98,10 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
         if(story.user != req.user.id){
             res.redirect('/stories')
         } else {
-            res.render('stories/edit',{
+            res.render('feed/edit',{
+                name: req.user.firstName,
+                profileimage:req.user.image,
+                displayName:req.user.displayName,
                 story,
             })
         }
@@ -98,20 +116,20 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
 //update stories
 router.put('/:id', ensureAuth, async (req, res) => {
     try {
-        let story = await Story.findById(req.params.id).lean()
+        let story = await Story.findById(req.params.id).lean() 
 
         if(!story){
             return res.render('error/404')
         }
         if(story.user != req.user.id){
-            res.redirect('/stories')
+            res.redirect('/feed')
         } else {
             story = await Story.findOneAndUpdate({ _id: req.params.id}, req.body, {
                 new: true,
                 runValidators: true
             })
-
-            res.redirect('/dashboard')
+            req.flash('info', 'Posted Updated Successfully')
+            res.redirect('/profile')
         }
         
     } catch (err) {
@@ -126,8 +144,8 @@ router.put('/:id', ensureAuth, async (req, res) => {
 router.delete('/:id', ensureAuth, async (req, res) => {
     try {
          await Story.remove({_id: req.params.id})
-         req.flash('info', 'Post Deleted Successfuly')
-         res.redirect('/dashboard')
+         req.flash('info', 'Post Deleted Successfully')
+         res.redirect('/profile')
     } catch (err) {
         console.error(err)
         return res.render('error/500')
@@ -144,7 +162,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
         .populate('user')
         .lean()
 
-        res.render('stories/index', {
+        res.render('feed/index', {
             stories,
         })
 

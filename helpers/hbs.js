@@ -22,9 +22,9 @@ module.exports = {
       editIcon: function (storyUser, loggedUser, storyId, floating = true) {
         if (storyUser._id.toString() == loggedUser._id.toString()) {
           if (floating) {
-            return `<a href="/stories/edit/${storyId}" class="btn-floating btn-small halfway-fab red"><i class="fas fa-edit fa-small"></i></a>`
+            return `<a href="/feed/edit/${storyId}" class="btn-floating btn-small halfway-fab red"><i class="fas fa-edit fa-small"></i></a>`
           } else {
-            return `<a href="/stories/edit/${storyId}"><i class="fas fa-edit"></i></a>`
+            return `<a href="/feed/edit/${storyId}"><i class="fas fa-edit"></i></a>`
           }
         } else {
           return ''
@@ -42,9 +42,9 @@ module.exports = {
             ' selected="selected"$&'
           )
       },
-      checklength: function (v1, v2) {
-            if (v1.length>v2) {     
-                return `<p class="notification">${v1}</p>`;
+      checklength: function (message, length_message) {
+            if (message.length>length_message) {     
+                return `<p class="notification">${message}</p>`;
             }
             
         },

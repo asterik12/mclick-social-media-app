@@ -47,7 +47,7 @@ body{
 }
 
 /* 3 dot menu */
-.dropdown-content{
+.dropdown-content.t-dot{
     width: max-content !important;
 }
 #search{
@@ -390,3 +390,90 @@ sdf
 
   }
 
+  /* write post styles */
+  .post-container{
+      width: 100%;
+      padding-right: 3%;
+
+  }
+  .post-profile-img{
+    width: 35px;margin:10px; border-radius:50%;
+  }
+  .btn.post{
+      margin: 10px !important;
+      font-style: normal !important;
+      text-transform: none !important;
+      border-radius: 50px;
+      width: 100%;
+      font-size: 18px;
+      text-align: left;
+      
+      
+      
+  }
+
+  .post-footer-bar{
+      width: 100%;
+      text-align: center;
+  }
+  .post-f-btn{
+      width: 30%;
+      margin-top: -3%;
+  }
+
+/* modal post */
+
+
+.modal{
+    background-color:rgb(34, 34, 34);
+    border-radius: 10px;
+    width: 30%;
+
+}
+
+.modal-close{
+    font-size: 30px !important;
+    color: white;
+
+}
+
+.input-field-post{
+    margin-top: 5px;
+    font-size: 13px;
+    margin-left: 5%;
+}
+
+.dark-theme{
+    background-color: rgb(39, 39, 39) !important;
+    color: rgb(250, 246, 246) !important;
+    border: none;
+    border-radius: 5px !important;
+    height: 25vh !important;
+    max-height: 25vh !important;
+    font-size: 24px !important;
+    padding: 10px;
+    resize: none;
+    box-shadow: none !important;
+
+}
+
+
+/* textarea{
+    background-color: green !important;
+} */
+.browser-default{
+    height: 25px !important;
+    background-color: rgb(75, 74, 74);
+    color: white;
+    width: 100px !important;
+    border-radius: 5px !important;
+    border: 0px !important;
+    outline: none;
+}
+#op-post *{
+    background-color: red;
+}
+
+select:focus{
+      outline: none;
+  }

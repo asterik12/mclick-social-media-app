@@ -78,7 +78,7 @@
                     <div class="card">
                         <div class="card-image red">
                             {{{editIcon user ../user _id}}}
-                                <form action="/stories/{{_id}}" method="POST" id="delete-form">
+                                <form action="/feed/{{_id}}" method="POST" id="delete-form">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button type="submit" class="btn-floating btn-small waves-effect waves-light htp right">
                                                 <i class="fas fa-trash"></i>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="chip res">
                                 <img src="{{user.image}}" alt="">
-                                <a class="name-color" href="/stories/user/{{user._id}}"> {{user.displayName}} </a>
+                                <a class="name-color" href="/feed/user/{{user._id}}"> {{user.displayName}} </a>
                         </div>
                         
                        
@@ -95,7 +95,7 @@
                             <span class="card-date">{{formatDate createdAt 'do MMM yyyy HH:mm:ss'}}</span>
                             <span class="card-date capitalize">&bull; {{status}} </span>
                             <p> {{stripTags (truncate body 150)}} </p>
-                            <a href="/stories/{{_id}}">View More</a>
+                            <a href="/feed/{{_id}}">View More</a>
                             <br>
     
                         </div>
@@ -112,7 +112,7 @@
                 
 
             {{else}}
-                <p>No stories to display</p>
+                <p style="color: white;">No feed to display</p>
 
             {{/each}}
 

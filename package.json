@@ -15,6 +15,7 @@
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
+    "emoji-picker-textarea": "^1.0.1",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
@@ -23,6 +24,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.11.11",
     "morgan": "^1.10.0",
+    "multer": "^1.4.2",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0"
   },
