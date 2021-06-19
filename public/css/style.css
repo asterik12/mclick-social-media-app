@@ -414,16 +414,31 @@ sdf
 
   .post-footer-bar{
       width: 100%;
-      text-align: center;
+      padding-left: 15% !important;
+      padding-right: 0% !important;
+
   }
   .post-f-btn{
       width: 30%;
-      margin-top: -3%;
+      
+      margin-right: 30% !important;
+      display: inline;
   }
 
+.display-top-header{
+    float: none;
+    height: 40px;
+    background-color: rgb(37, 37, 37);
+
+}
+.action-btn{
+    background-color: green;
+}
 /* modal post */
 
-
+.mid-text{
+    text-transform: none !important;
+}
 .modal{
     background-color:rgb(34, 34, 34);
     border-radius: 10px;

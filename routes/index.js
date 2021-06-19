@@ -33,4 +33,31 @@ router.get('/profile', ensureAuth, async (req,res) => {
     
    
 })
-module.exports = router
+
+router.get('/editProfile', ensureAuth, async (req, res) => {
+    try{
+
+        res.render('about/editProfile', {
+            firstName: req.user.firstName,
+            profileimage:req.user.image,
+            lastName:req.user.lastName,
+            email:req.user.email,
+        })
+    }
+    catch(err){
+        console.error(err)
+        res.render('error/505')
+    }
+})
+
+// update profile
+router.put('/editProfile', ensureAuth, async (req, res) => {
+    try {
+        req.body.user = req.user.id
+        res.redirect('about/editProfile')
+    } catch (err) {
+        console.error(err)
+        res.render('error/500')
+    }
+})
+module.exports = router;

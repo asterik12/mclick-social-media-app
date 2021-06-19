@@ -19,7 +19,7 @@
     {{> _add_btn}}
     
          {{{body}}}
-    <
+    
    
      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.15.1/ckeditor.js" integrity="sha512-aThGT4RJc95+zt2vrs8iMjrFpsJxcFclp7tweVls6/3cNo3GWvGvtLV576o8Kdvdf3fJhrrG3wkmoea/KJMLFQ==" crossorigin="anonymous"></script>
@@ -43,9 +43,9 @@
      M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
      M.Collapsible.init(document.querySelectorAll('.collapsible'));
      M.Tabs.init(document.querySelectorAll('.tabs'), { swipeable: true });
-     M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'),{direction:left, hoverEnabled: false});
      M.toast.init(document.querySelector('.toast'));
       M.FormSelect.init(document.querySelectorAll('select'));
+      M.Datepicker.init(document.querySelectorAll('.datepicker'));
 
 
 
@@ -63,6 +63,7 @@
                
            });
        })
+       
    </script>
     <script>
     $(document).ready(function(){
@@ -70,7 +71,14 @@
         dismissible: false
     });
     $('#editPost').modal('open'); 
+
+
  });
+</script>
+<script>
+    $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
 </script>
 </body>
 </html>

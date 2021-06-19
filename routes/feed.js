@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const controller = require('../controller/controller');
+const store = require('../middleware/multer')
 const { ensureAuth } = require('../middleware/auth')
 
 const Story = require('../models/Story')
@@ -11,10 +13,14 @@ router.get('/add', ensureAuth, async (req, res) => {
         const stories = await Story.find({ user: req.user.id})
         .populate('user')
         .lean()
+
+       
+
         res.render('feed/add', {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
+            myCursor,
             stories
         })
     } catch (err){ 
@@ -41,14 +47,19 @@ router.post('/', ensureAuth, async (req, res) => {
 //show all stories
 router.get('/', ensureAuth, async (req, res) => {
    try {
+       controller.home
+       
+       
        const stories = await Story.find({ status: 'public'})
         .populate('user')
         .sort({ createdAt: 'desc' })
-        .lean()
+        .lean();
+
         res.render('feed/index', {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
+        //    counter:req.Story.likes.length,
             stories,
         })
    } catch (err) {
@@ -128,7 +139,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
                 new: true,
                 runValidators: true
             })
-            req.flash('info', 'Posted Updated Successfully')
+            req.flash('info', 'Post Updated Successfully')
             res.redirect('/profile')
         }
         
@@ -137,6 +148,24 @@ router.put('/:id', ensureAuth, async (req, res) => {
         return res.render('error/500')
     }
     
+})
+
+//likes dislikes
+router.put('/:id/like', ensureAuth, async (req, res) => {
+    try {
+        const post = await Story.findById(req.params.id);
+        
+        if(!post.likes.includes(req.user.id)) {
+            await post.updateOne({$push : {likes: req.user.id}});
+           
+        } 
+        else{
+            await post.updateOne({$pull: { likes: req.user.id}});
+        }
+        res.redirect('/feed')
+    } catch (err) {
+        return res.render('error/500');
+    }
 })
 
 
@@ -173,4 +202,15 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
 })
 
 
+
+// images post
+// routes
+// router.get('/', ensureAuth, controller.home)
+router.post('/', ensureAuth, store.array('images', 12) , controller.uploads)
+
+
 module.exports = router
+
+
+
+

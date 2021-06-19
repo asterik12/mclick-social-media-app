@@ -20,6 +20,24 @@ const UserSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  work: {
+    type: String,
+  },
+  current_city:{
+    type: String,
+  },
+  hometown:{
+    type: String,
+  },
+  hobbies:{
+    type:String,
+  },
+  school:{
+    type: String,
+  },
+  degree:{
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

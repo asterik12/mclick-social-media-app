@@ -86,10 +86,41 @@
 
                     </div>
                     <ul class="post-footer-bar">
-        
-                        <li class="post-f-btn waves-effect waves-light"><a href="/feed"><i class="material-icons med center">add_a_photo</i></a></li>
-                        <li class="post-f-btn waves-effect waves-light"><a href="collapsible.html"><i class="material-icons med center">ondemand_video</i></a></li>
-                        <li class="post-f-btn waves-effect waves-light"><a href="sass.html"><i class="material-icons med center">mood</i></a></li>
+                            
+                        <li class="post-f-btn">
+                            <div id="imgpost" class="modal">
+                            <div class="modal-content">
+                                <a href="" class="modal-close btn right waves-effect waves-green btn-flat"> &times;</a>
+    
+                                <p style="color: rgb(236, 236, 236); font-size:24px">Post Images</p>
+                                
+                                
+                                <form action="/feed" enctype="multipart/form-data" method="POST">
+                                    <div class="row">
+                                        <div class="input-field-text">
+                                            <input type="file" class="form-control" name="images" id="formFile" multiple>
+                                        </div>
+                                        <div class="input-field-text">
+                                            <input type="submit" class="btn btn-warning" value="Upload Images">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>   
+                            
+                            <a href="#imgpost" class="waves-effect waves-light modal-trigger"><i class="material-icons med center">add_a_photo</i></a>
+                            
+                                  
+                        
+                        
+                        </li>
+
+
+
+
+                        <li class="post-f-btn"><a href="collapsible.html" class="waves-effect waves-light modal-trigger"><i class="material-icons med center">ondemand_video</i></a></li>
+                        <li class="post-f-btn"><a href="sass.html" class="waves-effect waves-light modal-trigger"><i class="material-icons med center">mood</i></a></li>
                      </ul>
                     
                 
@@ -109,13 +140,32 @@
               <h4 style="color: aliceblue;">News Feed</h4>
            </div>
        </div>
-    
+        <div class="row">
+            
+            {{#each images}} 
+                {{#each this}}
+                    {{#if imageBase64 }}
+                            <div class="container">
+                                    <div class="card red">
+                                        <div class="card-image">
+                                        <img src='data:{{contentType}};base64,{{imageBase64}}' alt="...">
+
+                                        </div>
+                                        
+                                    </div>
+                            </div>
+                    {{/if}}
+                    {{/each}}
+            {{/each}}
+        </div>
+
         <div class="row">
             {{#each stories}}
                 <div class="container" >
                     <div class="card">
                         <div class="card-image red">
                             {{{editIcon user ../user _id}}}
+                            
                            
                         </div>
                         <div class="chip res">
@@ -134,10 +184,19 @@
                         </div>
 
                         <div class="card-action">
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp left"><i class="material-icons">thumb_up</i> </a>4.9k
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp center"><i class="material-icons">comment</i></a>4.9k
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp float"><i class="material-icons">share</i></a>4.9k
+                            <form action="/feed/{{_id}}/like" method="POST">
+                                        <input type="hidden" name="_method" value="PUT">
+                                       
+                                        <input type="submit" class="btn material-icons" value="thumb_up"/>
 
+                                       
+                                       
+                            </form>
+{{!-- 
+                           <a href="/feed/{{_id}}" class="btn-floating btn-small waves-effect waves-light htp left"><i class="material-icons">thumb_up</i> </a>{{counter}}
+                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp center"><i class="material-icons">comment</i></a>4.9k
+                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp float"><i class="material-icons">share</i></a>4.9k --}}
+                    
 
                         </div>
                         
