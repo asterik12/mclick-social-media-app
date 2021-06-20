@@ -184,20 +184,49 @@
                         </div>
 
                         <div class="card-action">
-                            <form action="/feed/{{_id}}/like" method="POST">
-                                        <input type="hidden" name="_method" value="PUT">
-                                       
-                                        <input type="submit" class="btn material-icons" value="thumb_up"/>
+                            <div class="row" style="margin: 0% !important;">
+                                <div class="col s3 m4 l4">
+                                    <form action="/feed/{{_id}}/like" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
+                                                
+                                                <!-- Modal Trigger -->
+                                                <a class="modal-trigger" href="#modal1">{{likes.length}} Likes</a>
 
-                                       
-                                       
-                            </form>
-{{!-- 
-                           <a href="/feed/{{_id}}" class="btn-floating btn-small waves-effect waves-light htp left"><i class="material-icons">thumb_up</i> </a>{{counter}}
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp center"><i class="material-icons">comment</i></a>4.9k
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp float"><i class="material-icons">share</i></a>4.9k --}}
-                    
+                                                <!-- Modal Structure -->
+                                                <div id="modal1" class="modal">
+                                                    <div class="modal-content">
+                                                    <h4>Post Liked By</h4>
+                                                    <li>{{likes}}</li>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                                    </div>
+                                                </div>
+                                                        
+                                    </form>
 
+                                </div>
+                                <div class="col s12 m4 l4">
+                                    <form action="" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="message"/>
+                                                comments
+                                                        
+                                    </form>
+                                </div>
+                                <div class="col s12 m4 l4">
+                                    <form action="" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="share"/>
+                                                share
+                                                        
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         
                     </div>
@@ -219,6 +248,17 @@
          </div>
         <div class="med-right-chat-active">
               <h6 style="color: aliceblue;">Active Users</h6>
+
+              {{#each activeUsers}}
+              <li style="list-style-type: none;">
+                    <div class="chip res">
+                                <img src="{{image}}" alt="">
+                                <a class="name-color" href="/feed/user/{{user._id}}"> {{displayName}} </a>
+                    </div>
+              </li>
+                    
+
+              {{/each}}
                 
         </div>
     </div>

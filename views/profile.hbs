@@ -130,10 +130,35 @@
                         </div>
 
                         <div class="card-action">
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp left"><i class="material-icons">thumb_up</i> </a>4.9k
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp center"><i class="material-icons">comment</i></a>4.9k
-                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp float"><i class="material-icons">share</i></a>4.9k
-
+                           <div class="row" style="margin: 0% !important;">
+                                <div class="col s12 m4 l4">
+                                    <form action="/feed/{{_id}}/like" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
+                                                {{likes.length}} Likes
+                                                        
+                                    </form>
+                                </div>
+                                <div class="col s12 m4 l4">
+                                    <form action="" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="message"/>
+                                                comments
+                                                        
+                                    </form>
+                                </div>
+                                <div class="col s12 m4 l4">
+                                    <form action="" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="share"/>
+                                                share
+                                                        
+                                    </form>
+                                </div>
+                            </div>
 
                         </div>
                         

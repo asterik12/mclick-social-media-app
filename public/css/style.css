@@ -407,9 +407,12 @@ sdf
       width: 100%;
       font-size: 18px;
       text-align: left;
+   
       
-      
-      
+  }
+  .round{
+      border-radius: 80% !important;
+      padding: 3% !important;
   }
 
   .post-footer-bar{

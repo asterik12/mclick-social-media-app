@@ -18,6 +18,38 @@
                 <br>
                 {{{story.body}}}
             </div>
+            <div class="card-action">
+                <div class="row">
+                    <div class="col s12 m4 l4">
+                        <form action="/feed/{{_id}}/like" method="POST">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    
+                                    <input type="submit" class="btn-small material-icons" value="thumb_up"/>
+                                    {{story.likes.length}} Likes
+                                            
+                        </form>
+                    </div>
+                    <div class="col s12 m4 l4">
+                        <form action="/feed/{{_id}}/" method="POST">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    
+                                    <input type="submit" class="btn-small material-icons" value="message"/>
+                                     comments
+                                            
+                        </form>
+                    </div>
+                    <div class="col s12 m4 l4">
+                        <form action="/share" method="POST">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    
+                                    <input type="submit" class="btn-small material-icons" value="share"/>
+                                     share
+                                            
+                        </form>
+                    </div>
+                </div>
+                
+             </div>
         </div>
     </div>
     <div class="col s12 m4 l5">

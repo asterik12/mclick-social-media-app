@@ -3,7 +3,7 @@ const router = express.Router()
 const controller = require('../controller/controller');
 const store = require('../middleware/multer')
 const { ensureAuth } = require('../middleware/auth')
-
+const User  = require('../models/User')
 const Story = require('../models/Story')
 
 
@@ -13,14 +13,10 @@ router.get('/add', ensureAuth, async (req, res) => {
         const stories = await Story.find({ user: req.user.id})
         .populate('user')
         .lean()
-
-       
-
         res.render('feed/add', {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
-            myCursor,
             stories
         })
     } catch (err){ 
@@ -48,18 +44,21 @@ router.post('/', ensureAuth, async (req, res) => {
 router.get('/', ensureAuth, async (req, res) => {
    try {
        controller.home
-       
+       const activeUsers = await User.find({})
+        .populate('user')
+        .lean();
        
        const stories = await Story.find({ status: 'public'})
         .populate('user')
         .sort({ createdAt: 'desc' })
         .lean();
-
+       
         res.render('feed/index', {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
-        //    counter:req.Story.likes.length,
+            activeUserList: req.user.displayName,
+            activeUsers,
             stories,
         })
    } catch (err) {
@@ -69,6 +68,17 @@ router.get('/', ensureAuth, async (req, res) => {
 
 })
 
+router.get('/usersList', ensureAuth, async (req, res) =>  {
+    const activeUsers = await User.find({})
+        .populate('user')
+        .lean();
+        
+        res.render('feed/usersList', {
+            displayName:req.user.displayName,
+            activeUsers,
+        })
+
+});
 
 //show single story
 router.get('/:id', ensureAuth, async (req, res) => {
@@ -162,7 +172,7 @@ router.put('/:id/like', ensureAuth, async (req, res) => {
         else{
             await post.updateOne({$pull: { likes: req.user.id}});
         }
-        res.redirect('/feed')
+        res.redirect('back')
     } catch (err) {
         return res.render('error/500');
     }
