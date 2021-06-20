@@ -1,7 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const controller = require('../controller/controller');
-const store = require('../middleware/multer')
 const { ensureAuth } = require('../middleware/auth')
 const User  = require('../models/User')
 const Story = require('../models/Story')
@@ -43,7 +41,6 @@ router.post('/', ensureAuth, async (req, res) => {
 //show all stories
 router.get('/', ensureAuth, async (req, res) => {
    try {
-       controller.home
        const activeUsers = await User.find({})
         .populate('user')
         .lean();
@@ -213,10 +210,6 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
 
 
 
-// images post
-// routes
-// router.get('/', ensureAuth, controller.home)
-router.post('/', ensureAuth, store.array('images', 12) , controller.uploads)
 
 
 module.exports = router

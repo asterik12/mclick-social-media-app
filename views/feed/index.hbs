@@ -140,24 +140,7 @@
               <h4 style="color: aliceblue;">News Feed</h4>
            </div>
        </div>
-        <div class="row">
-            
-            {{#each images}} 
-                {{#each this}}
-                    {{#if imageBase64 }}
-                            <div class="container">
-                                    <div class="card red">
-                                        <div class="card-image">
-                                        <img src='data:{{contentType}};base64,{{imageBase64}}' alt="...">
-
-                                        </div>
-                                        
-                                    </div>
-                            </div>
-                    {{/if}}
-                    {{/each}}
-            {{/each}}
-        </div>
+        
 
         <div class="row">
             {{#each stories}}
