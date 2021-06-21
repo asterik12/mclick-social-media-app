@@ -11,6 +11,9 @@ const StorySchema = new mongoose.Schema({
     default: 'public',
     enum: ['public', 'private'],
   },
+  image: {
+    type: String,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -19,6 +22,7 @@ const StorySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
   likes:{
     type:Array,
     default:[],

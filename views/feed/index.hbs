@@ -51,7 +51,8 @@
                                 <img src="{{profileimage}}" alt="">
                                 <a class="name-color" href="/feed/user/{{user._id}}"> {{displayName}} </a>
                              </div>
-                            <form action="/feed" method="POST" >
+                            <form action="/feed" method="POST" enctype="multipart/form-data" >
+                               
                                 <div class="row">
                                     <div class="input-field-post">
                                         <select class="browser-default" name="status">
@@ -68,7 +69,11 @@
 
                                 </div>
 
-                                
+                                 <div class="row">
+                                    <div class="input-field-text">
+                                            <input type="file" class="form-control" name="image" id="image" />
+                                        </div>
+                                 </div>
 
                                 <div class="row">
                                     <input type="submit" value="Post" class="btn col s12 htp">
@@ -95,10 +100,10 @@
                                 <p style="color: rgb(236, 236, 236); font-size:24px">Post Images</p>
                                 
                                 
-                                <form action="/feed" enctype="multipart/form-data" method="POST">
+                                <form action="/feed"  method="POST">
                                     <div class="row">
                                         <div class="input-field-text">
-                                            <input type="file" class="form-control" name="images" id="formFile" multiple>
+                                            <input type="file" class="form-control" name="iage" id="iage">
                                         </div>
                                         <div class="input-field-text">
                                             <input type="submit" class="btn btn-warning" value="Upload Images">
@@ -156,7 +161,7 @@
                                 <a class="name-color" href="/feed/user/{{user._id}}"> {{user.displayName}} </a>
                         </div>
                         
-                       
+                      
                         <div class="card-content">
                             <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
                             <span class="card-date capitalize">&bull; {{status}} </span>
@@ -165,7 +170,9 @@
                             <br>
     
                         </div>
-
+                        <div>
+                           <img src="/uploads/posts/{{image}}" alt="" height="300px" width="100%" />
+                       </div>
                         <div class="card-action">
                             <div class="row" style="margin: 0% !important;">
                                 <div class="col s3 m4 l4">

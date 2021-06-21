@@ -4,8 +4,31 @@ const { ensureAuth } = require('../middleware/auth')
 const User  = require('../models/User')
 const Story = require('../models/Story')
 
+const multer = require('multer')
+const { request } = require('express')
+
+const storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, './public/uploads/posts');
+    },
+    filename: function (req, file, callback){
+        callback(null, Date.now() + file.originalname);
+    },
+});
+
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fieldSize:1024*1024*8,
+    },
+});
+
+
+
 
 //show add page
+
 router.get('/add', ensureAuth, async (req, res) => {
     try {
         const stories = await Story.find({ user: req.user.id})
@@ -24,8 +47,11 @@ router.get('/add', ensureAuth, async (req, res) => {
 })
 
 
+
 //process add form
-router.post('/', ensureAuth, async (req, res) => {
+router.post('/', upload.single('image'), ensureAuth, async (req, res) => {
+    console.log(req.file);
+
     try {
         req.body.user = req.user.id
         await Story.create(req.body)

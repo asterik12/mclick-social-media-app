@@ -4,7 +4,6 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
 const Story = require('../models/Story')
 
-
 //Landing page
 router.get('/', ensureGuest, (req, res) => {
     res.render('login', {
@@ -60,4 +59,8 @@ router.put('/editProfile', ensureAuth, async (req, res) => {
         res.render('error/500')
     }
 })
+
+
+//imagepost
+
 module.exports = router;

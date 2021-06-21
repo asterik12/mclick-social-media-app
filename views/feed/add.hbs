@@ -8,7 +8,13 @@
                                 <img src="{{profileimage}}" alt="">
                                 <a class="name-color" href="/feed/user/{{user._id}}"> {{displayName}} </a>
                              </div>
-                            <form action="/feed" method="POST" >
+                            <form action="/feed" enctype="multipart/form-data" method="POST" >
+                             <div class="row">
+                                        <div class="input-field-text">
+                                            <input type="file" class="form-control" name="image" id="image">
+                                        </div>
+                                 </div>
+                                
                                 <div class="row">
                                     <div class="input-field-post">
                                         <select class="browser-default" name="status">
@@ -17,14 +23,17 @@
                                         </select>
                                         
                                     </div>
-                                </div>
+                              <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp left"><i class="material-icons">thumb_up</i> </a>4.9k
+                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp center"><i class="material-icons">comment</i></a>4.9k
+                           <a href="sass.html" class="btn-floating btn-small waves-effect waves-light htp float"><i class="material-icons">share</i></a>4.9k
+  </div>
                                 <div class="row">
                                     <div class="input-field-text">
                                         <textarea id="body" class="dark-theme" name="body" placeholder=" What's on your mind, {{name}}? " required></textarea>
                                     </div>
 
                                 </div>
-
+                                
                                 
 
                                 <div class="row">
