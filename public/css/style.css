@@ -410,6 +410,16 @@ sdf
    
       
   }
+  .timestories{
+      border-radius: 50% !important;
+      padding: 1% !important;
+  }
+  .timestories-wall{
+      background-color: #525252f1;
+      border-bottom: 2px solid rgba(244, 245, 247, 0.685);
+      padding-left: 3%;
+      color: white;
+  }
   .round{
       border-radius: 80% !important;
       padding: 3% !important;

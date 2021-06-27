@@ -103,7 +103,7 @@
                                 <form action="/feed"  method="POST">
                                     <div class="row">
                                         <div class="input-field-text">
-                                            <input type="file" class="form-control" name="iage" id="iage">
+                                            <input type="file" class="form-control" name="image" id="image">
                                         </div>
                                         <div class="input-field-text">
                                             <input type="submit" class="btn btn-warning" value="Upload Images">
@@ -170,9 +170,11 @@
                             <br>
     
                         </div>
-                        <div>
+
+                        {{{validImage image}}}
+                        {{!-- <div>
                            <img src="/uploads/posts/{{image}}" alt="" height="300px" width="100%" />
-                       </div>
+                       </div> --}}
                         <div class="card-action">
                             <div class="row" style="margin: 0% !important;">
                                 <div class="col s3 m4 l4">
@@ -233,7 +235,33 @@
      <div class="col s12 m4 l3">
          <div class="top-right-stories">
             <h6 style="color: aliceblue;">Stories</h6>
+                <form action="/feed/status" method="POST" enctype="multipart/form-data" >
+                        
+                    <input type="file" class="form-control" name="storiesimage" id="storiesimage" />
+                         
+                    <input type="submit" value="Add" class="btn htp">
+                    
+                </form>
 
+            <div class="row">
+                {{#each timestories}}
+                    <div class="timestories-wall" >
+                        
+                            
+                            <p style={float:right; top:2px}>
+                                {{{TimeStatus storiesimage}}}
+                            {{user.displayName}}
+                            <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+
+                            </p>
+                            
+                    </div>
+
+                {{else}}
+                    <p>No stories to display</p>
+
+                {{/each}}
+            </div>
                 
          </div>
         <div class="med-right-chat-active">

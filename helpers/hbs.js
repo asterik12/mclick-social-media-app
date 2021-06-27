@@ -49,6 +49,20 @@ module.exports = {
             }
             
         },
+      validImage: function (image_name) {
+          if (image_name) {     
+              return `<img src="/uploads/posts/${image_name}" alt="" height="300px" width="100%" />
+              `;
+          }
+          
+      },
+      TimeStatus: function (image_name) {
+        if (image_name) {     
+            return `<img src="/uploads/stories/${image_name}" alt="" height="100px" width="100px" class="card timestories" style={float:left} />
+            `;
+        }
+        
+    },
     
 
 

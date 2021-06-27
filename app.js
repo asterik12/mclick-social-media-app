@@ -24,6 +24,7 @@ connectDB()
 
 const app = express()
 
+
 //Body parser
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -50,7 +51,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon, select, checklength } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon, select, checklength, validImage,TimeStatus } = require('./helpers/hbs')
 
 
 
@@ -65,6 +66,8 @@ app.engine(
             editIcon,
             select,
             checklength,
+            validImage,
+            TimeStatus,
         },
         defaultLayout: 'main', 
         extname: '.hbs'
@@ -111,6 +114,3 @@ app.listen(
     PORT, 
     console.log(`Server running in ${process.env.NODE_ENV} node on port ${PORT}`)
     )
-
-
-
