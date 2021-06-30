@@ -1,0 +1,73 @@
+{{#each users}}
+<div class="row">
+    <div class="col s12" style="background-image: linear-gradient(180deg, rgb(138, 137, 137), rgba(18, 34, 49, 0.616)); height:50vh">
+        <div class="container">
+            
+                <div class="card-profile">
+                
+                     <img src="/uploads/user/cover/{{cover}}" alt="" class="poster-profile">
+                 
+                    </div>
+                    
+                         <div style="padding-top: 15%;">
+                             <div class="content">
+                            
+                            <div class="content-overlay circle"></div>
+                            <img class="content-image circle" src="/uploads/user/{{image}}">
+       
+                            <div class="content-details fadeIn-bottom">
+                                <h3 class="content-title">
+                                    <a href="/uploads/user/{{image}}" class="btn-floating btn-small waves-effect waves-light htp">&#128065;</a>
+                                    
+                                </h3>
+                                
+                            </div>
+                            
+                            
+                        </div>
+                         </div>
+
+                        <span class="card-title profile center">
+                            <h4 class="profile-name">{{firstName}} {{lastName}}
+                            </h4>
+                            </span>
+                       
+
+                        
+            
+            
+        </div>
+    </div>
+</div>
+{{/each}}
+
+<div class="row">
+    <div class="col s12 m4 l2"></div>
+    <div class="col s12 m4 l8 " >
+        <div class="row">
+            {{#each users}}
+            
+                <div class="display-top-header">
+                    
+                        <a href="/feed/user/{{_id}}" class="waves-effect waves-light btn htp mid-text"><i class="material-icons left">account_circle</i> &nbsp; Profile</a>
+                        <a class="breadcrumb">Photos</a>
+                        
+                    
+                </div>
+            {{/each}}
+        </div>
+
+       <div style="display: inline-flexbox !important;">
+            {{#each stories}}
+            
+                <div class="card-image size-image">
+                      {{{validImage image}}}
+                </div>
+                          
+            {{/each}}
+       </div>
+             
+       
+    </div>
+</div>
+            

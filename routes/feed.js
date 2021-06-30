@@ -57,6 +57,8 @@ router.get('/add', ensureAuth, async (req, res) => {
         res.render('feed/add', {
             name: req.user.firstName,
             profileimage:req.user.image,
+            firstName:req.user.firstName,
+            lastName:req.user.lastName,
             displayName:req.user.displayName,
             stories
         })
@@ -74,10 +76,16 @@ router.post('/', upload.single('image'), ensureAuth, async (req, res) => {
 
     try {
         
-
-        req.body.user = req.user.id
-        req.body.image = req.file.filename,
-        await Story.create(req.body)
+        if(req.file){
+            req.body.user = req.user.id
+            req.body.image = req.file.filename,
+            await Story.create(req.body)
+        }
+        else{
+            req.body.user = req.user.id
+            await Story.create(req.body)
+        }
+        
 
         req.flash('info', 'Posted Successfully')
         res.redirect('back')
@@ -124,6 +132,9 @@ router.get('/', ensureAuth, async (req, res) => {
             profileimage:req.user.image,
             displayName:req.user.displayName,
             activeUserList: req.user.displayName,
+            firstName:req.user.firstName,
+            lastName:req.user.lastName,
+            cover:req.user.cover,
             activeUsers,
             stories,
             timestories,
@@ -158,6 +169,8 @@ router.get('/:id', ensureAuth, async (req, res) => {
             return res.render('error/404')
         }
         res.render('feed/show', {
+            firstName:req.user.firstName,
+            lastName:req.user.lastName,
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
@@ -187,6 +200,8 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
             res.redirect('/stories')
         } else {
             res.render('feed/edit',{
+                firstName:req.user.firstName,
+                lastName:req.user.lastName,
                 name: req.user.firstName,
                 profileimage:req.user.image,
                 displayName:req.user.displayName,
@@ -261,15 +276,23 @@ router.delete('/:id', ensureAuth, async (req, res) => {
 //users stories user:id
 router.get('/user/:userId', ensureAuth, async (req, res) => {
     try {
-        const stories = await Story.find({
-            user: req.params.userId,
-            status: 'public'
-        })
+        const users = await User.find({ _id: req.params.userId})
         .populate('user')
         .lean()
 
-        res.render('feed/index', {
+        const stories = await Story.find({ user: req.params.userId, status:'public'})
+        .populate('user')
+        .lean()
+        const timestories = await UStory.find({user: req.params.userId})
+        .populate('user')
+        .lean();
+        res.render('users/users_profile', {
+            profileimage:req.user.image,
+            firstName:req.user.firstName,
+            lastName:req.user.lastName,
             stories,
+            timestories,
+            users,
         })
 
     } catch (err) {
@@ -279,7 +302,37 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
 })
 
 
+//profile- photos
+router.get('/user/photos/:userId', ensureAuth, async (req,res) => {
+    try {
+        const users = await User.find({ _id: req.params.userId})
+        .populate('user')
+        .lean()
 
+        const stories = await Story.find({ user: req.params.userId})
+        .populate('user')
+        .sort({ createdAt: 'desc' })
+        .lean()
+
+        const timestories = await UStory.find({user: req.params.userId})
+        .populate('user')
+        .lean();
+
+        res.render('about/photosforall', {
+            profileimage:req.user.image,
+            firstName:req.user.firstName,
+            lastName:req.user.lastName,
+            users,
+            stories,
+            timestories
+        })
+    } catch (err){ 
+        console.error(err)
+        res.render('error/505')
+    }
+    
+   
+})
 
 
 module.exports = router

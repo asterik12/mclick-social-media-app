@@ -192,15 +192,14 @@ sdf
 
 /* profile */
 .poster-profile{
-    height: 40vh;
-    width: 100vh;
+    height: 42vh;
+    width: 117vh;
     text-align: center;
     border-radius: 5px;
 }
 .card-profile{
     
-    margin-left: 7%;
-   
+    margin-left: 3%;
     position: absolute;  
    
 }
@@ -434,7 +433,7 @@ sdf
   .post-f-btn{
       width: 30%;
       
-      margin-right: 30% !important;
+      margin-right: 27% !important;
       display: inline;
   }
 
@@ -447,6 +446,16 @@ sdf
 .action-btn{
     background-color: green;
 }
+/* edit profile */
+.validate{
+    color: #fff !important;
+}
+.featured{
+    display: flexbox;
+    width: 70px !important;
+    height: 60px !important;
+}
+
 /* modal post */
 
 .mid-text{
@@ -505,3 +514,12 @@ sdf
 select:focus{
       outline: none;
   }
+
+
+
+  /* card photos */
+.size-image{
+    display:inline-flex;
+    height: 250px;
+    width: 410px;
+}

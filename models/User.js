@@ -19,8 +19,19 @@ const UserSchema = new mongoose.Schema({
   },
   image: {
     type: String,
+    default:"default.jpg",
+  },
+  cover: {
+    type: String,
+    default:"cover.jpg",
   },
   work: {
+    type: String,
+  },
+  gender:{
+    type: String,
+  },
+  dob:{
     type: String,
   },
   current_city:{
@@ -36,6 +47,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   degree:{
+    type: String,
+  },
+  branch:{
     type: String,
   },
   createdAt: {

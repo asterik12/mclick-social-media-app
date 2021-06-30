@@ -9,15 +9,15 @@
               <div class="collapsible-header"><i class="material-icons">filter_drama</i>Account Details</div>
               <div class="collapsible-body"><span>
                   <div class="row">
-                    <form href="/editProfile" class="col s12" method="POST" >
+                    <form href="/editProfile/{{id}}" class="col s12" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col s6">
                         <label for="first_name">First Name</label>
-                        <input id="first_name" type="text" class="validate" value="{{firstName}}"> 
+                        <input id="firstName" type="text" name="firstName" class="validate" value="{{firstName}}"> 
                       </div>
                       <div class="col s6">
                         <label for="first_name">Last Name</label>
-                        <input id="last_name" type="text" class="validate" value="{{lastName}}">
+                        <input id="lastName" type="text" name="lastName" class="validate" value="{{lastName}}">
                       </div>
                         
                         
@@ -30,11 +30,11 @@
                         </div>
                         <div class="col s6">
                           <label for="gender"> Gender</label>
-                          <select class="browser-default">
-                          <option value="" disabled selected>Select</option>
-                          <option value="1">Male</option>
-                          <option value="2">Female</option>
-                          <option value="3">Other</option>
+                          <select name="gender" class="browser-default">
+                          <option value="" disabled selected>{{gender}}</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
                         </select>
                         </div>
                         
@@ -42,7 +42,7 @@
                     <div class="row">
                       <div class="col s6">
                         <label for="dob">Birth Date</label>
-                        <input type="text" class="datepicker">
+                      <input type="text" name="dob" class="datepicker validate" value="{{dob}}">
                       </div>
                     </div>
                     
@@ -53,18 +53,23 @@
                       <div class = "file-field">
                           <div class = "btn">
                             <span>Browse</span>
-                            <input type = "file" />
+                            <input type = "file" name="image" id="image" />
                           </div>
                           
                           <div class = "file-path-wrapper">
-                            <input class = "file-path validate" type = "text"
+                            <input class = "file-path validate" type = "text" 
                                 placeholder = "Upload file" />
                           </div>
                       </div>
                    </div>
+                    
                     <input type="submit" class="btn col s1 waves-effect waves-light right" value="Save"/>
 
                     </form>
+                </div>
+                <div class="row">
+                <img src="/uploads/user/{{profileimage}}" alt="" width="100px" height="100px">
+
                 </div>
               </span></div>
             </li>
@@ -72,26 +77,26 @@
       <div class="collapsible-header"><i class="material-icons">place</i>Basic Information</div>
       <div class="collapsible-body"><span>
                   <div class="row">
-                    <form href="/editProfile" class="col s12" method="POST" >
+                    <form href="/editProfile/{{id}}" class="col s12" method="POST" >
                     <div class="row">
                       <div class="col s6">
                         <label for="work">Work</label>
-                        <input id="work" type="text" class="validate"> 
+                        <input id="work" name="work" type="text" class="validate" value="{{work}}"> 
                       </div>
                       <div class="col s6">
                         <label for="current_city">Current City</label>
-                        <input id="current_city" type="text" class="validate">
+                        <input name="current_city"  type="text" class="validate" value="{{current_city}}">
                        </div>
                     </div>
 
                     <div class="row">
                       <div class="col s6">
                         <label for="Hometown">HomeTown</label>
-                        <input id="Hometown" type="text" class="validate"> 
+                        <input name="hometown" type="text" class="validate" value="{{hometown}}"> 
                       </div>
                       <div class="col s6">
                         <label for="hobbies">Hobbies</label>
-                        <input id="hobbies" type="text" class="validate">
+                        <input name="hobbies" type="text" class="validate" value="{{hobbies}}">
                        </div>
                     </div>
                     
@@ -108,31 +113,36 @@
       <div class="collapsible-header"><i class="material-icons">books</i>Educational Qualification</div>
       <div class="collapsible-body"><span>
                   <div class="row">
-                    <form href="/editProfile" class="col s12" method="POST" >
+                    <form href="/editProfile/{{id}}" class="col s12" method="POST" >
                     <div class="row">
                       <div class="col s6">
                         <label for="school">School/College</label>
-                        <input id="school" type="text" class="validate"> 
+                        <input name="school" type="text" class="validate" value="{{school}}"> 
                       </div>
+                      <div class="col s6">
+                        <label for="school">Branch</label>
+                        <input name="branch" type="text" class="validate" value="{{branch}}"> 
+                      </div>
+                    </div>
                       
                     
 
                     <div class="row">
                         <div class="col s12">
                           <label for="degree"> Degree</label>
-                          <select class="browser-default">
-                          <option value="" disabled selected>Select</option>
-                          <option value="1">BSc</option>
-                          <option value="2">BA</option>
-                          <option value="3">MSc</option>
-                          <option value="1">MA</option>
-                          <option value="2">Bcom</option>
-                          <option value="3">Mcom</option>
-                          <option value="1">BE</option>
-                          <option value="2">Btech</option>
-                          <option value="3">Mtech</option>
-                          <option value="1">MBBS</option>
-                          <option value="2">MS</option>
+                          <select class="browser-default" name="degree">
+                          <option value="" disabled selected>{{degree}}</option>
+                          <option value="BSc">BSc</option>
+                          <option value="BA">BA</option>
+                          <option value="MSc">MSc</option>
+                          <option value="MA">MA</option>
+                          <option value="Bcom">Bcom</option>
+                          <option value="Mcom">Mcom</option>
+                          <option value="BE">BE</option>
+                          <option value="Btech">Btech</option>
+                          <option value="Mtech">Mtech</option>
+                          <option value="MBBS">MBBS</option>
+                          <option value="MS">MS</option>
                         </select>
                         </div>
                     </div>

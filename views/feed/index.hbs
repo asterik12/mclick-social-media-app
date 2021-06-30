@@ -2,14 +2,13 @@
 <div class="row">
     
     <div class="col s12 m4 l3">
-             <div class="card top-m-1 center">
+            <div class="card top-m-1 center">
                  <div class="poster-main">
-                     <img src="/img/cover.jpg" alt="" class="poster-main-img">
+                     <img src="/uploads/user/cover/{{cover}}" alt="" class="poster-main-img">
                  </div>
                  
-            
-                <img src="{{profileimage}}" class="circle responsive-img img-small center" style="position:relative"><br>
-                <span class="card-title center">{{displayName}}</span>
+                <img src="/uploads/user/{{profileimage}}" class="circle responsive-img img-small center" style="position:relative"><br>
+                <span class="card-title center">{{firstName}} {{lastName}}</span>
             </div>
            
             <ul class="collapsible top-m-1">
@@ -48,37 +47,37 @@
    
                             <p style="color: rgb(236, 236, 236); font-size:24px">Create Post</p>
                             <div class="chip res">
-                                <img src="{{profileimage}}" alt="">
-                                <a class="name-color" href="/feed/user/{{user._id}}"> {{displayName}} </a>
+                                <img src="/uploads/user/{{profileimage}}" alt="">
+                                <a class="name-color" href="/feed/user/{{user._id}}"> {{firstName}} {{lastName}} </a>
                              </div>
-                            <form action="/feed" method="POST" enctype="multipart/form-data" >
-                               
-                                <div class="row">
-                                    <div class="input-field-post">
-                                        <select class="browser-default" name="status">
-                                            <option id="op-post" value="public"  selected > Public</option>
-                                            <option id="op-post" value="private" >Private</option>
-                                        </select>
-                                        
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field-text">
-                                        <textarea id="body" class="dark-theme" name="body" placeholder=" What's on your mind, {{name}}? "></textarea>
-                                    </div>
-
-                                </div>
-
-                                 <div class="row">
-                                    <div class="input-field-text">
-                                            <input type="file" class="form-control" name="image" id="image" />
+                                <form action="/feed" method="POST" enctype="multipart/form-data" >
+                                
+                                    <div class="row">
+                                        <div class="input-field-post">
+                                            <select class="browser-default" name="status">
+                                                <option id="op-post" value="public"  selected > Public</option>
+                                                <option id="op-post" value="private" >Private</option>
+                                            </select>
+                                            
                                         </div>
-                                 </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field-text">
+                                            <textarea id="body" class="dark-theme" name="body" placeholder=" What's on your mind, {{name}}? "></textarea>
+                                        </div>
 
-                                <div class="row">
-                                    <input type="submit" value="Post" class="btn col s12 htp">
-                                </div>
-                            </form>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field-text">
+                                                <input type="file" class="form-control" name="image" id="image" />
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <input type="submit" value="Post" class="btn col s12 htp">
+                                    </div>
+                                </form>
                             </div>
                             
                         </div>        
@@ -100,14 +99,32 @@
                                 <p style="color: rgb(236, 236, 236); font-size:24px">Post Images</p>
                                 
                                 
-                                <form action="/feed"  method="POST">
+                                    <form action="/feed" method="POST" enctype="multipart/form-data" >
+                                
+                                    <div class="row">
+                                        <div class="input-field-post">
+                                            <select class="browser-default" name="status">
+                                                <option id="op-post" value="public"  selected > Public</option>
+                                                <option id="op-post" value="private" >Private</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="input-field-text">
-                                            <input type="file" class="form-control" name="image" id="image">
+                                            <textarea id="body" class="dark-theme" name="body" placeholder=" What's on your mind, {{name}}? "></textarea>
                                         </div>
+
+                                    </div>
+
+                                    <div class="row">
                                         <div class="input-field-text">
-                                            <input type="submit" class="btn btn-warning" value="Upload Images">
-                                        </div>
+                                                <input type="file" class="form-control" name="image" id="image" />
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <input type="submit" value="Post" class="btn col s12 htp">
                                     </div>
                                 </form>
                             </div>
@@ -157,8 +174,8 @@
                            
                         </div>
                         <div class="chip res">
-                                <img src="{{user.image}}" alt="">
-                                <a class="name-color" href="/feed/user/{{user._id}}"> {{user.displayName}} </a>
+                                <img src="/uploads/user/{{user.image}}" alt="">
+                                <a class="name-color" href="/feed/user/{{user._id}}"> {{user.firstName}} {{user.lastName}} </a>
                         </div>
                         
                       
@@ -270,8 +287,8 @@
               {{#each activeUsers}}
               <li style="list-style-type: none;">
                     <div class="chip res">
-                                <img src="{{image}}" alt="">
-                                <a class="name-color" href="/feed/user/{{user._id}}"> {{displayName}} </a>
+                                <img src="/uploads/user/{{image}}" alt="">
+                                <a class="name-color" href="/feed/user/{{user._id}}"> {{firstName}} {{lastName}} </a>
                     </div>
               </li>
                     

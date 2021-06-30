@@ -61,8 +61,16 @@ module.exports = {
             return `<img src="/uploads/stories/${image_name}" alt="" height="100px" width="100px" class="card timestories" style={float:left} />
             `;
         }
-        
-    },
+
+       },
+
+       featured: function (image_name) {
+        if (image_name) {     
+            return `<img src="/uploads/stories/${image_name}" alt="" height="50px" width="50px" class="featured" />
+            `;
+        }
+
+       },
     
 
 

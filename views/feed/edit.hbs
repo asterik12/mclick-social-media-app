@@ -7,8 +7,8 @@
 
         <p style="color: rgb(236, 236, 236);">Edit Post</p>
         <div class="chip res">
-            <img src="{{profileimage}}" alt="">
-            <a class="name-color" href="/feed/user/{{user._id}}"> {{displayName}} </a>
+            <img src="/uploads/user/{{profileimage}}" alt="">
+            <a class="name-color" href="/feed/user/{{user._id}}"> {{firstName}} {{lastName}} </a>
             </div>
         <form action="/feed/{{story._id}}" method="POST" >
             <input type="hidden" name="_method" value="PUT">
@@ -53,7 +53,7 @@
                  
             
                 <img src="{{profileimage}}" class="circle responsive-img img-small center" style="position:relative"><br>
-                <span class="card-title center">{{displayName}}</span>
+                <span class="card-title center">{{firstName}} {{lastName}}</span>
             </div>
            
             <ul class="collapsible top-m-1">
