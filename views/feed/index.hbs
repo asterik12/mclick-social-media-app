@@ -169,16 +169,15 @@
                 <div class="container" >
                     <div class="card">
                         <div class="card-image red">
-                            {{{editIcon user ../user _id}}}
-                            
+                            {{{editIconfeed user ../user _id}}}
                            
                         </div>
                         <div class="chip res">
                                 <img src="/uploads/user/{{user.image}}" alt="">
                                 <a class="name-color" href="/feed/user/{{user._id}}"> {{user.firstName}} {{user.lastName}} </a>
                         </div>
-                        
-                      
+                                   
+
                         <div class="card-content">
                             <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
                             <span class="card-date capitalize">&bull; {{status}} </span>

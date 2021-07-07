@@ -152,6 +152,7 @@
                 
                     <div class="card">
                         <div class="card-image red">
+                            {{{editIconfeed user ../user _id}}}
 
 
                            
@@ -165,23 +166,7 @@
                         
 
       
-                        <!-- Dropdown Trigger -->
-                            <a class='dropdown-trigger btn right' href='#' data-target='post-edit'><i class="material-icons">more_horiz</i></a>
-
-                            <!-- Dropdown Structure -->
-                            <ul id='post-edit' class='dropdown-content t-dot'>
-                                <li style=""> {{{editIcon user ../user _id}}}</li>
-                                
-                                <li>
-                                    <form action="/feed/{{_id}}" method="POST" id="delete-form">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        
-                                        <input type="submit" class="btn waves-effect waves-light" value="Delete">
-                                            
-                                        </input> 
-                                    </form>
-                                </li>
-                            </ul>
+                        
                         <div class="card-content">
                             <span class="card-date">{{formatDate createdAt 'do MMM yyyy HH:mm:ss'}}</span>
                             <span class="card-date capitalize">&bull; {{status}} </span>

@@ -51,7 +51,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon, select, checklength, validImage,TimeStatus,featured } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,TimeStatus,featured } = require('./helpers/hbs')
 
 
 
@@ -64,6 +64,7 @@ app.engine(
             stripTags,
             truncate,
             editIcon,
+            editIconfeed,
             select,
             checklength,
             validImage,

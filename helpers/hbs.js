@@ -19,18 +19,63 @@ module.exports = {
         return input.replace(/<(?:.|\n)*?>/gm, '')
       },
 
-      editIcon: function (storyUser, loggedUser, storyId, floating = true) {
+      editIcon: function (storyUser, loggedUser, storyId,) {
         if (storyUser._id.toString() == loggedUser._id.toString()) {
-          if (floating) {
-            // return `<a href="/feed/edit/${storyId}" class="btn waves-effect waves-light"><i class="fas fa-edit fa-small"></i></a>`
-            return `<a href="/feed/edit/${storyId}" class="btn-floating halfway-fab blue"><i class="fas fa-edit fa-small"></i></a>`
-          } else {
-            return `<a href="/feed/edit/${storyId}"><i class="fas fa-edit"></i></a>`
-          }
+           
+          return `<!-- Dropdown Trigger -->
+          <a class='dropdown-trigger btn right' href='#' data-target='post-edit'><i class="material-icons">more_horiz</i></a>
+
+          <!-- Dropdown Structure -->
+          <div id='post-edit' class='dropdown-content show'>
+              
+              <a class="btn" style="margin-bottom:5px" href="/feed/edit/${storyId}"><i class="fas fa-edit fa-small"></i></a>
+              
+              
+                  <form action="/feed/${storyId}" method="POST" id="delete-form">
+                      <input type="hidden" name="_method" value="DELETE">
+                     
+                      
+                      <button type="submit" class="btn">
+                        <i class="fas fa-trash fa-small"></i> 
+                      </button> 
+                     
+                  </form>
+                  
+          </div>`
+        
+      }  else {
+          return ''
+        }
+      },
+      editIconfeed: function (storyUser, loggedUser, storyId) {
+        if (storyUser._id.toString() == loggedUser._id.toString()) {
+           
+            return `<!-- Dropdown Trigger -->
+            <a class='dropdown-trigger btn right' href='#' data-target='post-edit'><i class="material-icons">more_horiz</i></a>
+
+            <!-- Dropdown Structure -->
+            <div id='post-edit' class='dropdown-content show'>
+                
+                <a class="btn" style="margin-bottom:5px" href="/feed/edit/${storyId}"><i class="fas fa-edit fa-small"></i></a>
+                
+                
+                    <form action="/feed/${storyId}" method="POST" id="delete-form">
+                        <input type="hidden" name="_method" value="DELETE">
+                       
+                        
+                        <button type="submit" class="btn">
+                          <i class="fas fa-trash fa-small"></i> 
+                        </button> 
+                       
+                    </form>
+                    
+            </div>`
+          
         } else {
           return ''
         }
       },
+      
       select: function (selected, options) {
         return options
           .fn(this)
