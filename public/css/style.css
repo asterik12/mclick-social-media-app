@@ -7,6 +7,7 @@ body{
     background-color: rgb(29, 29, 29);
 }
 
+
 .body-color1{
     background-color:rgb(49, 49, 49);
     color: #eeeeee;
@@ -532,6 +533,7 @@ sdf
     max-height: 25vh !important;
     font-size: 24px !important;
     padding: 10px;
+    overflow: hidden;
     resize: none;
     box-shadow: none !important;
 
@@ -565,4 +567,32 @@ select:focus{
     display:inline-flex;
     height: 250px;
     width: 410px;
+}
+
+/* likes content */
+.likes-content{
+    display:inline-flexbox !important;
+    padding-left: 0px !important;
+    /* padding-right: 4px !important; */
+    padding-top: 5px !important;
+    padding-bottom: 9px !important;
+    margin: 0px !important;
+    overflow: hidden;
+    white-space: nowrap;
+
+    width: 100%;
+
+}
+.likes-content:hover{
+    overflow: auto;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+    white-space: nowrap;
+}
+.likes-content:hover::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.size{
+    font-size: 18px;
+
 }

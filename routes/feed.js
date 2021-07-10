@@ -4,6 +4,7 @@ const { ensureAuth } = require('../middleware/auth')
 const User  = require('../models/User')
 const Story = require('../models/Story')
 const UStory = require('../models/UStory')
+const Comment = require('../models/Comment')
 
 
 const multer = require('multer')
@@ -120,8 +121,11 @@ router.get('/', ensureAuth, async (req, res) => {
        
        const stories = await Story.find({ status: 'public'})
         .populate('user')
+        .populate('likes')
         .sort({ createdAt: 'desc' })
         .lean();
+
+        
 
         const timestories = await UStory.find({})
         .populate('user')
@@ -161,7 +165,13 @@ router.get('/usersList', ensureAuth, async (req, res) =>  {
 //show single story
 router.get('/:id', ensureAuth, async (req, res) => {
     try {
-        let story = await Story.findById(req.params.id)
+        const story = await Story.findById(req.params.id)
+        .populate('user')
+        .populate('likes')
+        .lean()
+        
+        
+        const comment = await Comment.find({post: req.params.id})
         .populate('user')
         .lean()
 
@@ -174,8 +184,8 @@ router.get('/:id', ensureAuth, async (req, res) => {
             name: req.user.firstName,
             profileimage:req.user.image,
             displayName:req.user.displayName,
-            
-            story
+            comment,
+            story,
         })
     } catch (err) {
         console.error(err)
@@ -332,6 +342,26 @@ router.get('/user/photos/:userId', ensureAuth, async (req,res) => {
     }
     
    
+})
+
+
+// comment
+router.put('/:id/comments', ensureAuth, async (req, res) => {
+
+     const id = req.params.id;
+      const comment = new Comment({
+      text: req.body.comment,
+      post: id,
+      user: req.user.id,
+    })
+    await comment.save();
+    const postRelated = await Story.findById(id);
+    postRelated.comments.push(comment);
+    await postRelated.save(function(err) {
+    if(err) {console.log(err)}
+    res.redirect('back')
+    })
+
 })
 
 

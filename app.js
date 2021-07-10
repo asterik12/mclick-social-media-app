@@ -13,7 +13,7 @@ const flash = require('connect-flash')
 const { resolve } = require('path')
 const { Cookie } = require('express-session')
 const { Mongoose } = require('mongoose')
-
+var _ = require('underscore');
 //Load Config
 dotenv.config({ path: './config/config.env'})
 
@@ -51,7 +51,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,TimeStatus,featured } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments } = require('./helpers/hbs')
 
 
 
@@ -60,6 +60,19 @@ app.engine(
     '.hbs', 
     exphbs({
         helpers: {
+            iter:function(context, options) {
+                var fn = options.fn, inverse = options.inverse;
+                var ret = "";
+              
+                if(context && context.length > 0) {
+                  for(var i=0, j=context.length; i<j; i++) {
+                    ret = ret + fn( _.extend({}, context[i], { i: i, iPlus1: i + 1 }));
+                  }
+                } else {
+                  ret = inverse(this);
+                }
+                return ret;
+              },
             formatDate,
             stripTags,
             truncate,
@@ -68,14 +81,19 @@ app.engine(
             select,
             checklength,
             validImage,
+            validImageEnlarge,
             TimeStatus,
             featured,
+            checkLikes,
+            checkComments,
         },
         defaultLayout: 'main', 
         extname: '.hbs'
     })
 );
 app.set('view engine', '.hbs');
+
+
 
 //Session
 app.use(session({

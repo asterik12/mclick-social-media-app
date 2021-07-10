@@ -23,14 +23,15 @@ const StorySchema = new mongoose.Schema({
     default: Date.now,
   },
 
-  likes:{
-    type:Array,
-    default:[],
-  },
-  comments:{
-    types:Array,
-    default:[],
-  }
+  likes:[{  
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+           
+  }],
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment'
+  }]
 })
 
 module.exports = mongoose.model('Story', StorySchema)

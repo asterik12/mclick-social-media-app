@@ -96,10 +96,17 @@ module.exports = {
         },
       validImage: function (image_name) {
           if (image_name) {     
-              return `<img src="/uploads/posts/${image_name}" alt="" height="300px" width="100%" />
+              return `<img src="/uploads/posts/${image_name}" alt="" height="400px" width="100%" />
               `;
           }
           
+      },
+      validImageEnlarge: function (image_name) {
+        if (image_name) {     
+            return `<img src="/uploads/posts/${image_name}" alt="" height="500px" width="100%" />
+            `;
+        }
+        
       },
       TimeStatus: function (image_name) {
         if (image_name) {     
@@ -116,6 +123,38 @@ module.exports = {
         }
 
        },
+       checkLikes: function (likes, length_message) {
+        if (likes.length>=length_message) { 
+          
+            return `
+            <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                    <li>
+                    <div class="collapsible-header">${likes.length} likes</div>
+                    <div class="collapsible-body"><span>
+                    
+                    ${likes.firstName}</span></div>
+                    </li>
+            </ul>
+            
+            `;
+
+        }
+        else{
+          return ` Like`;
+        }
+        
+      },
+      checkComments: function (comment, length_message) {
+        if (comment.length>=length_message) { 
+          
+            return `${comment.length} comments`;
+
+        }
+        else{
+          return ` comment`;
+        }
+        
+      },
     
 
 

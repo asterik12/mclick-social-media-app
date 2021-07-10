@@ -157,18 +157,18 @@
         </div>
 
 
-       <div class="row">
+       {{!-- <div class="row">
            <div class="container">
               <h4 style="color: aliceblue;">News Feed</h4>
            </div>
        </div>
-        
+         --}}
 
         <div class="row">
             {{#each stories}}
                 <div class="container" >
                     <div class="card">
-                        <div class="card-image red">
+                        <div class="card-image">
                             {{{editIconfeed user ../user _id}}}
                            
                         </div>
@@ -191,6 +191,45 @@
                         {{!-- <div>
                            <img src="/uploads/posts/{{image}}" alt="" height="300px" width="100%" />
                        </div> --}}
+                        {{!-- {{{checkLikes likes 1}}} --}}
+                        {{#if likes}}
+                        <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                            <li>
+                            <div class="collapsible-header">
+                                
+                                <div class="col s4 m7 l10">
+                                    <div style="float: left !important;">
+                                        <span class="material-icons size">thumb_up</span>
+                                        <span>{{likes.length}} likes <span>
+                                    </div>
+                                </div>
+                                <div class="col s5 m4 l4">
+                                    <a href="/feed/{{_id}}">{{comments.length}} comments </a>, 0 share
+                                </div>
+                            </div>
+                            <div class="collapsible-body likes-content">
+                                <span> 
+                                    {{#iter likes}}
+                                        <div class="chip res">
+                                                <img src="/uploads/user/{{image}}" alt="">
+                                                <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                        </div>
+                                        
+                                        
+                                    {{/iter}}
+                                </span>
+                            </div>
+                           
+                            </li>
+                        </ul>
+                        {{else}}
+                            Be the first to like
+                            <div class="right"><a href="/feed/{{_id}}">{{comments.length}} comments </a>, 0 share </div>
+
+
+                        {{/if}}
+                        
+                        
                         <div class="card-action">
                             <div class="row" style="margin: 0% !important;">
                                 <div class="col s3 m4 l4">
@@ -198,32 +237,17 @@
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
                                                 <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
-                                                
-                                                <!-- Modal Trigger -->
-                                                <a class="modal-trigger" href="#modal1">{{likes.length}} Likes</a>
-
-                                                <!-- Modal Structure -->
-                                                <div id="modal1" class="modal">
-                                                    <div class="modal-content">
-                                                    <h4>Post Liked By</h4>
-                                                    <li>{{likes}}</li>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-                                                    </div>
-                                                </div>
-                                                        
+                                                Like
+                                        
+                                                      
                                     </form>
 
                                 </div>
                                 <div class="col s12 m4 l4">
-                                    <form action="" method="POST">
-                                                <input type="hidden" name="_method" value="PUT">
-                                                
-                                                <input type="submit" class="btn-small material-icons round" value="message"/>
-                                                comments
+                                       
+                                                <a href="/feed/{{_id}}" class="btn-small material-icons round">message </a>
+                                                 comments
                                                         
-                                    </form>
                                 </div>
                                 <div class="col s12 m4 l4">
                                     <form action="" method="POST">
