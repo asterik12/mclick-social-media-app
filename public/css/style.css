@@ -146,6 +146,12 @@ body{
 .input-field{
     color: white;
 }
+.view-more{
+    color:#2595d6
+}
+.view-more:hover{
+    color: #43b5d8;
+}
 
 /*  
 sdf
@@ -592,7 +598,9 @@ select:focus{
 .likes-content:hover::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
-.size{
-    font-size: 18px;
-
+.likedlook{
+    color:#eeeeee;
+}
+.likedlook:hover{
+    color:#62dbdd;
 }

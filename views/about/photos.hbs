@@ -58,10 +58,13 @@
 
        <div style="display: inline-flexbox !important;">
             {{#each stories}}
-            
+                {{#if image}}
                 <div class="card-image size-image">
                       {{{validImage image}}}
                 </div>
+                {{else}}
+
+                {{/if}}
                           
             {{/each}}
        </div>

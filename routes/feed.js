@@ -125,7 +125,10 @@ router.get('/', ensureAuth, async (req, res) => {
         .sort({ createdAt: 'desc' })
         .lean();
 
-        
+       const profile_image = await User.find({})
+       .lean();
+
+       
 
         const timestories = await UStory.find({})
         .populate('user')
@@ -142,6 +145,7 @@ router.get('/', ensureAuth, async (req, res) => {
             activeUsers,
             stories,
             timestories,
+            profile_image,
         })
    } catch (err) {
        console.error(err)
@@ -259,10 +263,11 @@ router.put('/:id/like', ensureAuth, async (req, res) => {
         
         if(!post.likes.includes(req.user.id)) {
             await post.updateOne({$push : {likes: req.user.id}});
-           
+            const state = "Unlike";
         } 
         else{
             await post.updateOne({$pull: { likes: req.user.id}});
+            const state = "Like";
         }
         res.redirect('back')
     } catch (err) {

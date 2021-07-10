@@ -27,7 +27,44 @@
                     <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
                     </li>
                 </ul> --}}
-            {{{checkLikes story.likes 1}}}
+
+            {{#if story.likes}}
+                        <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                            <li>
+                            <div class="collapsible-header">
+                                
+                                <div class="col s4 m7 l10">
+                                    <div style="float: left !important;">
+                                        {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
+                                        <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
+                                        <span class="likedlook">{{story.likes.length}} likes <span>
+                                    </div>
+                                </div>
+                                <div class="col s5 m4 l4">
+                                    <a href="/feed/{{story._id}}" class="likedlook">{{story.comments.length}} comments </a>, 0 share
+                                </div>
+                            </div>
+                                <div class="collapsible-body likes-content">
+                                    <span> 
+                                        {{#iter story.likes}}
+                                            <div class="chip res">
+                                                    <img src="/uploads/user/{{image}}" alt="">
+                                                    <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                            </div>
+                                            
+                                            
+                                        {{/iter}}
+                                    </span>
+                                </div>
+                            
+                                </li>
+                            </ul>
+                            {{else}}
+                                Be the first to like
+                                <div class="right"><a href="/feed/{{story._id}}" class="likedlook">{{story.comments.length}} comments </a>, 0 share </div>
+
+
+                        {{/if}}
 
             <div class="card-action">
                 
@@ -45,7 +82,7 @@
                         <form action="">
                                     
                                     <input type="submit" class="btn-small material-icons" value="message"/>
-                                     {{{checkComments story.comments 1}}}
+                                     Comment
                                             
                         </form>
                     </div>
@@ -54,7 +91,7 @@
                                     <input type="hidden" name="_method" value="PUT">
                                     
                                     <input type="submit" class="btn-small material-icons" value="share"/>
-                                     share
+                                     Share
                                             
                         </form>
                     </div>
@@ -70,7 +107,9 @@
             
             <div class="card-content">
                 <h4>Comments</h4>
+                {{#if comment}}
                 {{#each comment}}
+                
                 <div class="card-story" style="background-color: rgba(42, 42, 43, 0.959); border-radius:5px">
                     <div class="chip res">
                         <img src="/uploads/user/{{user.image}}" alt="">
@@ -78,13 +117,25 @@
                          <span class="card-date">{{formatDate date 'MMMM Do YYYY, h:mm:ss a'}}</span>
 
                     </div>
+                    {{#if user.work}}
+                    <p style="font-size: 9px; margin:0px !important; padding-left:7%">{{user.work}}</p>
+                    {{else if user.school}}
+                    <p style="font-size: 9px; margin:0px !important; padding-left:7%">{{user.school}}</p>
+
+
+                    {{/if}}
                     <div class="card-content" style="margin:6px">
                         {{text}}
                     </div>
 
                 </div>
+                
 
                 {{/each}}
+                {{else}}
+                    <p>Be the first to comment.</p>
+
+                {{/if}}
                 <form action="/feed/{{story._id}}/comments" method="POST">
                                 
                      <input type="hidden" name="_method" value="PUT">

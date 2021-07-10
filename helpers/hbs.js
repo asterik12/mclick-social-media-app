@@ -101,6 +101,13 @@ module.exports = {
           }
           
       },
+      validProfileImage: function (image_name) {
+        if (image_name) {     
+            return `<img src="/uploads/user/${image_name}" alt="" height="400px" width="100%" />
+            `;
+        }
+        
+    },
       validImageEnlarge: function (image_name) {
         if (image_name) {     
             return `<img src="/uploads/posts/${image_name}" alt="" height="500px" width="100%" />

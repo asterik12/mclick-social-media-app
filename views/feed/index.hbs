@@ -163,6 +163,7 @@
            </div>
        </div>
          --}}
+         
 
         <div class="row">
             {{#each stories}}
@@ -182,7 +183,7 @@
                             <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
                             <span class="card-date capitalize">&bull; {{status}} </span>
                             <p> {{stripTags (truncate body 150)}} </p>
-                            <a href="/feed/{{_id}}">View More</a>
+                            <a href="/feed/{{_id}}" class="view-more">Show More</a>
                             <br>
     
                         </div>
@@ -199,12 +200,115 @@
                                 
                                 <div class="col s4 m7 l10">
                                     <div style="float: left !important;">
-                                        <span class="material-icons size">thumb_up</span>
-                                        <span>{{likes.length}} likes <span>
+                                        {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
+                                        <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
+                                        <span class="likedlook">{{likes.length}} likes <span>
                                     </div>
                                 </div>
                                 <div class="col s5 m4 l4">
-                                    <a href="/feed/{{_id}}">{{comments.length}} comments </a>, 0 share
+                                    <a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share
+                                </div>
+                            </div>
+                            <div class="collapsible-body likes-content">
+                                <span> 
+                                    {{#iter likes}}
+                                        <div class="chip res">
+                                                <img src="/uploads/user/{{image}}" alt="">
+                                                <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                        </div>
+                                        
+                                        
+                                    {{/iter}}
+                                </span>
+                            </div>
+                           
+                            </li>
+                        </ul>
+                        {{else}}
+                            Be the first to like
+                            <div class="right"><a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share </div>
+
+
+                        {{/if}}
+                        
+                        
+                        <div class="card-action">
+                            <div class="row" style="margin: 0% !important;">
+                                <div class="col s3 m4 l4">
+                                    <form action="/feed/{{_id}}/like" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
+                                                Like
+                                        
+                                                      
+                                    </form>
+
+                                </div>
+                                <div class="col s12 m4 l4">
+                                       
+                                                <a href="/feed/{{_id}}" class="btn-small material-icons round">message </a>
+                                                 Comment
+                                                        
+                                </div>
+                                <div class="col s12 m4 l4">
+                                    <form action="" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                <input type="submit" class="btn-small material-icons round" value="share"/>
+                                                share
+                                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            {{else}}
+                <p>No stories to display</p>
+
+            {{/each}}
+        </div>
+
+
+        {{!-- profile photo upload --}}
+        <div class="row">
+            {{#each profile_image}}
+            <div class="container">
+                <div class="card">
+                    <div class="card-image">
+                    </div>
+                    <div class="chip res">
+                                <img src="/uploads/user/{{image}}" alt="">
+                                <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                    </div>
+                    <span>uploaded profile photo</span>
+
+                    <div class="card-content">
+                            <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                            <span class="card-date capitalize">&bull; public </span>
+                            <a href="/feed/{{_id}}" class="view-more">Show More</a>
+                            <br>
+    
+                        </div>
+
+                    {{{validProfileImage image}}}
+                    {{#if likes}}
+                        <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                            <li>
+                            <div class="collapsible-header">
+                                
+                                <div class="col s4 m7 l10">
+                                    <div style="float: left !important;">
+                                        {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
+                                        <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
+                                        <span class="likedlook">{{likes.length}} likes <span>
+                                    </div>
+                                </div>
+                                <div class="col s5 m4 l4">
+                                    <a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share
                                 </div>
                             </div>
                             <div class="collapsible-body likes-content">
@@ -228,8 +332,6 @@
 
 
                         {{/if}}
-                        
-                        
                         <div class="card-action">
                             <div class="row" style="margin: 0% !important;">
                                 <div class="col s3 m4 l4">
@@ -246,7 +348,7 @@
                                 <div class="col s12 m4 l4">
                                        
                                                 <a href="/feed/{{_id}}" class="btn-small material-icons round">message </a>
-                                                 comments
+                                                 Comment
                                                         
                                 </div>
                                 <div class="col s12 m4 l4">
@@ -260,15 +362,15 @@
                                 </div>
                             </div>
                         </div>
-                        
-                    </div>
+
                 </div>
 
-            {{else}}
-                <p>No stories to display</p>
-
+            </div>
             {{/each}}
         </div>
+
+
+
     </div>
 
 

@@ -1,3 +1,4 @@
+
 {{#each users}}
 <div class="row">
     <div class="col s12" style="background-image: linear-gradient(180deg, rgb(138, 137, 137), rgba(18, 34, 49, 0.616)); height:50vh">
@@ -58,13 +59,16 @@
         </div>
 
        <div style="display: inline-flexbox !important;">
-            {{#each stories}}
             
+            {{#each stories}}
+                {{#if image}}
                 <div class="card-image size-image">
                       {{{validImage image}}}
                 </div>
-                          
+                {{else}}
+                {{/if}} 
             {{/each}}
+             
        </div>
              
        
