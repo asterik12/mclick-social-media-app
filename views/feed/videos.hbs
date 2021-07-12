@@ -1,0 +1,142 @@
+
+
+<div class="row">
+   <div class="col s12 m4 l3">
+       <div class="card top-m-1 center">
+                 <div class="poster-main">
+                     <img src="/uploads/user/cover/{{cover}}" alt="" class="poster-main-img">
+                 </div>
+                 
+                <img src="/uploads/user/{{profileimage}}" class="circle responsive-img img-small center" style="position:relative"><br>
+                <span class="card-title center">{{firstName}} {{lastName}}</span>
+            </div>
+           
+            <ul class="collapsible top-m-1">
+            <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li class="divider" tabindex="-1"></li>
+            <li>
+            <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li class="divider" tabindex="-1"></li>
+
+            <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col s12 m4 l6">
+        <div class="row">
+            {{#each stories}}
+            <div class="container">
+                <div class="card">
+                            <div class="card-image">
+                                {{{editIconfeed user ../user _id}}}
+                            
+                            </div>
+                            <div class="chip res">
+                                    <img src="/uploads/user/{{user.image}}" alt="">
+                                    <a class="name-color" href="/feed/user/{{user._id}}"> {{user.firstName}} {{user.lastName}} </a>
+                            </div>
+                                    
+
+                            <div class="card-content">
+                                <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                                <span class="card-date capitalize">&bull; {{status}} </span>
+                                <a href="/video/{{_id}}" class="view-more">Show More</a>
+        
+                            </div>
+
+                            {{{validVideo video}}}
+                            
+                            {{#if likes}}
+                            <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                                <li>
+                                <div class="collapsible-header">
+                                    
+                                    <div class="col s4 m7 l10">
+                                        <div style="float: left !important;">
+                                            {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
+                                            <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
+                                            <span class="likedlook">{{likes.length}} likes <span>
+                                        </div>
+                                    </div>
+                                    <div class="col s5 m4 l4">
+                                        <a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share
+                                    </div>
+                                </div>
+                                <div class="collapsible-body likes-content">
+                                    <span> 
+                                        {{#iter likes}}
+                                            <div class="chip res">
+                                                    <img src="/uploads/user/{{image}}" alt="">
+                                                    <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                            </div>
+                                            
+                                            
+                                        {{/iter}}
+                                    </span>
+                                </div>
+                            
+                                </li>
+                            </ul>
+                            {{else}}
+                                Be the first to like
+                                <div class="right"><a href="/video/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share </div>
+
+
+                            {{/if}}
+                            
+                            
+                            <div class="card-action">
+                                <div class="row" style="margin: 0% !important;">
+                                    <div class="col s3 m4 l4">
+                                        <form action="/video/{{_id}}/like" method="POST">
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    
+                                                    <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
+                                                    Like
+                                            
+                                                        
+                                        </form>
+
+                                    </div>
+                                    <div class="col s12 m4 l4">
+                                        
+                                                    <a href="/video/{{_id}}" class="btn-small material-icons round">message </a>
+                                                    Comment
+                                                            
+                                    </div>
+                                    <div class="col s12 m4 l4">
+                                        <form action="" method="POST">
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    
+                                                    <input type="submit" class="btn-small material-icons round" value="share"/>
+                                                    share
+                                                            
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                {{else}}
+                    <p>No videos to display</p>
+
+                {{/each}}
+            </div>
+                        
+        </div>
+        
+    
+    </div>
+
+    <div class="col s12 m4 l3">
+    </div>
+</div>

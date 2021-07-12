@@ -1,0 +1,51 @@
+
+<div class="row">
+    <div class="col s12 m4 l3">
+    </div>
+
+
+    <div class="col s12 m4 l6">
+
+        <div class="row">
+            
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Find Friends</h3>
+
+                        <ul>
+                            {{#each friends}}
+                            <li>
+                                <img src="/uploads/user/{{image}}" class="circle flex"  style="height:100px; width:100px; float:left"  alt="">
+                                <p class="col m4 l4"> {{firstName}} {{lastName}}</p>
+                                <div class="chip res btn">
+                                    Add Friend
+                                
+                                </div>
+                                <div class="chip res btn">
+                                Message
+                                
+                                </div>
+                                
+                                <p style="padding-left: 6%;">{{work}}</p>
+                                <p style="padding-left: 6%;">{{school}}</p>
+
+                                
+                            </li>
+                        
+                            <br>
+                            {{/each}}
+
+                        </ul>
+                            
+                                
+                    </div>
+                </div>
+  
+        </div>
+
+    </div>
+
+    <div class="col s12 m4 l3">
+
+    </div>
+</div>

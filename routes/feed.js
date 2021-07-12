@@ -5,7 +5,7 @@ const User  = require('../models/User')
 const Story = require('../models/Story')
 const UStory = require('../models/UStory')
 const Comment = require('../models/Comment')
-
+const includes = require('array-includes')
 
 const multer = require('multer')
 const { request } = require('express')
@@ -297,10 +297,18 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
 
         const stories = await Story.find({ user: req.params.userId, status:'public'})
         .populate('user')
+        .populate('likes')
         .lean()
         const timestories = await UStory.find({user: req.params.userId})
         .populate('user')
         .lean();
+       
+        const followUser = await User.find({
+            // _id: req.params.userId, 
+            followers: {$in: [req.user.id]}, })
+        // let state = users.followers.includes(req.user.id)?"Followed":"Follow";
+        state = "follow"
+        
         res.render('users/users_profile', {
             profileimage:req.user.image,
             firstName:req.user.firstName,
@@ -308,6 +316,9 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
             stories,
             timestories,
             users,
+            state,
+            followUser
+            
         })
 
     } catch (err) {
@@ -368,6 +379,24 @@ router.put('/:id/comments', ensureAuth, async (req, res) => {
     })
 
 })
+
+// follow users
+router.put('/user/:id/follow', ensureAuth, async (req, res) => {
+    try {
+        const followUser = await User.findById(req.params.id);
+        if(!followUser.followers.includes(req.user.id)) {
+            await followUser.updateOne({$push : {followers: req.user.id}});
+        } 
+        else{
+            await followUser.updateOne({$pull: {followers: req.user.id}});
+        }
+        res.redirect('back')
+
+    } catch (err) {
+        return res.render('error/500');
+    }
+})
+
 
 
 module.exports = router

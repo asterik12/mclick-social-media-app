@@ -2,9 +2,9 @@
   <nav>
     <div class="nav-wrapper">
      <img src="/img/logo.png" alt="" style="width: 70px; margin:5px; margin-left:5%">
-      <form class="brand-logo">
+      <form action="/search" method="GET" class="brand-logo">
         <div class="input-field ">
-          <input id="search" type="search" placeholder="Search for mclick" required>
+          <input id="search" type="search" name="name" placeholder="Search for mclick" required>
           <label class="label-icon" for="search"><i class="material-icons input-color">search</i></label>
           <i class="material-icons input-color1">close</i>
         </div>
@@ -15,9 +15,9 @@
       <ul class="hide-on-med-and-down brand-logo center">
         
           <li class="mid-loss waves-effect waves-light"><a href="/feed"><i class="material-icons med center">home</i></a></li>
-          <li class="mid-loss waves-effect waves-light"><a href="collapsible.html"><i class="material-icons med center">ondemand_video</i></a></li>
+          <li class="mid-loss waves-effect waves-light"><a href="/videos"><i class="material-icons med center">ondemand_video</i></a></li>
           <li class="mid-loss waves-effect waves-light"><a href="sass.html"><i class="material-icons med center">event</i></a></li>
-          <li class="mid-loss waves-effect waves-light"><a href="badges.html"><i class="material-icons med center">groups</i></a></li>
+          <li class="mid-loss waves-effect waves-light"><a href="/find_friends"><i class="material-icons med center">groups</i></a></li>
           <li class="mid-loss waves-effect waves-light"><a href="collapsible.html"><i class="material-icons med center">contacts</i></a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
@@ -87,8 +87,8 @@
         <ul id='dropdown1' class='dropdown-content t-dot'>
             <li class="list-style"><a href="/profile">
                <div class="chip">
-                        <img src="{{profileimage}}" alt="">
-                        {{displayName}}
+                        <img src="/uploads/user/{{profileimage}}" alt="">
+                        {{firstName}} {{lastName}}
                         <p>See your profile</p>
 
                 </div>

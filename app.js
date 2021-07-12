@@ -51,7 +51,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validProfileImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validVideo,validProfileImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate } = require('./helpers/hbs')
 
 
 
@@ -81,12 +81,14 @@ app.engine(
             select,
             checklength,
             validImage,
+            validVideo,
             validProfileImage,
             validImageEnlarge,
             TimeStatus,
             featured,
             checkLikes,
             checkComments,
+            checkstate
         },
         defaultLayout: 'main', 
         extname: '.hbs'
@@ -125,7 +127,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
 app.use('/feed', require('./routes/feed'))
-
+app.use('/search', require('./routes/search'))
+app.use('/find_friends', require('./routes/find_friends'))
+app.use('/videos', require('./routes/videos'))
 
 
 const PORT = process.env.PORT || 3000

@@ -30,7 +30,7 @@
                         <span class="card-title profile center">
                             <h4 class="profile-name">{{firstName}} {{lastName}}
                             </h4>
-                            </span>
+                        </span>
                        
 
             
@@ -140,13 +140,21 @@
 
             <div class="col s12 m4 l6" style="display:inline-flexbox">
                 
-              {{#each users}}  
              <div class="display-top-header">
+              {{#each users}}  
 
                  &nbsp;<a href = "/feed/user/photos/{{_id}}" class="waves-effect waves-light btn htp mid-text"><i class="material-icons left">photo_library</i>&nbsp; Photos</a>
-
-             </div>
+                
+                     
+                <form action="/feed/user/{{_id}}/follow" method="POST" class="right" >
+                     <input type="hidden" name="_method" value="PUT">
+                     <input type="submit"  class="waves-effect waves-light btn blue mid-text right" style="color: white !important;" value="{{{checkstate followers _id}}}"/>
+                                                
+                </form>
+                 <a href = "" class="waves-effect waves-light btn blue mid-text right"><i class="material-icons left">group_add</i>&nbsp; Add Friend</a>
+                 
                 {{/each}}
+             </div>
 
                 
               
@@ -170,11 +178,48 @@
                             <span class="card-date">{{formatDate createdAt 'do MMM yyyy HH:mm:ss'}}</span>
                             <span class="card-date capitalize">&bull; {{status}} </span>
                             <p> {{stripTags (truncate body 150)}} </p>
-                            <a href="/feed/{{_id}}">View More</a>
+                            <a href="/feed/{{_id}}" class="view-more">View More</a>
                             <br>
     
                         </div>
                         {{{validImage image}}}
+                        {{#if likes}}
+                        <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                            <li>
+                            <div class="collapsible-header">
+                                
+                                <div class="col s4 m7 l10">
+                                    <div style="float: left !important;">
+                                        {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
+                                        <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
+                                        <span class="likedlook">{{likes.length}} likes <span>
+                                    </div>
+                                </div>
+                                <div class="col s5 m4 l4">
+                                    <a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share
+                                </div>
+                            </div>
+                                <div class="collapsible-body likes-content">
+                                    <span> 
+                                        {{#iter likes}}
+                                            <div class="chip res">
+                                                    <img src="/uploads/user/{{image}}" alt="">
+                                                    <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                            </div>
+                                            
+                                            
+                                        {{/iter}}
+                                    </span>
+                                </div>
+                            
+                                </li>
+                            </ul>
+                            {{else}}
+                                Be the first to like
+                                <div class="right"><a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share </div>
+
+
+                            {{/if}}
 
                         <div class="card-action">
                            <div class="row" style="margin: 0% !important;">
@@ -183,7 +228,7 @@
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
                                                 <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
-                                                {{likes.length}} Likes
+                                                Like
                                                         
                                     </form>
                                 </div>
@@ -192,7 +237,7 @@
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
                                                 <input type="submit" class="btn-small material-icons round" value="message"/>
-                                                comments
+                                                Comment
                                                         
                                     </form>
                                 </div>
@@ -201,7 +246,7 @@
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
                                                 <input type="submit" class="btn-small material-icons round" value="share"/>
-                                                share
+                                                Share
                                                         
                                     </form>
                                 </div>
@@ -224,5 +269,4 @@
         
     </div>
 </div>
-
 

@@ -52,6 +52,10 @@ const UserSchema = new mongoose.Schema({
   branch:{
     type: String,
   },
+  followers:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

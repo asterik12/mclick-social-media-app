@@ -108,6 +108,13 @@ module.exports = {
         }
         
     },
+    validVideo: function (video_name) {
+      if (video_name) {     
+          return `<video src="/uploads/videos/${video_name}" type=""video/mp4" alt="" height="400px" width="100%" controls/>
+          `;
+      }
+      
+  },
       validImageEnlarge: function (image_name) {
         if (image_name) {     
             return `<img src="/uploads/posts/${image_name}" alt="" height="500px" width="100%" />
@@ -162,6 +169,18 @@ module.exports = {
         }
         
       },
+      checkstate: function (followers, userId) {
+
+        for(let i = 0; i<followers.length;i++){
+          if (`${followers[i]}`==`${userId}`) { 
+          }
+       
+        }
+        return `${userId}`;
+        
+        
+      },
+      
     
 
 

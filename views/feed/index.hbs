@@ -132,16 +132,48 @@
                         </div>   
                             
                             <a href="#imgpost" class="waves-effect waves-light modal-trigger"><i class="material-icons med center">add_a_photo</i></a>
-                            
-                                  
-                        
-                        
                         </li>
 
 
 
 
-                        <li class="post-f-btn"><a href="collapsible.html" class="waves-effect waves-light modal-trigger"><i class="material-icons med center">ondemand_video</i></a></li>
+                        <li class="post-f-btn">
+                         <div id="videopost" class="modal">
+                            <div class="modal-content">
+                                <a href="" class="modal-close btn right waves-effect waves-green btn-flat"> &times;</a>
+
+                                <p style="color: rgb(236, 236, 236); font-size:24px">Post Videos</p>
+                                
+                                
+                                    <form action="/videos" method="POST" enctype="multipart/form-data" >
+                                
+                                    <div class="row">
+                                        <div class="input-field-post">
+                                            <select class="browser-default" name="status">
+                                                <option id="op-post" value="public"  selected > Public</option>
+                                                <option id="op-post" value="private" >Private</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="row">
+                                        <div class="input-field-text">
+                                                <input type="file" class="form-control" name="video" id="video" />
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <input type="submit" value="Post" class="btn col s12 htp">
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>   
+                        <a href="#videopost" class="waves-effect waves-light modal-trigger"><i class="material-icons med center">ondemand_video</i></a>
+
+                        </li>
                         <li class="post-f-btn"><a href="sass.html" class="waves-effect waves-light modal-trigger"><i class="material-icons med center">mood</i></a></li>
                      </ul>
                     
@@ -391,8 +423,8 @@
                         
                             
                             <p style={float:right; top:2px}>
-                                {{{TimeStatus storiesimage}}}
-                            {{user.displayName}}
+                                <span>{{{TimeStatus storiesimage}}}</span>
+                            <span>{{user.displayName}}</span>
                             <span class="card-date">{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
 
                             </p>
@@ -408,17 +440,19 @@
          </div>
         <div class="med-right-chat-active">
               <h6 style="color: aliceblue;">Active Users</h6>
-
-              {{#each activeUsers}}
-              <li style="list-style-type: none;">
-                    <div class="chip res">
-                                <img src="/uploads/user/{{image}}" alt="">
-                                <a class="name-color" href="/feed/user/{{user._id}}"> {{firstName}} {{lastName}} </a>
-                    </div>
-              </li>
+            <div class="card">
+                {{#each activeUsers}}
+                    <li style="list-style-type: none;">
+                            <div class="chip res">
+                                        <img src="/uploads/user/{{image}}" alt="">
+                                        <a class="name-color" href="/feed/user/{{user._id}}"> {{firstName}} {{lastName}} </a>
+                            </div>
+                    </li>
                     
 
               {{/each}}
+            </div>
+              
                 
         </div>
     </div>
