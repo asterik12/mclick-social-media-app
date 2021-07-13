@@ -9,7 +9,7 @@
 
             <div class="chip res">
                 <img src="/uploads/user/{{story.user.image}}" alt="">
-                <a class="name-color" href="/feed/user/{{story.user._id}}"> {{story.user.firstName}} {{story.user.lastName}} </a>
+                <a class="name-color" href="{{{validUser story.user user}}}"> {{story.user.firstName}} {{story.user.lastName}} </a>
             </div>
             
             <div class="card-content">
@@ -21,12 +21,7 @@
 
             {{{validImageEnlarge story.image}}}
             
-                {{!-- <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
-                    <li>
-                    <div class="collapsible-header">{{{checkLikes story.likes 1}}}</div>
-                    <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                    </li>
-                </ul> --}}
+                
 
             {{#if story.likes}}
                         <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
@@ -49,7 +44,7 @@
                                         {{#iter story.likes}}
                                             <div class="chip res">
                                                     <img src="/uploads/user/{{image}}" alt="">
-                                                    <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                                    <a class="name-color" href="{{{validLikedUser _id ../user}}}"> {{firstName}} {{lastName}} </a>
                                             </div>
                                             
                                             

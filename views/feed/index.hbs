@@ -48,7 +48,7 @@
                             <p style="color: rgb(236, 236, 236); font-size:24px">Create Post</p>
                             <div class="chip res">
                                 <img src="/uploads/user/{{profileimage}}" alt="">
-                                <a class="name-color" href="/feed/user/{{user._id}}"> {{firstName}} {{lastName}} </a>
+                                <a class="name-color" href="/profile"> {{firstName}} {{lastName}} </a>
                              </div>
                                 <form action="/feed" method="POST" enctype="multipart/form-data" >
                                 
@@ -207,7 +207,7 @@
                         </div>
                         <div class="chip res">
                                 <img src="/uploads/user/{{user.image}}" alt="">
-                                <a class="name-color" href="/feed/user/{{user._id}}"> {{user.firstName}} {{user.lastName}} </a>
+                                <a class="name-color" href="{{{validUser user ../user}}}"> {{user.firstName}} {{user.lastName}} </a>
                         </div>
                                    
 
@@ -233,8 +233,12 @@
                                 <div class="col s4 m7 l10">
                                     <div style="float: left !important;">
                                         {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
-                                        <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
-                                        <span class="likedlook">{{likes.length}} likes <span>
+                                        <span><img src="/img/like.png" style="float: left;" height="25px" width="25px" alt=""></span>
+                                        <span class="likedlook name-color">
+                                            {{#iter likes}}
+                                                {{{validLikedUserTag _id ../likes ../../user}}}
+                                            {{/iter}}
+                                            {{{checkLikedLength likes ../user}}}
                                     </div>
                                 </div>
                                 <div class="col s5 m4 l4">
@@ -246,7 +250,7 @@
                                     {{#iter likes}}
                                         <div class="chip res">
                                                 <img src="/uploads/user/{{image}}" alt="">
-                                                <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                                <a class="name-color" href="{{{validLikedUser _id ../../user}}}"> {{firstName}} {{lastName}} </a>
                                         </div>
                                         
                                         
@@ -270,8 +274,8 @@
                                     <form action="/feed/{{_id}}/like" method="POST">
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
-                                                <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
-                                                Like
+                                                {{{checkLikedState likes ../user}}}
+
                                         
                                                       
                                     </form>
@@ -279,7 +283,7 @@
                                 </div>
                                 <div class="col s12 m4 l4">
                                        
-                                                <a href="/feed/{{_id}}" class="btn-small material-icons round">message </a>
+                                                <a href="/feed/{{_id}}" class="btn-small htp material-icons round">message </a>
                                                  Comment
                                                         
                                 </div>
@@ -287,7 +291,7 @@
                                     <form action="" method="POST">
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
-                                                <input type="submit" class="btn-small material-icons round" value="share"/>
+                                                <input type="submit" class="btn-small htp material-icons round" value="share"/>
                                                 share
                                                         
                                     </form>

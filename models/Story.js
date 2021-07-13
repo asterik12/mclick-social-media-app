@@ -23,7 +23,7 @@ const StorySchema = new mongoose.Schema({
     default: Date.now,
   },
 
-  likes:[{  
+  likes:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
            

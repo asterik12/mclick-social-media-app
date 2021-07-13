@@ -119,7 +119,9 @@ router.get('/', ensureAuth, async (req, res) => {
         .populate('user')
         .lean();
        
-       const stories = await Story.find({ status: 'public'})
+       const stories = await Story.find({ 
+           status: 'public', 
+        })
         .populate('user')
         .populate('likes')
         .sort({ createdAt: 'desc' })
@@ -293,6 +295,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
     try {
         const users = await User.find({ _id: req.params.userId})
         .populate('user')
+        .populate('followers')
         .lean()
 
         const stories = await Story.find({ user: req.params.userId, status:'public'})
@@ -303,11 +306,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
         .populate('user')
         .lean();
        
-        const followUser = await User.find({
-            // _id: req.params.userId, 
-            followers: {$in: [req.user.id]}, })
-        // let state = users.followers.includes(req.user.id)?"Followed":"Follow";
-        state = "follow"
+        
         
         res.render('users/users_profile', {
             profileimage:req.user.image,
@@ -316,8 +315,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
             stories,
             timestories,
             users,
-            state,
-            followUser
+            
             
         })
 

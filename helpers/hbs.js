@@ -75,7 +75,39 @@ module.exports = {
           return ''
         }
       },
+      validUser:function (storyUser, loggedUser) {
+        if (storyUser._id.toString() == loggedUser._id.toString()) {
+          return `/profile`;
+        }
+        else {
+          return `/feed/user/${storyUser._id}`;
+        }
+      },
+      validLikedUser:function (likedId, loggedUser) {
+        if (likedId.toString() == loggedUser._id.toString()) {
+          return `/profile`;
+        }
+        else {
+          return `/feed/user/${likedId}`;
+        }
+      },
+      validLikedUserTag:function (likes, likesArray, loggedUser) {
+        if (likes._id.toString() == loggedUser._id.toString()) {
+          return ` You `;
+        }
+        else {
+          return ` `;
+        }
+      },
+      validFollowedUser:function (followers, loggedUser) {
       
+        if (followers.toString() == loggedUser._id.toString()) {
+          return `/profile`;
+        }
+        else {
+          return `/feed/user/${followers}`;
+        }
+      },
       select: function (selected, options) {
         return options
           .fn(this)
@@ -158,6 +190,24 @@ module.exports = {
         }
         
       },
+      checkLikedLength: function (likes, loggedUser) {
+        // if(likes.length == 1)
+        //   return `${likes.length}`;
+        // else
+        for(let i = 0; i<likes.length; i++){
+          if(likes[i]._id.toString() == loggedUser._id.toString()) {
+            if(likes.length == 1){
+              return ` `;
+            }
+            else {
+              return ` and ${likes.length - 1} others`;
+
+            }
+          }
+          
+        }
+          return ` ${likes.length}`
+      },
       checkComments: function (comment, length_message) {
         if (comment.length>=length_message) { 
           
@@ -169,14 +219,31 @@ module.exports = {
         }
         
       },
-      checkstate: function (followers, userId) {
+      checkstate: function (followers, loggedUser) {
 
         for(let i = 0; i<followers.length;i++){
-          if (`${followers[i]}`==`${userId}`) { 
+          if (followers[i].toString()==loggedUser._id.toString()) { 
+            return ` <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Following"/>
+            `;
           }
        
         }
-        return `${userId}`;
+        return ` <input type="submit"  class="btn blue mid-text right" style="color: white !important;" value="Follow"/>
+            `;
+        
+        
+      },
+      checkLikedState: function (likes, loggedUser) {
+
+        for(let i = 0; i<likes.length;i++){
+          if (likes[i]._id.toString() == loggedUser._id.toString()) { 
+            return `<input type="submit" class="btn-small blue material-icons round" value="thumb_up"/> Unlike
+            `;
+          }
+       
+        }
+        return `<input type="submit" class="btn-small htp material-icons round" value="thumb_up"/> Like
+        `;
         
         
       },

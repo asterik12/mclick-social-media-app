@@ -76,6 +76,14 @@
                 <p>
                     <i class="material-icons">home</i> From {{hometown}}     
                 </p>
+                
+                <p>
+                    
+                    <a href="#followers" class="modal-trigger follower-text"><i class="material-icons">domain_verification</i> Followed by {{followers.length}} people </a>
+                    
+                </p>
+                
+                
                 <p>
                     <i class="material-icons">schedule</i> Joined {{formatDate createdAt 'do MMM yyyy HH:mm:ss'}}     
                 </p>
@@ -129,7 +137,37 @@
                 </div>
                 
             </div>
-            
+                <!-- Modal Structure -->
+                    <div id="followers" class="modal">
+                        
+                        <div class="modal-content">
+                        <h4 class="mid-text">Followers:</h4>
+                        <hr>
+                        <p class="mid-text">
+                            {{#each users}}
+                            <ul>
+                                
+                                    {{#iter followers}}
+                                    <li>
+                                        <div class="chip res">
+                                            <img src="/uploads/user/{{image}}" alt="">
+                                            <a class="name-color" href="{{{validFollowedUser _id ../../user}}}"> {{firstName}} {{lastName}} </a>
+                                         </div>  
+
+                                    </li>
+                                            
+                                    {{/iter}}
+
+                            </ul>
+                                
+
+
+                            {{/each}}
+                        </p>
+                        </div>
+                        
+                        
+                    </div>
 
 
             <div class="col s12 m4 l6" style="display:inline-flexbox">
@@ -161,7 +199,7 @@
                         </div>
                         <div class="chip res">
                                 <img src="/uploads/user/{{user.image}}" alt="">
-                                <a class="name-color" href="/feed/user/{{user._id}}"> {{user.firstName}} {{user.lastName}} </a>
+                                <a class="name-color" href="{{{validUser user ../user}}}"> {{user.firstName}} {{user.lastName}} </a>
                         </div>
                         
 
@@ -197,8 +235,8 @@
                                     <span> 
                                         {{#iter likes}}
                                             <div class="chip res">
-                                                    <img src="/uploads/user/{{profileimage}}" alt="">
-                                                    <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
+                                                    <img src="/uploads/user/{{image}}" alt="">
+                                                    <a class="name-color" href="{{{validLikedUser _id ../user}}}"> {{firstName}} {{lastName}} </a>
                                             </div>
                                             
                                             
@@ -263,3 +301,4 @@
         
     </div>
 </div>
+                    

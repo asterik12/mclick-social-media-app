@@ -513,6 +513,7 @@ sdf
 
 .mid-text{
     text-transform: none !important;
+    color: #fff !important;
 }
 .modal{
     background-color:rgb(34, 34, 34);
@@ -606,4 +607,11 @@ select:focus{
 }
 .likedlook:hover{
     color:#62dbdd;
+}
+
+.follower-text{
+    color:#eeeeee;
+}
+.follower-text:hover{
+    color: #eeeeee;
 }

@@ -64,6 +64,11 @@ router.get('/profile', ensureAuth, async (req,res) => {
         .sort({ createdAt: 'desc' })
         .lean()
 
+        const users = await User.find({ _id: req.user.id})
+        .populate('user')
+        .populate('followers')
+        .lean()
+        
         const timestories = await UStory.find({user: req.user.id})
         .populate('user')
         .lean();
@@ -89,10 +94,12 @@ router.get('/profile', ensureAuth, async (req,res) => {
             branch:req.user.branch,
             createdAt:req.user.createdAt,
             cover:req.user.cover,
-            id:req.user.id,
+            
+            followers:req.user.followers,
             messages:req.flash('info'),
             stories,
-            timestories
+            timestories,
+            users
         })
     } catch (err){ 
         console.error(err)
