@@ -73,6 +73,8 @@ router.get('/profile', ensureAuth, async (req,res) => {
         .populate('user')
         .lean();
 
+        
+
         res.render('profile', {
             name: req.user.firstName,
             firstName:req.user.firstName,
@@ -94,12 +96,13 @@ router.get('/profile', ensureAuth, async (req,res) => {
             branch:req.user.branch,
             createdAt:req.user.createdAt,
             cover:req.user.cover,
-            
+            userID:req.user.id,
             followers:req.user.followers,
             messages:req.flash('info'),
             stories,
             timestories,
-            users
+            users,
+            
         })
     } catch (err){ 
         console.error(err)

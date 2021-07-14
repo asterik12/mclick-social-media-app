@@ -56,6 +56,36 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
   }],
+  following:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  Notification:[{
+    notifyId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    notifyTime:{
+      type: Date,
+      default: Date.now,
+    },
+    notificationBody:{
+      type:String,
+    },
+    postId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Story'
+    },
+
+  }],
+  requests:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  friends:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

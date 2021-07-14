@@ -259,13 +259,25 @@ router.put('/:id', ensureAuth, async (req, res) => {
 })
 
 //likes dislikes
-router.put('/:id/like', ensureAuth, async (req, res) => {
+router.put('/:id/:userId/like', ensureAuth, async (req, res) => {
     try {
         const post = await Story.findById(req.params.id);
-        
+        const users = await User.findById(req.params.userId);
+        const message = " reacted to the post that you have uploaded."
         if(!post.likes.includes(req.user.id)) {
             await post.updateOne({$push : {likes: req.user.id}});
             const state = "Unlike";
+            await users.update({
+                $push: 
+                    {"Notification": 
+                        {
+                            notifyId: req.user.id,
+                            notificationBody : message,
+                            notifyTime: Date.now(),
+                            postId: req.params.id,
+                        }
+                    }
+                })
         } 
         else{
             await post.updateOne({$pull: { likes: req.user.id}});
@@ -296,6 +308,8 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
         const users = await User.find({ _id: req.params.userId})
         .populate('user')
         .populate('followers')
+        .populate('requests')
+        .populate('friends')
         .lean()
 
         const stories = await Story.find({ user: req.params.userId, status:'public'})
@@ -360,8 +374,10 @@ router.get('/user/photos/:userId', ensureAuth, async (req,res) => {
 
 
 // comment
-router.put('/:id/comments', ensureAuth, async (req, res) => {
+router.put('/:id/:userId/comments', ensureAuth, async (req, res) => {
 
+    const users = await User.findById(req.params.userId)
+    const message = " commented in your post.";
      const id = req.params.id;
       const comment = new Comment({
       text: req.body.comment,
@@ -371,6 +387,17 @@ router.put('/:id/comments', ensureAuth, async (req, res) => {
     await comment.save();
     const postRelated = await Story.findById(id);
     postRelated.comments.push(comment);
+    await users.update({
+        $push: 
+            {"Notification": 
+                {
+                    notifyId: req.user.id,
+                    notificationBody : message,
+                    notifyTime: Date.now(),
+                    postId: req.params.id,
+                }
+            }
+        })
     await postRelated.save(function(err) {
     if(err) {console.log(err)}
     res.redirect('back')
@@ -382,11 +409,27 @@ router.put('/:id/comments', ensureAuth, async (req, res) => {
 router.put('/user/:id/follow', ensureAuth, async (req, res) => {
     try {
         const followUser = await User.findById(req.params.id);
+        const followingUser = await User.findById(req.user.id);
+        const message = "started following you.";
         if(!followUser.followers.includes(req.user.id)) {
             await followUser.updateOne({$push : {followers: req.user.id}});
+            await followingUser.updateOne({$push : {following: req.params.id}});
+           
+            await followUser.update({
+                $push: 
+                    {"Notification": 
+                        {
+                            notifyId: req.user.id,
+                            notificationBody : message,
+                            notifyTime: Date.now(),
+                        }
+                    }
+                })
         } 
         else{
             await followUser.updateOne({$pull: {followers: req.user.id}});
+            await followingUser.updateOne({$pull : {following: req.params.id}});
+            
         }
         res.redirect('back')
 
@@ -395,6 +438,53 @@ router.put('/user/:id/follow', ensureAuth, async (req, res) => {
     }
 })
 
+// process friend requests
+router.put('/user/:userId/request', ensureAuth, async (req, res) => {
+    try {
+        users = await User.findById(req.params.userId);
+        loggedUser = await User.findById(req.user.id); 
+
+        if(!loggedUser.requests.includes(req.params.userId) && !users.requests.includes(req.user.id)){
+            await users.updateOne({$push : {requests: req.user.id}});
+
+        }
+        else{
+            await users.updateOne({$pull: {requests: req.user.id}})
+        }
+        res.redirect('back')
+        
+    } catch (err) {
+        return res.render('error/500')
+        
+    }
+})
+
+// accept requests and unfriend
+router.put('/user/:userId/accept', ensureAuth, async (req, res) => {
+    try {
+        users = await User.findById(req.params.userId);
+        loggedUser = await User.findById(req.user.id); 
+
+        if(!loggedUser.friends.includes(req.params.id)) {
+            await loggedUser.updateOne({$push : {friends: req.params.id}});
+            await users.updateOne({$push: {friends: req.user.id}});
+            await loggedUser.updateOne({$pull: {requests: req.params.id}});
+
+        }
+        else{
+            await loggedUser.updateOne({$pull : {friends: req.params.id}});
+            await users.updateOne({$pull: {friends:req.user.id}});
+
+
+        }
+        
+        res.redirect('back')
+        
+    } catch (err) {
+        return res.render('error/500')
+        
+    }
+})
 
 
 module.exports = router

@@ -93,7 +93,7 @@ module.exports = {
       },
       validLikedUserTag:function (likes, likesArray, loggedUser) {
         if (likes._id.toString() == loggedUser._id.toString()) {
-          return ` You `;
+          return `&nbsp; You `;
         }
         else {
           return ` `;
@@ -206,7 +206,7 @@ module.exports = {
           }
           
         }
-          return ` ${likes.length}`
+          return `&nbsp; ${likes.length}`
       },
       checkComments: function (comment, length_message) {
         if (comment.length>=length_message) { 
@@ -222,7 +222,7 @@ module.exports = {
       checkstate: function (followers, loggedUser) {
 
         for(let i = 0; i<followers.length;i++){
-          if (followers[i].toString()==loggedUser._id.toString()) { 
+          if (followers[i]._id.toString()==loggedUser._id.toString()) { 
             return ` <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Following"/>
             `;
           }
@@ -230,7 +230,6 @@ module.exports = {
         }
         return ` <input type="submit"  class="btn blue mid-text right" style="color: white !important;" value="Follow"/>
             `;
-        
         
       },
       checkLikedState: function (likes, loggedUser) {
@@ -247,7 +246,67 @@ module.exports = {
         
         
       },
-      
+      checkLikedStateforsingle: function (likes, loggedUser) {
+        for(let i = 0; i<likes.length;i++){
+          if (likes[i]._id.toString() == loggedUser._id.toString()) { 
+            return `<input type="submit" class="btn-small blue material-icons round-1 " value="thumb_up"/> Unlike
+            `;
+          }
+       
+        }
+        return `<input type="submit" class="btn-small htp material-icons" value="thumb_up"/> Like
+        `;
+      },
+      checkRequeststate: function (requests, loggedUser, NextUser, LoggedUserRequests) {
+
+        for(let i = 0; i<requests.length;i++){
+          if (requests[i]._id.toString()==loggedUser._id.toString()) { 
+            return ` 
+            <form action="/feed/user/${NextUser}/request" method="POST" class="right" >
+                <input type="hidden" name="_method" value="PUT">
+                <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Requested"/>
+            </form>
+            
+            `;
+          }
+        }
+
+        // for(let i = 0; i<loggedUser.friends.length; i++) {
+        //   if(NextUser.toString() == loggedUser.friends[i]._id.toString()) {
+        //     return `
+        //     <form action="/feed/user/${NextUser}/accept" method="POST" class="right" >
+        //         <input type="hidden" name="_method" value="PUT">
+        //         <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Friends"/>
+        //     </form>
+        //     `;
+        //   }
+        // }
+
+        for(let i = 0; i<loggedUser.requests.length; i++) {
+          if(NextUser.toString() == loggedUser.requests[i]._id.toString()) {
+            return `
+            <form action="/feed/user/${NextUser}/accept" method="POST" class="right" >
+                <input type="hidden" name="_method" value="PUT">
+                <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Accept Request"/>
+            </form>
+            `;
+          }
+          
+        }
+
+        
+
+
+        return ` 
+        <form action="/feed/user/${NextUser}/request" method="POST" class="right" >
+            <input type="hidden" name="_method" value="PUT">
+            <input type="submit"  class="btn blue mid-text right" style="color: white !important;" value="Add Friend"/>
+        </form>
+        `;
+        
+      },
+
+
     
 
 

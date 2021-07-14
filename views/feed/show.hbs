@@ -31,12 +31,16 @@
                                 <div class="col s4 m7 l10">
                                     <div style="float: left !important;">
                                         {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
-                                        <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
-                                        <span class="likedlook">{{story.likes.length}} likes <span>
+                                        <span><img src="/img/like.png" style="float: left;" height="25px" width="25px" alt=""></span>
+                                        <span class="likedlook name-color">
+                                            {{#iter story.likes}}
+                                                {{{validLikedUserTag _id ../story.likes ../user}}}
+                                            {{/iter}}
+                                            {{{checkLikedLength story.likes user}}}
                                     </div>
                                 </div>
                                 <div class="col s5 m4 l4">
-                                    <a href="/feed/{{story._id}}" class="likedlook">{{story.comments.length}} comments </a>, 0 share
+                                    {{story.comments.length}} comments , 0 share
                                 </div>
                             </div>
                                 <div class="collapsible-body likes-content">
@@ -56,7 +60,7 @@
                             </ul>
                             {{else}}
                                 Be the first to like
-                                <div class="right"><a href="/feed/{{story._id}}" class="likedlook">{{story.comments.length}} comments </a>, 0 share </div>
+                                <div class="right">{{story.comments.length}} comments, 0 share </div>
 
 
                         {{/if}}
@@ -65,18 +69,18 @@
                 
                 <div class="row">
                     <div class="col s12 m4 l4">
-                        <form action="/feed/{{story._id}}/like" method="POST">
+                        <form action="/feed/{{story._id}}/{{story.user._id}}/like" method="POST">
                                     <input type="hidden" name="_method" value="PUT">
                                     
-                                    <input type="submit" class="btn-small material-icons" value="thumb_up"/>
-                                    Like
+                                   {{{checkLikedStateforsingle story.likes user}}}
+                                
                         </form>
                         
                     </div>
                     <div class="col s12 m4 l4">
                         <form action="">
                                     
-                                    <input type="submit" class="btn-small material-icons" value="message"/>
+                                    <input type="submit" class="btn-small htp material-icons" value="message"/>
                                      Comment
                                             
                         </form>
@@ -85,7 +89,7 @@
                         <form action="/share" method="POST">
                                     <input type="hidden" name="_method" value="PUT">
                                     
-                                    <input type="submit" class="btn-small material-icons" value="share"/>
+                                    <input type="submit" class="btn-small htp material-icons" value="share"/>
                                      Share
                                             
                         </form>
@@ -131,7 +135,7 @@
                     <p>Be the first to comment.</p>
 
                 {{/if}}
-                <form action="/feed/{{story._id}}/comments" method="POST">
+                <form action="/feed/{{story._id}}/{{story.user._id}}/comments" method="POST">
                                 
                      <input type="hidden" name="_method" value="PUT">
                     

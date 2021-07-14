@@ -476,6 +476,10 @@ sdf
       border-radius: 80% !important;
       padding: 3% !important;
   }
+  .round-1{
+    border-radius: 10% !important;
+    
+}
 
   .post-footer-bar{
       width: 100%;
@@ -615,3 +619,6 @@ select:focus{
 .follower-text:hover{
     color: #eeeeee;
 }
+
+/* notification */
+ 

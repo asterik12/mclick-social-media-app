@@ -271,7 +271,7 @@
                         <div class="card-action">
                             <div class="row" style="margin: 0% !important;">
                                 <div class="col s3 m4 l4">
-                                    <form action="/feed/{{_id}}/like" method="POST">
+                                    <form action="/feed/{{_id}}/{{user._id}}/like" method="POST">
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
                                                 {{{checkLikedState likes ../user}}}

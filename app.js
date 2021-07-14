@@ -51,7 +51,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validVideo,validProfileImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validVideo,validProfileImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate } = require('./helpers/hbs')
 
 
 
@@ -94,7 +94,9 @@ app.engine(
             validLikedUserTag,
             validFollowedUser,
             checkLikedLength,
-            checkLikedState
+            checkLikedState,
+            checkLikedStateforsingle,
+            checkRequeststate,
         },
         defaultLayout: 'main', 
         extname: '.hbs'
@@ -136,6 +138,8 @@ app.use('/feed', require('./routes/feed'))
 app.use('/search', require('./routes/search'))
 app.use('/find_friends', require('./routes/find_friends'))
 app.use('/videos', require('./routes/videos'))
+app.use('/notifications', require('./routes/notifications'))
+
 
 
 const PORT = process.env.PORT || 3000

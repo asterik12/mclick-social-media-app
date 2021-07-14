@@ -17,7 +17,7 @@
                             <div class="content-details fadeIn-bottom">
                                 <h3 class="content-title">
                                     <a href="/uploads/user/{{profileimage}}" class="btn-floating btn-small waves-effect waves-light htp">&#128065;</a>
-                                    <a href = "/editprofile/{{id}}" class="btn-floating btn-small waves-effect waves-light htp"><i class="material-icons">edit</i></a>
+                                    <a href = "/editprofile/{{userID}}" class="btn-floating btn-small waves-effect waves-light htp"><i class="material-icons">edit</i></a>
       
                                 </h3>
                                 
@@ -174,9 +174,9 @@
                 
                 
              <div class="display-top-header">
-
-                <a href = "/editProfile/{{id}}" class="waves-effect waves-light btn htp mid-text right"><i class="material-icons left">edit</i> &nbsp;Edit Profile</a>
-              &nbsp;<a href = "/cover/{{id}}" class="waves-effect waves-light btn htp mid-text right"><i class="material-icons left">camera</i> &nbsp; Add Cover</a>
+                 
+                <a href = "/editProfile/{{userID}}" class="waves-effect waves-light btn htp mid-text right"><i class="material-icons left">edit</i> &nbsp;Edit Profile</a>
+              &nbsp;<a href = "/cover/{{userID}}" class="waves-effect waves-light btn htp mid-text right"><i class="material-icons left">camera</i> &nbsp; Add Cover</a>
               &nbsp;<a href = "/profile/photos" class="waves-effect waves-light btn htp mid-text"><i class="material-icons left">photo_library</i>&nbsp; Photos</a>
 
              </div>
@@ -223,8 +223,13 @@
                                 <div class="col s4 m7 l10">
                                     <div style="float: left !important;">
                                         {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
-                                        <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
-                                        <span class="likedlook">{{likes.length}} likes <span>
+                                        <span><img src="/img/like.png" style="float: left;" height="25px" width="25px" alt=""></span>
+                                        <span class="likedlook name-color">
+                                            {{#iter likes}}
+                                                {{{validLikedUserTag _id ../likes ../../user}}}
+                                            {{/iter}}
+                                            {{{checkLikedLength likes ../user}}}
+                                            
                                     </div>
                                 </div>
                                 <div class="col s5 m4 l4">
@@ -256,11 +261,11 @@
                         <div class="card-action">
                            <div class="row" style="margin: 0% !important;">
                                 <div class="col s12 m4 l4">
-                                    <form action="/feed/{{_id}}/like" method="POST">
+                                    <form action="/feed/{{_id}}/{{user._id}}/like" method="POST">
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
-                                                <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
-                                                Like
+                                                {{{checkLikedState likes ../user}}}
+                                         
                                                         
                                     </form>
                                 </div>
@@ -268,7 +273,7 @@
                                     <form action="" method="POST">
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
-                                                <input type="submit" class="btn-small material-icons round" value="message"/>
+                                                <input type="submit" class="btn-small htp material-icons round" value="message"/>
                                                 Comment
                                                         
                                     </form>
@@ -277,7 +282,7 @@
                                     <form action="" method="POST">
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
-                                                <input type="submit" class="btn-small material-icons round" value="share"/>
+                                                <input type="submit" class="btn-small htp material-icons round" value="share"/>
                                                 share
                                                         
                                     </form>
@@ -302,3 +307,5 @@
     </div>
 </div>
                     
+                    
+             

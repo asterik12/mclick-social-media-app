@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col s12 m4 l3">
+    </div>
+
+
+    <div class="col s12 m4 l6">
+
+        <div class="row">
+        <div class="container">
+            <div class="card-content"
+                 style="background-color: rgb(49, 49, 49); 
+                        border-radius:5px;
+                        padding:15px;">
+                <h4 class="mid-text" style="padding:10px;">Notifications:</h4>
+                <hr>
+
+                    
+                    
+                        {{#each users}} 
+                        {{#iter Notification}}
+
+                        
+                        <div class="card-content" style="background-color: rgb(49, 49, 49); padding:5px;">
+                           
+                            <p class="mid-text"
+                                 style="background-color: rgba(33, 116, 119, 0.336);
+                                        padding:10px; 
+                                        margin-bottom: 2px !important;
+                                        margin-top: 2px !important;
+                                        border-radius:5px" >
+
+                                <b>{{notifyId.firstName}} {{notifyId.lastName}}</b>
+                                     {{notificationBody}} 
+                            
+                            <span 
+                                style="float: right !important;
+                                        font-size:10px;
+                                        ">
+                                        <i>{{formatDate notifyTime 'MMMM Do YYYY, h:mm:ss a'}}</i>
+                                </span>
+                            </p>
+                        </div>
+                        
+                            
+
+                        
+                        
+                        {{/iter}}
+
+                    {{/each}}
+                    
+                    
+            </div>
+     
+        </div>
+    </div>                    
+    
+    <div class="col s12 m4 l3">
+
+    </div>
+</div>
