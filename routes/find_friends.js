@@ -8,16 +8,40 @@ const Comment = require('../models/Comment')
 
 
 router.get('/', ensureAuth, async (req, res) => {
-    const friends = await User.find({_id: {$ne: req.user.id}})
-    .lean()
+    try {
+        
+        const users = await User.find({ _id: req.user.id})
+        .populate('user')
+        .populate('requests')
+        .lean()
+
+        const loggedUser = await User.findById(req.user.id)
+        .lean()
+
+        const friends = await User.find({
+            _id: {
+                $ne: req.user.id,
+            }
+            })
+        .lean()
+        
     
    
-    res.render('friends/find_friends', {
-        profileimage:req.user.image,
-        firstName:req.user.firstName,
-        lastName:req.user.lastName,
-        friends,
-    })
+        res.render('friends/find_friends', {
+            profileimage:req.user.image,
+            firstName:req.user.firstName,
+            lastName:req.user.lastName,
+            users,
+            friends,
+            loggedUser
+            
+        })
+    } catch (err) {
+        console.log(err)
+        return res.render('error/500')
+        
+    }
+    
 })
 
 // process friend requests

@@ -258,29 +258,31 @@ module.exports = {
         `;
       },
       checkRequeststate: function (requests, loggedUser, NextUser, LoggedUserRequests) {
+        if(requests){
+          for(let i = 0; i<requests.length;i++){
+            if (requests[i]._id.toString()==loggedUser._id.toString()) { 
+              return ` 
+              <form action="/feed/user/${NextUser}/request" method="POST" class="right" >
+                  <input type="hidden" name="_method" value="PUT">
+                  <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Requested"/>
+              </form>
+              
+              `;
+            }
+          }
+        }
+        
 
-        for(let i = 0; i<requests.length;i++){
-          if (requests[i]._id.toString()==loggedUser._id.toString()) { 
-            return ` 
-            <form action="/feed/user/${NextUser}/request" method="POST" class="right" >
+        for(let i = 0; i<loggedUser.friends.length; i++) {
+          if(NextUser.toString() == loggedUser.friends[i]._id.toString()) {
+            return `
+            <form action="/feed/user/${NextUser}/accept" method="POST" class="right" >
                 <input type="hidden" name="_method" value="PUT">
-                <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Requested"/>
+                <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Unfriend"/>
             </form>
-            
             `;
           }
         }
-
-        // for(let i = 0; i<loggedUser.friends.length; i++) {
-        //   if(NextUser.toString() == loggedUser.friends[i]._id.toString()) {
-        //     return `
-        //     <form action="/feed/user/${NextUser}/accept" method="POST" class="right" >
-        //         <input type="hidden" name="_method" value="PUT">
-        //         <input type="submit"  class="btn mid-text right" style="color: white !important;" value="Friends"/>
-        //     </form>
-        //     `;
-        //   }
-        // }
 
         for(let i = 0; i<loggedUser.requests.length; i++) {
           if(NextUser.toString() == loggedUser.requests[i]._id.toString()) {
@@ -305,6 +307,7 @@ module.exports = {
         `;
         
       },
+     
 
 
     

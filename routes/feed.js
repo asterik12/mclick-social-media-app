@@ -258,6 +258,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
     
 })
 
+
 //likes dislikes
 router.put('/:id/:userId/like', ensureAuth, async (req, res) => {
     try {
@@ -305,6 +306,9 @@ router.delete('/:id', ensureAuth, async (req, res) => {
 //users stories user:id
 router.get('/user/:userId', ensureAuth, async (req, res) => {
     try {
+        if(req.user.id == req.params.userId){
+            res.redirect('/profile')
+        }
         const users = await User.find({ _id: req.params.userId})
         .populate('user')
         .populate('followers')
@@ -446,7 +450,10 @@ router.put('/user/:userId/request', ensureAuth, async (req, res) => {
 
         if(!loggedUser.requests.includes(req.params.userId) && !users.requests.includes(req.user.id)){
             await users.updateOne({$push : {requests: req.user.id}});
-
+            if(!loggedUser.following.includes(req.params.userId)){
+                await users.updateOne({$push: {followers: req.user.id}})
+                await loggedUser.updateOne({$push: {following: req.params.userId}})
+            }
         }
         else{
             await users.updateOne({$pull: {requests: req.user.id}})
@@ -462,18 +469,18 @@ router.put('/user/:userId/request', ensureAuth, async (req, res) => {
 // accept requests and unfriend
 router.put('/user/:userId/accept', ensureAuth, async (req, res) => {
     try {
-        users = await User.findById(req.params.userId);
+        requestedUser = await User.findById(req.params.userId);
         loggedUser = await User.findById(req.user.id); 
 
-        if(!loggedUser.friends.includes(req.params.id)) {
-            await loggedUser.updateOne({$push : {friends: req.params.id}});
-            await users.updateOne({$push: {friends: req.user.id}});
-            await loggedUser.updateOne({$pull: {requests: req.params.id}});
+        if(!loggedUser.friends.includes(req.params.userId) && !requestedUser.friends.includes(req.user.id)) {
+            await loggedUser.update({$push: {friends: req.params.userId}});
+            await loggedUser.updateOne({$pull: {requests: req.params.userId}});
+            await requestedUser.updateOne({$push: {friends: req.user.id}});
 
         }
         else{
-            await loggedUser.updateOne({$pull : {friends: req.params.id}});
-            await users.updateOne({$pull: {friends:req.user.id}});
+            await loggedUser.updateOne({$pull: {friends: req.params.userId}});
+            await requestedUser.updateOne({$pull: {friends:req.user.id}});
 
 
         }

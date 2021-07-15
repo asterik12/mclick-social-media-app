@@ -1,5 +1,7 @@
 const path = require('path')
+const http = require('http').createServer();
 const express = require('express')
+const socketio = require('socket.io')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const exphbs = require('express-handlebars')
@@ -14,6 +16,8 @@ const { resolve } = require('path')
 const { Cookie } = require('express-session')
 const { Mongoose } = require('mongoose')
 var _ = require('underscore');
+
+
 //Load Config
 dotenv.config({ path: './config/config.env'})
 
@@ -149,3 +153,19 @@ app.listen(
     PORT, 
     console.log(`Server running in ${process.env.NODE_ENV} node on port ${PORT}`)
     )
+
+
+// connecting socket.io
+
+const io = socketio(http);
+
+io.on("connection", function (socket) {
+  console.log("Made Socket connection");
+  socket.on("disconnect", function () {
+    console.log("made socket disconnected")
+  });
+
+  socket.on("send-notificaition", function (data) {
+    socket.broadcast.emit("new-notification", data);
+  });
+});
