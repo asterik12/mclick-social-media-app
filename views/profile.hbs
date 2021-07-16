@@ -207,7 +207,8 @@
                         
                         <div class="card-content">
                             <span class="card-date">{{formatDate createdAt 'do MMM yyyy HH:mm:ss'}}</span>
-                            <span class="card-date capitalize">&bull; {{status}} </span>
+                            <span class="card-date">&bull; {{{getStatus status}}} </span>
+
                             <p> {{stripTags (truncate body 150)}} </p>
                             <a href="/feed/{{_id}}" class="view-more">Show More</a>
                             <br>

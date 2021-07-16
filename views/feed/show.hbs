@@ -14,7 +14,8 @@
             
             <div class="card-content">
                 <span class="card-date">{{formatDate story.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
-                <span class="card-date capitalize">&bull; {{story.status}} </span>
+                <span class="card-date">&bull; {{{getStatus story.status}}} </span>
+
                 <br>
                 {{{story.body}}}
             </div>

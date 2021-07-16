@@ -9,11 +9,22 @@ const Comment = require('../models/Comment')
 
 router.get('/', ensureAuth, async (req, res) => {
     const search_name = req.query.name;
-    const search_results = await User.find({displayName: {$regex: search_name, $options: '$i'}})
+    const search_results = await User.find({
+        displayName: {
+            $regex: search_name, 
+            $options: '$i'
+        },
+        // _id: {
+        //     $ne : req.user.id
+        // }
+    })
     .lean()
 
 
     res.render('about/search_results', {
+        profileimage:req.user.image,
+        firstName:req.user.firstName,
+        lastName: req.user.lastName,
         search_results,
         search_name,
     })

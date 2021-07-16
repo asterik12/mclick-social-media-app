@@ -14,23 +14,39 @@
 
                         <ul>
                             {{#each search_results}}
-                            <li>
-                                <img src="/uploads/user/{{image}}" class="circle flex"  style="height:100px; width:100px; float:left"  alt="">
-                                <p class="col m4 l4"> {{firstName}} {{lastName}}</p>
-                                <div class="chip res btn">
-                                    Add Friend
-                                
-                                </div>
-                                <div class="chip res btn">
-                                Message
-                                
-                                </div>
-                                
-                                <p style="padding-left: 6%;">{{work}}</p>
-                                <p style="padding-left: 6%;">{{school}}</p>
+                                <li 
+                                    style="background-color: rgba(69, 69, 70, 0.781);
+                                            padding: 1%;
+                                            border-radius:5px;
+                                            margin-bottom:0! !important;
+                                            margin-top:0% !important ">
+                                    <div class="row">
+                                        <div class="col s12 m4 l2" style="padding-left: 5%;">
+                                            <img src="/uploads/user/{{image}}" class="circle flex"  style="height:100px; width:100px; float:left"  alt="">
 
-                                
-                            </li>
+                                        </div>
+                                        <div class="col s12 m4 l8">
+                                            
+                                                <a class="name-color" href="{{{validFollowedUser _id ../user}}}" style="font-size: 15px !important;"><b>{{firstName}} {{lastName}} </b></a>
+
+                                                <p>{{work}}</p>
+                                                <p>{{school}}</p>
+                                            
+                                        </div>
+                                        <div class="col s12 m4 l2" style="display: inline-flexbox;">
+                                            
+                                            {{{sendRequest requests ../user _id ../user.requests}}}
+
+                                            {{{showMessageIcon ../user _id}}}
+                                             
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </li>
+                            
+                                <br>
                             {{else}}
                             <p>no User found</p>
 

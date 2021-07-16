@@ -449,14 +449,20 @@ router.put('/user/:userId/request', ensureAuth, async (req, res) => {
         loggedUser = await User.findById(req.user.id); 
 
         if(!loggedUser.requests.includes(req.params.userId) && !users.requests.includes(req.user.id)){
-            await users.updateOne({$push : {requests: req.user.id}});
-            if(!loggedUser.following.includes(req.params.userId)){
-                await users.updateOne({$push: {followers: req.user.id}})
-                await loggedUser.updateOne({$push: {following: req.params.userId}})
+            if(!loggedUser.friends.includes(req.params.userId)){
+                await users.updateOne({$push : {requests: req.user.id}});
+                if(!loggedUser.following.includes(req.params.userId)){
+                    await users.updateOne({$push: {followers: req.user.id}})
+                    await loggedUser.updateOne({$push: {following: req.params.userId}})
+                }
             }
+            
         }
         else{
             await users.updateOne({$pull: {requests: req.user.id}})
+            // await users.updateOne({$pull: {followers: req.user.id}})
+            // await loggedUser.updateOne({$pull: {following: req.params.userId}})
+        
         }
         res.redirect('back')
         

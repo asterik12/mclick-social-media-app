@@ -18,9 +18,10 @@ router.get('/', ensureAuth, async (req, res) => {
         const loggedUser = await User.findById(req.user.id)
         .lean()
 
-        const friends = await User.find({
+        const getUser = await User.find({
             _id: {
                 $ne: req.user.id,
+              
             }
             })
         .lean()
@@ -32,7 +33,7 @@ router.get('/', ensureAuth, async (req, res) => {
             firstName:req.user.firstName,
             lastName:req.user.lastName,
             users,
-            friends,
+            getUser,
             loggedUser
             
         })

@@ -19,6 +19,22 @@ module.exports = {
         return input.replace(/<(?:.|\n)*?>/gm, '')
       },
 
+      getStatus: function (status) {
+        if(status == "public")
+          return `<i class="material-icons card-date" style="font-size:12px;">
+          public
+          </i> <span class="card-date"> public </span>`;
+        else if(status == "friends")
+          return `<i class="material-icons card-date" style="font-size:12px;">
+          people
+          </i> <span class="card-date"> friends </span>`;
+        else
+          return `<i class="material-icons card-date" style="font-size:12px;">
+          lock
+          </i> <span class="card-date"> private </span>`;
+
+      },
+
       editIcon: function (storyUser, loggedUser, storyId,) {
         if (storyUser._id.toString() == loggedUser._id.toString()) {
            
@@ -307,7 +323,72 @@ module.exports = {
         `;
         
       },
-     
+      sendRequest: function (requests, loggedUser, NextUser, LoggedUserRequests) {
+        if(loggedUser._id.toString() != NextUser.toString()) {
+
+
+          if(requests){
+            for(let i = 0; i<requests.length;i++){
+              if (requests[i]._id.toString()==loggedUser._id.toString()) { 
+                return ` 
+                <form action="/feed/user/${NextUser}/request" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="submit"  class="chip res btn mid-text" title ="Cancel Request" style="color: white !important;" value="Requested"/>
+                </form>
+                `;
+              }
+            }
+          }
+
+          for(let i = 0; i<loggedUser.friends.length; i++) {
+            if(NextUser.toString() == loggedUser.friends[i]._id.toString()) {
+              return `
+              <form action="/feed/user/${NextUser}/accept" method="POST"  >
+                  <input type="hidden" name="_method" value="PUT">
+                  <input type="submit"  class="chip res btn mid-text" style="color: white !important;" value="Unfriend"/>
+              </form>
+              `;
+            }
+          }
+
+          for(let i = 0; i<loggedUser.requests.length; i++) {
+            if(NextUser.toString() == loggedUser.requests[i]._id.toString()) {
+              return `
+              <form action="/feed/user/${NextUser}/accept" method="POST"  >
+                  <input type="hidden" name="_method" value="PUT">
+                  <input type="submit"  class="chip res btn mid-text" style="color: white !important;" value="Accept Request"/>
+              </form>
+              `;
+            }
+            
+          }
+
+          return `
+          <form action="/feed/user/${NextUser}/request" method="POST">
+              <input type="hidden" name="_method" value="PUT">
+              <input type="submit"  class="chip res btn mid-text" style="color: white !important;" value="Add Friend"/>
+          </form>
+          `;
+
+      }
+      else{
+        return ``;
+      }
+
+      },
+      showMessageIcon: function (loggedUser, NextUser) {
+        if(loggedUser._id.toString() == NextUser.toString()) {
+          return ``;
+        }
+        else{
+          return `
+            <form action="/messages/${NextUser}" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="submit"  class="chip res btn mid-text" style="color: white !important;" value="Message"/>
+            </form>`;
+
+        }
+      },
 
 
     

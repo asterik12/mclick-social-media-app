@@ -66,7 +66,7 @@
                         <h5>All Users</h5>
 
                         <ul>
-                            {{#each friends}}
+                            {{#each getUser}}
                             <li 
                                 style="background-color: rgba(69, 69, 70, 0.781);
                                         padding: 1%;
@@ -80,16 +80,16 @@
                                     </div>
                                     <div class="col s12 m4 l8">
                                         
-                                            <p><b>{{firstName}} {{lastName}}</b></p>
+                                            <a class="name-color" href="{{{validFollowedUser _id ../user}}}" style="font-size: 15px !important;"><b>{{firstName}} {{lastName}} </b></a>
+
                                             <p>{{work}}</p>
                                             <p>{{school}}</p>
                                         
                                     </div>
                                     <div class="col s12 m4 l2" style="display: inline-flexbox;">
-                                        <form action="/feed/user/{{_id}}/request" method="POST">
-                                            <input type="hidden" name="_method" value="PUT">
-                                            <input type="submit"  class="chip res btn mid-text" style="color: white !important;" value="Add Friend"/>
-                                        </form>
+                                        
+                                        {{{sendRequest requests ../user _id ../user.requests}}}
+
                                                 
                                         <form action="/messages/{{_id}}" method="POST">
                                             <input type="hidden" name="_method" value="PUT">
