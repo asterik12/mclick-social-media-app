@@ -10,8 +10,9 @@
             
                 <div class="card">
                     <div class="card-content" style="padding-top: 1% !important ;">
+
                             {{#if loggedUser.requests}}
-                                <h5>Friend equests</h5>
+                                <h5>Friend Requests</h5>
                                 <ul>
                                     {{#each users}}
                         
@@ -63,7 +64,7 @@
                            
 
                         
-                        <h5>All Users</h5>
+                        <h5>Find Friend</h5>
 
                         <ul>
                             {{#each getUser}}
@@ -91,10 +92,8 @@
                                         {{{sendRequest requests ../user _id ../user.requests}}}
 
                                                 
-                                        <form action="/messages/{{_id}}" method="POST">
-                                            <input type="hidden" name="_method" value="PUT">
-                                            <input type="submit"  class="chip res btn mid-text" style="color: white !important;" value="Message"/>
-                                        </form>
+                                         {{{showMessageIcon ../user _id}}}
+
                                     </div>
                                 </div>
                                 

@@ -48,29 +48,6 @@ const uploadforstories = multer({
 
 
 
-//show add page
-
-router.get('/add', ensureAuth, async (req, res) => {
-    try {
-        const stories = await Story.find({ user: req.user.id})
-        .populate('user')
-        .lean()
-        res.render('feed/add', {
-            name: req.user.firstName,
-            profileimage:req.user.image,
-            firstName:req.user.firstName,
-            lastName:req.user.lastName,
-            displayName:req.user.displayName,
-            stories
-        })
-    } catch (err){ 
-        console.error(err)
-        res.render('error/505')
-    }
-})
-
-
-
 //process add form
 router.post('/', upload.single('image'), ensureAuth, async (req, res) => {
     console.log(req.file);
@@ -130,6 +107,7 @@ router.get('/', ensureAuth, async (req, res) => {
        const profile_image = await User.find({})
        .lean();
 
+        const notificationBadge = await User.findById(req.user.id).lean()
        
 
         const timestories = await UStory.find({})
@@ -148,6 +126,7 @@ router.get('/', ensureAuth, async (req, res) => {
             stories,
             timestories,
             profile_image,
+            notificationBadge
         })
    } catch (err) {
        console.error(err)
@@ -180,6 +159,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
         const comment = await Comment.find({post: req.params.id})
         .populate('user')
         .lean()
+        const notificationBadge = await User.findById(req.user.id).lean()
 
         if(!story){
             return res.render('error/404')
@@ -192,6 +172,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
             displayName:req.user.displayName,
             comment,
             story,
+            notificationBadge
         })
     } catch (err) {
         console.error(err)
@@ -211,6 +192,8 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
         if(!story){
             return res.render('error/404')
         }
+        const notificationBadge = await User.findById(req.user.id).lean()
+
         
         if(story.user != req.user.id){
             res.redirect('/stories')
@@ -222,6 +205,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
                 profileimage:req.user.image,
                 displayName:req.user.displayName,
                 story,
+                notificationBadge
             })
         }
         
@@ -276,7 +260,10 @@ router.put('/:id/:userId/like', ensureAuth, async (req, res) => {
                             notificationBody : message,
                             notifyTime: Date.now(),
                             postId: req.params.id,
-                        }
+                            status: "unread",
+                            method: "like",
+                        },
+                        
                     }
                 })
         } 
@@ -309,6 +296,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
         if(req.user.id == req.params.userId){
             res.redirect('/profile')
         }
+        const GuestUser = await User.findById(req.params.userId).lean()
         const users = await User.find({ _id: req.params.userId})
         .populate('user')
         .populate('followers')
@@ -323,6 +311,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
         const timestories = await UStory.find({user: req.params.userId})
         .populate('user')
         .lean();
+        const notificationBadge = await User.findById(req.user.id).lean()
        
         
         
@@ -333,7 +322,8 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
             stories,
             timestories,
             users,
-            
+            GuestUser,
+            notificationBadge
             
         })
 
@@ -359,6 +349,7 @@ router.get('/user/photos/:userId', ensureAuth, async (req,res) => {
         const timestories = await UStory.find({user: req.params.userId})
         .populate('user')
         .lean();
+        const notificationBadge = await User.findById(req.user.id).lean()
 
         res.render('about/photosforall', {
             profileimage:req.user.image,
@@ -366,7 +357,8 @@ router.get('/user/photos/:userId', ensureAuth, async (req,res) => {
             lastName:req.user.lastName,
             users,
             stories,
-            timestories
+            timestories,
+            notificationBadge
         })
     } catch (err){ 
         console.error(err)
@@ -399,6 +391,8 @@ router.put('/:id/:userId/comments', ensureAuth, async (req, res) => {
                     notificationBody : message,
                     notifyTime: Date.now(),
                     postId: req.params.id,
+                    status: "unread",
+                    method: "comment",
                 }
             }
         })
@@ -447,10 +441,23 @@ router.put('/user/:userId/request', ensureAuth, async (req, res) => {
     try {
         users = await User.findById(req.params.userId);
         loggedUser = await User.findById(req.user.id); 
-
+        const message = " sent you friend request."
         if(!loggedUser.requests.includes(req.params.userId) && !users.requests.includes(req.user.id)){
             if(!loggedUser.friends.includes(req.params.userId)){
                 await users.updateOne({$push : {requests: req.user.id}});
+                await users.update({
+                    $push: 
+                        {"Notification": 
+                            {
+                                notifyId: req.user.id,
+                                notificationBody : message,
+                                notifyTime: Date.now(),
+                                status: "unread",
+                                method: "friend",
+                            },
+                            
+                        }
+                    })
                 if(!loggedUser.following.includes(req.params.userId)){
                     await users.updateOne({$push: {followers: req.user.id}})
                     await loggedUser.updateOne({$push: {following: req.params.userId}})
@@ -477,11 +484,24 @@ router.put('/user/:userId/accept', ensureAuth, async (req, res) => {
     try {
         requestedUser = await User.findById(req.params.userId);
         loggedUser = await User.findById(req.user.id); 
-
+        const message = " accepted your friend request."
         if(!loggedUser.friends.includes(req.params.userId) && !requestedUser.friends.includes(req.user.id)) {
             await loggedUser.update({$push: {friends: req.params.userId}});
             await loggedUser.updateOne({$pull: {requests: req.params.userId}});
             await requestedUser.updateOne({$push: {friends: req.user.id}});
+            await requestedUser.update({
+                $push: 
+                    {"Notification": 
+                        {
+                            notifyId: req.user.id,
+                            notificationBody : message,
+                            notifyTime: Date.now(),
+                            status: "unread",
+                            method: "friend",
+                        },
+                        
+                    }
+                })
 
         }
         else{

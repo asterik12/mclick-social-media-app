@@ -376,6 +376,82 @@ module.exports = {
       }
 
       },
+
+      checkFriendsList: function (requests, loggedUser, NextUser, LoggedUserRequests) {
+        if(requests){
+          for(let i = 0; i<requests.length;i++){
+            if (requests[i]._id.toString()==loggedUser._id.toString()) { 
+              return ` 
+              <form action="/feed/user/${NextUser}/request" method="POST">
+                  <input type="hidden" name="_method" value="PUT">
+                  <input type="submit"  class="chip res btn mid-text" 
+                      style="
+                          color: white !important; 
+                          margin-right:0 !important;
+                          margin-left:0 !important"
+                            value="Requested"/>
+              </form>
+              
+              `;
+            }
+          }
+        }
+        
+        
+        if(NextUser.toString() == loggedUser._id.toString()) {
+          return ``;
+        }
+        
+
+        for(let i = 0; i<loggedUser.friends.length; i++) {
+          if(NextUser.toString() == loggedUser.friends[i]._id.toString()) {
+            return `
+            <form action="/feed/user/${NextUser}/accept" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="submit"  class="chip res btn mid-text" 
+                    style="
+                        color: white !important; 
+                        margin-right:0 !important;
+                        margin-left:0 !important"
+                          value="Unfriend"/>
+            </form>
+            `;
+          }
+        }
+
+        for(let i = 0; i<loggedUser.requests.length; i++) {
+          if(NextUser.toString() == loggedUser.requests[i]._id.toString()) {
+            return `
+            <form action="/feed/user/${NextUser}/accept" method="POST">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="submit"  class="chip res btn mid-text" 
+                    style="
+                        color: white !important; 
+                        margin-right:0 !important;
+                        margin-left:0 !important"
+                          value="Accept Request"/>
+            </form>
+            `;
+          }
+          
+        }
+
+        
+
+
+        return ` 
+        <form action="/feed/user/${NextUser}/request" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="submit"  class="chip res btn mid-text" 
+                style="
+                    color: white !important; 
+                    margin-right:0 !important;
+                    margin-left:0 !important"
+                      value="Add Friend"/>
+        </form>
+        `;
+        
+      },
       showMessageIcon: function (loggedUser, NextUser) {
         if(loggedUser._id.toString() == NextUser.toString()) {
           return ``;
@@ -384,11 +460,89 @@ module.exports = {
           return `
             <form action="/messages/${NextUser}" method="POST">
             <input type="hidden" name="_method" value="PUT">
-            <input type="submit"  class="chip res btn mid-text" style="color: white !important;" value="Message"/>
+            <input type="submit"  class="chip res btn mid-text material-icons" style="color: white !important;" value="message"/>
             </form>`;
 
         }
       },
+
+      notify_Badge: function(notification) {
+        let count = 0
+        if(notification) {
+          for(let i = 0; i<notification.length; i++) {
+            if(notification[i].status == "unread" ) {
+              count = count + 1
+            }
+          }
+          if(count == 0) {
+            return ``;
+          }
+          else{
+            return `<span class="badge_notify"> ${count} </span>`;
+
+          }
+        }
+        else{
+          return ``;
+        }
+      },
+
+      notify_Badge_friends: function(friends) {
+        
+        if(friends.length >= 1) {
+
+          return `<span class="badge_notify_friends"> ${friends.length} </span>`;
+
+          }
+          else{
+            return ``;
+          }
+        
+      },
+
+      
+      UnreadNotify: function(status) {
+       
+            if(status == "unread") {
+             
+              return `unread`;
+            }
+            else {
+              
+              return `read`;
+            }
+        
+      },
+
+      getNotificationMethod:function(notification) {
+        if(notification == "like")
+          return `<span class="badge_notify_post">
+          <img src="/img/like.png" alt="" 
+          style="
+          height:20px; 
+          width:20px; 
+          " >
+      </span>`;
+        else if(notification == "comment")
+          return `<span class="badge_notify_post">
+          <img src="/img/comment.png" alt="" 
+          style="
+          height:20px; 
+          width:20px; 
+          " >
+      </span>`;
+        else if(notification == "friend")
+          return `<span class="badge_notify_post">
+          <img src="/img/person.png" alt="" 
+          style="
+          height:20px; 
+          width:20px; 
+          " >
+      </span>`;
+        else
+          return ``;
+      }
+
 
 
     

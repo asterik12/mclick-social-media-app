@@ -64,14 +64,20 @@ router.get('/profile', ensureAuth, async (req,res) => {
         .sort({ createdAt: 'desc' })
         .lean()
 
+        const GuestUser = await User.findById(req.user.id).lean()
+        
         const users = await User.find({ _id: req.user.id})
         .populate('user')
+        .populate('friends')
+        .populate('requests')
+        .populate('following')
         .populate('followers')
         .lean()
         
         const timestories = await UStory.find({user: req.user.id})
         .populate('user')
         .lean();
+        const notificationBadge = await User.findById(req.user.id).lean()
 
         
 
@@ -102,6 +108,8 @@ router.get('/profile', ensureAuth, async (req,res) => {
             stories,
             timestories,
             users,
+            GuestUser,
+            notificationBadge
             
         })
     } catch (err){ 
@@ -120,6 +128,7 @@ router.get('/editProfile/:id', ensureAuth, async (req, res) => {
             res.redirect('/')
         } 
         else{
+        const notificationBadge = await User.findById(req.user.id).lean()
            
             res.render('about/editProfile', {
                 gender:req.user.gender,
@@ -136,6 +145,7 @@ router.get('/editProfile/:id', ensureAuth, async (req, res) => {
                 school:req.user.school,
                 branch:req.user.branch,
                 cover:req.user.cover,
+                notificationBadge,
             })
         }
         
@@ -182,11 +192,13 @@ router.get('/cover/:id', ensureAuth, async (req, res) => {
             res.redirect('/')
         } 
         else{
+        const notificationBadge = await User.findById(req.user.id).lean()
            
             res.render('about/cover', {
                 profileimage:req.user.image,
                 firstName:req.user.firstName,
                 cover:req.user.cover,
+                notificationBadge
             })
         }
         
@@ -236,6 +248,8 @@ router.get('/profile/photos', ensureAuth, async (req,res) => {
         const timestories = await UStory.find({user: req.user.id})
         .populate('user')
         .lean();
+        const notificationBadge = await User.findById(req.user.id).lean()
+
 
         res.render('about/photos', {
             name: req.user.firstName,
@@ -261,7 +275,8 @@ router.get('/profile/photos', ensureAuth, async (req,res) => {
             id:req.user.id,
             messages:req.flash('info'),
             stories,
-            timestories
+            timestories,
+            notificationBadge
         })
     } catch (err){ 
         console.error(err)

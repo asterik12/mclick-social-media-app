@@ -19,6 +19,8 @@ router.get('/', ensureAuth, async (req, res) => {
         // }
     })
     .lean()
+    const notificationBadge = await User.findById(req.user.id).lean()
+
 
 
     res.render('about/search_results', {
@@ -27,6 +29,7 @@ router.get('/', ensureAuth, async (req, res) => {
         lastName: req.user.lastName,
         search_results,
         search_name,
+        notificationBadge
     })
 })
 

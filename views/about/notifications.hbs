@@ -11,25 +11,65 @@
                  style="background-color: rgb(49, 49, 49); 
                         border-radius:5px;
                         padding:15px;">
-                <h4 class="mid-text" style="padding:10px;">Notifications:</h4>
+                <div class="row">
+                    <div class="col s12 m4 l8">
+                        <h5 class="mid-text" style="padding:10px;margin:0px !important">Notifications:</h5>
+                    
+                    </div>
+                    <div class="col s12 m4 l4" style="padding-top: 10px ;">
+                        <form action="/notifications/mark-all-read" method="POST" class="right">
+                        <input type="hidden" name="_method" value="PUT">
+                        <input type="submit" class="btn htp" value="Mark All Read">
+                        </form>
+                    </div>
+
+                </div>
+                
+                    
+              
+                
+                
                 <hr>
 
                     
                     
-                        {{#each users}} 
+                    {{#each users}} 
                         {{#iter Notification}}
 
                         
                         <div class="card-content" style="background-color: rgb(49, 49, 49); padding:5px;">
-                           
-                            <p class="mid-text"
-                                 style="background-color: rgba(33, 116, 119, 0.336);
-                                        padding:10px; 
-                                        margin-bottom: 2px !important;
-                                        margin-top: 2px !important;
-                                        border-radius:5px" >
-
-                                <b>{{notifyId.firstName}} {{notifyId.lastName}}</b>
+                           <div class="row {{{UnreadNotify status}}} mid-text">
+                               <div class="col s12 m4 l1 " >
+                                   <span style="position:relative">
+                                    <img src="/uploads/user/{{notifyId.image}}" 
+                                    style="
+                                        height:50px; 
+                                        width:50px; 
+                                        border-radius:50%; 
+                                        float:left;
+                                        margin-right:5px;
+                                        margin-bottom:15px;" 
+                                        alt="">
+                                    {{{getNotificationMethod method}}}
+                                </span>
+                               </div>
+                                <div class="col s12 m4 l11">
+                                    <a class="name-color" href="{{{validFollowedUser notifyId._id ../../user}}}" style="font-size: 15px !important;"><b>{{notifyId.firstName}} {{notifyId.lastName}}</b></a>
+                                
+                                     {{notificationBody}} 
+                            
+                                    <span 
+                                        style="float: right !important;
+                                                font-size:10px;
+                                                ">
+                                                <i>{{formatDate notifyTime 'MMMM Do YYYY, h:mm:ss a'}}</i>
+                                        </span>
+                               </div>
+                           </div>
+                            {{!-- <p class="mid-text {{{UnreadNotify status}}}" style="margin:3px !important; padding:5px 25px 5px 25px !important;">
+                                
+                                <a class="name-color" href="{{{validFollowedUser notifyId._id ../../user}}}" style="font-size: 15px !important;"><b>{{notifyId.firstName}} {{notifyId.lastName}}</b></a>
+                                
                                      {{notificationBody}} 
                             
                             <span 
@@ -38,7 +78,7 @@
                                         ">
                                         <i>{{formatDate notifyTime 'MMMM Do YYYY, h:mm:ss a'}}</i>
                                 </span>
-                            </p>
+                            </p> --}}
                         </div>
                         
                             

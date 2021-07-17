@@ -36,7 +36,7 @@ app.use(express.json())
 //flash configure
 
   
-    app.use(flash());
+  app.use(flash());
 
 //method override
 app.use(
@@ -55,7 +55,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validVideo,validProfileImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validVideo,validProfileImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon,checkFriendsList,notify_Badge,UnreadNotify,getNotificationMethod,notify_Badge_friends } = require('./helpers/hbs')
 
 
 
@@ -103,7 +103,12 @@ app.engine(
             checkRequeststate,
             sendRequest,
             getStatus,
-            showMessageIcon
+            showMessageIcon,
+            checkFriendsList,
+            notify_Badge,
+            UnreadNotify,
+            getNotificationMethod,
+            notify_Badge_friends
         },
         defaultLayout: 'main', 
         extname: '.hbs'

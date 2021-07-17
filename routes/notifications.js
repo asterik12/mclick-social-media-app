@@ -12,17 +12,43 @@ router.get('/', ensureAuth, async (req, res) => {
     .populate('user')
     .populate('followers')
     .populate('Notification.notifyId')
-    .sort({notifyTime: 'desc'})
     .lean()
     
-
-
+    const notificationBadge = await User.findById(req.user.id).lean()
+    .populate('user')
+    .populate('requests')
+    // console.log(notificationBadge)
     res.render('about/notifications', {
         profileimage:req.user.image,
         firstName:req.user.firstName,
         lastName:req.user.lastName,
         users,
+        notificationBadge
     })
+})
+
+router.put('/mark-all-read', ensureAuth, async (req, res) => {
+    try {
+        
+        await User.findOneAndUpdate(
+            {_id: req.user.id,
+            "Notification": {$elemMatch:{status: "unread"}},
+            },
+            
+            {"Notification.$.status":"read",
+            }
+        )
+        
+        
+        
+        res.redirect('/notifications');
+        
+    } catch (err) {
+        console.log(err)
+        return res.render('error/500')
+        
+    }
+    
 })
 
 

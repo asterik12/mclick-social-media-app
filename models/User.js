@@ -76,8 +76,15 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Story'
     },
+    status: {
+      type: String,
+    },
+    method:{
+      type: String,
+    }
 
   }],
+  
   requests:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

@@ -56,6 +56,7 @@ router.get('/', ensureAuth, async (req,res) => {
         .populate('likes')
         .sort({ createdAt: 'desc' })
         .lean();
+        const notificationBadge = await User.findById(req.user.id).lean()
 
 
     res.render('feed/videos.hbs', {
@@ -64,6 +65,7 @@ router.get('/', ensureAuth, async (req,res) => {
         lastName:req.user.lastName,
         cover:req.user.cover,
         stories,
+        notificationBadge
     })
 })
 

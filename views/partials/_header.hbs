@@ -17,7 +17,11 @@
           <li class="mid-loss waves-effect waves-light"><a href="/feed"><i class="material-icons med center">home</i></a></li>
           <li class="mid-loss waves-effect waves-light"><a href="/videos"><i class="material-icons med center">ondemand_video</i></a></li>
           <li class="mid-loss waves-effect waves-light"><a href="sass.html"><i class="material-icons med center">event</i></a></li>
-          <li class="mid-loss waves-effect waves-light"><a href="/find_friends"><i class="material-icons med center">groups</i></a></li>
+          <li class="mid-loss waves-effect waves-light" style="overflow:visible !important;" >
+            <a href="/find_friends" >
+              <i class="material-icons med center">groups</i>{{{notify_Badge_friends notificationBadge.requests}}}
+            </a>
+          </li>
           <li class="mid-loss waves-effect waves-light"><a href="collapsible.html"><i class="material-icons med center">contacts</i></a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
@@ -79,8 +83,11 @@
           </li>
         <li><a href="badges.html" class="btn-floating btn-medium waves-effect waves-light htp"><i class="material-icons">chat</i></a></li>
         <li>
-          <a href="/notifications" class="btn-floating btn-medium waves-effect waves-light htp modal-trigger">
+          {{!-- <a href="/notifications" class="btn-floating btn-medium waves-effect waves-light htp modal-trigger">
             <i class="material-icons">notifications</i>
+          </a> --}}
+          <a href="/notifications" class="btn-floating btn-medium waves-light htp" style="overflow:visible !important">
+            <i class="material-icons">notifications</i>  {{{notify_Badge notificationBadge.Notification}}}
           </a>
           
         </li>
