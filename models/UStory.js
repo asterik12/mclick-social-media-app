@@ -13,11 +13,12 @@ const UStorySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  
+
 
   likes:{
     type:Array,
     default:[],
   }
 })
-
 module.exports = mongoose.model('UStory', UStorySchema)

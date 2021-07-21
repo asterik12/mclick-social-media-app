@@ -57,15 +57,68 @@ router.post('/', upload.single('image'), ensureAuth, async (req, res) => {
         if(req.file){
             req.body.user = req.user.id
             req.body.image = req.file.filename,
+            req.body.firstName = req.user.firstName,
+            req.body.lastName = req.user.lastName,
+            req.body.userImage = req.user.image,
+            req.body.userId = req.user._id,
             await Story.create(req.body)
         }
         else{
             req.body.user = req.user.id
+            req.body.image = req.file.filename,
+            req.body.firstName = req.user.firstName,
+            req.body.lastName = req.user.lastName,
+            req.body.userImage = req.user.image,
+            req.body.userId = req.user._id,
             await Story.create(req.body)
         }
         
 
         req.flash('info', 'Posted Successfully')
+        res.redirect('back')
+    } catch (err) {
+        console.error(err)
+        res.render('error/500')
+    }
+})
+
+//share post
+router.put('/share/:id/:userId', ensureAuth, async (req, res) => {
+
+    try {
+        
+        
+            req.body.user = req.user.id
+            req.body.getShared = req.params.id
+            req.body.postUser = req.params.userId
+            req.body.status = "public"
+            req.body.body = "shared a post"
+
+
+            await Story.create(req.body)
+
+
+        const post = await Story.findById(req.params.id);
+        const users = await User.findById(req.params.userId);
+        const message = " shared your post"
+        await post.updateOne({$push : {share: req.user.id}});
+        await users.update({
+            $push: 
+                {"Notification": 
+                    {
+                        notifyId: req.user.id,
+                        notificationBody : message,
+                        notifyTime: Date.now(),
+                        postId: req.params.id,
+                        status: "unread",
+                        method: "share",
+                    },
+                    
+                }
+            })
+        
+        
+
         res.redirect('back')
     } catch (err) {
         console.error(err)
@@ -95,12 +148,22 @@ router.get('/', ensureAuth, async (req, res) => {
        const activeUsers = await User.find({})
         .populate('user')
         .lean();
-       
+    //    console.log(req.user.following)
        const stories = await Story.find({ 
-           status: 'public', 
+           status: 'public',
+           
+               $or: [
+                   {user:req.user.following},
+                    {user: req.user.friends},
+                {user: req.user.id}]
+        //    {
+        //        $in:[req.user.following, req.user.friends]
+        //     }
         })
         .populate('user')
         .populate('likes')
+        .populate('postUser')
+        .populate('getShared')
         .sort({ createdAt: 'desc' })
         .lean();
 
@@ -108,10 +171,12 @@ router.get('/', ensureAuth, async (req, res) => {
        .lean();
 
         const notificationBadge = await User.findById(req.user.id).lean()
+        .populate('user')
        
 
         const timestories = await UStory.find({})
         .populate('user')
+        .sort({createdAt: 'desc'})
         .lean();
 
         res.render('feed/index', {

@@ -207,9 +207,8 @@ sdf
     background-color: rgb(51, 51, 51);
     padding-left: 10%;
     padding-right: 10%;
-    padding-top: 10px;
     padding-bottom: 10%;
-    height: 50vh;
+    height: 56vh;
     border-radius: 6px;
     overflow-y: auto;
 }
@@ -222,7 +221,7 @@ sdf
     padding-bottom: 10px;
     margin-top: 2px;
     background-color: rgb(51, 51, 51);
-    height: 40vh;
+    height: 34vh;
     border-radius: 6px;
     overflow-y: auto;
     scroll-behavior: auto;
@@ -677,3 +676,205 @@ select:focus{
     justify-content: center;
     border-radius: 50%;
  }
+
+ /* stories css */
+
+ .stories-upload{
+    width: 100x; 
+    cursor:pointer;
+    border: 2px solid rgb(120, 121, 121);
+    border-radius:10px !important; 
+    
+ }
+ .stories-upload:hover{
+    opacity: 0.8;
+ }
+ .storiesforall{
+    width: 100x; 
+    cursor:pointer;
+    border: 2px solid rgb(120, 121, 121);
+    border-radius:10px !important; 
+    opacity: 0.3;
+
+    
+ }
+ .storiesforall:hover{
+    opacity: 1;
+}
+
+
+  /* .showStories:hover{
+    overflow: auto;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+    white-space: nowrap;
+}
+.showStories:hover::-webkit-scrollbar { 
+    display: none; 
+} 
+*/
+
+/* slides */
+.mySlides {display: none;}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 200px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 8px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 11px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.top-items {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute !important;
+    opacity: 1 !important;
+    top: 0;
+  }
+
+
+
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+ .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+
+/* pages */
+#container {
+    overflow: scroll;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+    position: relative;
+    white-space: nowrap; 
+}
+#content {
+    white-space: nowrap;
+    height: 210px;
+    width: 100%;
+}
+
+.stories-container {
+    height: 210px;
+    width: 100%;
+    position: relative;
+    margin: auto;
+  }
+
+/* Next & previous buttons */
+.prevbutton, .nextbutton {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 8px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 11px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .nextbutton {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prevbutoon:hover, .nextbuttons:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  @media only screen and (max-width: 300px) {
+    .prevbutton, .nextbutton,.text {font-size: 11px}
+  }
+
+  
+  .top-items-stories {
+    color: #f2f2f2;
+    font-size: 12px;
+    position: absolute !important;
+    opacity: 1 !important;
+    top: 0;
+  }
+
+/* for pages */
+
+
+#containerforpages {
+    overflow: scroll;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+    position: relative;
+    white-space: nowrap; 
+}
+#contentforpages {
+    white-space: nowrap;
+    height: 210px;
+    width: 100%;
+}

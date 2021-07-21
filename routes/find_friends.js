@@ -13,9 +13,11 @@ router.get('/', ensureAuth, async (req, res) => {
         const users = await User.find({ _id: req.user.id})
         .populate('user')
         .populate('requests')
+        .populate('friends')
         .lean()
 
         const loggedUser = await User.findById(req.user.id)
+        .populate('users')
         .populate('friends')
         .lean()
 
@@ -23,11 +25,18 @@ router.get('/', ensureAuth, async (req, res) => {
         const currentFriends = req.user.friends
         console.log(req.user.friends)
         const getUser = await User.find({
+           $or:[ {_id: {
+                        $nin: req.user.requests,
+                        $ne: req.user.id
+                    },
+                },
+             
+            ],
             _id: {
-                $nin: [req.user.id, req.user.friends, req.user.requests],
-                // $ne: 
+                $nin: req.user.friends
             }
-            })
+            
+        })
         .lean()
         const notificationBadge = await User.findById(req.user.id).lean()
         

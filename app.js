@@ -55,7 +55,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validVideo,validProfileImage,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon,checkFriendsList,notify_Badge,UnreadNotify,getNotificationMethod,notify_Badge_friends } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validCoverImage,validVideo,validProfileImage,validProfileImageStory,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon,checkFriendsList,notify_Badge,UnreadNotify,getNotificationMethod,notify_Badge_friends } = require('./helpers/hbs')
 
 
 
@@ -85,8 +85,10 @@ app.engine(
             select,
             checklength,
             validImage,
+            validCoverImage,
             validVideo,
             validProfileImage,
+            validProfileImageStory,
             validImageEnlarge,
             TimeStatus,
             featured,
@@ -151,6 +153,7 @@ app.use('/search', require('./routes/search'))
 app.use('/find_friends', require('./routes/find_friends'))
 app.use('/videos', require('./routes/videos'))
 app.use('/notifications', require('./routes/notifications'))
+app.use('/chats', require('./routes/chat'))
 
 
 

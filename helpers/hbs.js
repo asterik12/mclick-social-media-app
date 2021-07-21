@@ -144,11 +144,25 @@ module.exports = {
         },
       validImage: function (image_name) {
           if (image_name) {     
-              return `<img src="/uploads/posts/${image_name}" alt="" height="400px" width="100%" />
+              return `<img src="/uploads/posts/${image_name}" alt="" height="500px" width="100%" />
               `;
           }
           
       },
+      validCoverImage: function (image_name) {
+        if (image_name) {     
+            return `<img src="/uploads/user/cover/${image_name}" alt="" height="500px" width="100%" />
+            `;
+        }
+        
+    },
+    validProfileImageStory: function (image_name) {
+      if (image_name) {     
+          return `<img src="/uploads/user/${image_name}" alt="" height="600px" width="100%" />
+          `;
+      }
+      
+    },
       validProfileImage: function (image_name) {
         if (image_name) {     
             return `<img src="/uploads/user/${image_name}" alt="" height="400px" width="100%" />
@@ -172,7 +186,8 @@ module.exports = {
       },
       TimeStatus: function (image_name) {
         if (image_name) {     
-            return `<img src="/uploads/stories/${image_name}" alt="" height="100px" width="100px" class="card timestories" style={float:left} />
+            return `
+            <a href = "/uploads/stories/${image_name}"> <img src="/uploads/stories/${image_name}" alt="" class="storiesforall" height="210px" width="200px"  /></a>
             `;
         }
 
@@ -487,16 +502,19 @@ module.exports = {
         }
       },
 
-      notify_Badge_friends: function(friends) {
+      notify_Badge_friends: function(requests) {
+        if(requests.length != 0) {
+
+            return `<span class="badge_notify_friends"> ${requests.length} </span>`;
+  
+        }
+            else{
+              return ``;
+            }
         
-        if(friends.length >= 1) {
-
-          return `<span class="badge_notify_friends"> ${friends.length} </span>`;
-
-          }
-          else{
-            return ``;
-          }
+      
+        
+        
         
       },
 

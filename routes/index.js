@@ -168,7 +168,14 @@ router.post('/editProfile/:id', upload.single('image'),  ensureAuth, async (req,
             if(req.file){
                 req.body.image = req.file.filename
                 await User.findOneAndUpdate({ _id: req.params.id}, req.body)
-                
+                // // show feed of updated profile photo
+                req.body.user = req.params.id
+                req.body.status = "public"
+                req.body.isProfile =  "yes"
+                req.body.body = "changed profile photo"
+                req.body.image = req.file.filename
+
+                await Story.create(req.body)
             }
             else{
                 await User.findOneAndUpdate({ _id: req.params.id}, req.body)
@@ -219,12 +226,23 @@ router.post('/cover/:id', uploadforcover.single('cover'), ensureAuth, async (req
             if(req.file){
                 req.body.cover = req.file.filename
                 await User.findOneAndUpdate({ _id: req.params.id}, req.body)
-                
+                // // show feed of updated cover photo
+                req.body.user = req.params.id
+                req.body.status = "public"
+                req.body.isCover =  "yes"
+                req.body.body = "changed cover photo"
+                req.body.image = req.file.filename
+
+                await Story.create(req.body)
+
             }
             else{
                 await User.findOneAndUpdate({ _id: req.params.id}, req.body)
 
             }
+            
+
+           
             
             res.redirect('back')
         }
