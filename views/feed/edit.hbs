@@ -43,46 +43,76 @@
     </div>        
 
 
-<div class="row">
+{{!-- <div class="row">
     
     <div class="col s12 m4 l3">
-             <div class="card top-m-1 center">
+            <div class="card top-m-1 center">
                  <div class="poster-main">
-                     <img src="/img/cover.jpg" alt="" class="poster-main-img">
+                     <img src="/uploads/user/cover/{{cover}}" alt="" class="poster-main-img">
                  </div>
                  
-            
-                <img src="{{profileimage}}" class="circle responsive-img img-small center" style="position:relative"><br>
+                <img src="/uploads/user/{{profileimage}}" class="circle responsive-img img-small center" style="position:relative"><br>
                 <span class="card-title center">{{firstName}} {{lastName}}</span>
             </div>
            
             <ul class="collapsible top-m-1">
             <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+            <div class="collapsible-header"><i class="material-icons">groups</i>Pages</div>
             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
-            <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+            <div class="collapsible-header"><i class="material-icons">groups</i>Friends</div>
+            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            </li>
+            <li class="divider" tabindex="-1"></li>
+            <li>
+            <div class="collapsible-header"><i class="material-icons">add</i>Followers</div>
             <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
             </li>
             <li class="divider" tabindex="-1"></li>
 
-            <li>
-            <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-            </li>
+            
         </ul>
+        <br>
+        <div class="col s12 m4 l12">
+            
+           <div class="stories-container">
+                    <div id="containerforpages">
+                        <div id="contentforpages">
+
+                            {{#each timestories}}
+                                
+                                    <div class="chip res top-items-stories">
+                                    {{user.firstName}} {{user.lastName}} <br>
+                                    <span>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+
+                                    </div>
+                                    {{{TimeStatus storiesimage}}}
+
+
+                                
+                            {{/each}}
+
+
+                        </div>
+                    </div>
+                    
+                    <a class="prevbutton" id="back" type="button">Prev</a>
+                    <a class="nextbutton" id="next" type="button">Next</a>
+            </div>
+        
+        
+        </div>
         
     </div>
-
     
     <div class="col s12 m4 l6">
         
     </div>
 
 
-     <div class="col s12 m4 l3">
+    <div class="col s12 m4 l3">
          <div class="top-right-stories">
             <h6 style="color: aliceblue;">Stories</h6>
 
@@ -93,6 +123,6 @@
                 
         </div>
     </div>
-  </div>
+  </div> --}}
 
      

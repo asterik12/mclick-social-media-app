@@ -39,10 +39,10 @@ module.exports = {
         if (storyUser._id.toString() == loggedUser._id.toString()) {
            
           return `<!-- Dropdown Trigger -->
-          <a class='dropdown-trigger btn right' href='#' data-target='post-edit'><i class="material-icons">more_horiz</i></a>
+          <a class='dropdown-trigger btn right' href='#' data-target='post-edit-${storyId}'><i class="material-icons">more_horiz</i></a>
 
           <!-- Dropdown Structure -->
-          <div id='post-edit' class='dropdown-content show'>
+          <div id='post-edit-${storyId}' class='dropdown-content show'>
               
               <a class="btn" style="margin-bottom:5px" href="/feed/edit/${storyId}"><i class="fas fa-edit fa-small"></i></a>
               
@@ -67,10 +67,10 @@ module.exports = {
         if (storyUser._id.toString() == loggedUser._id.toString()) {
            
             return `<!-- Dropdown Trigger -->
-            <a class='dropdown-trigger btn right' href='#' data-target='post-edit'><i class="material-icons">more_horiz</i></a>
+            <a class='dropdown-trigger btn right' href='#' data-target='post-edit-${storyId}'><i class="material-icons">more_horiz</i></a>
 
             <!-- Dropdown Structure -->
-            <div id='post-edit' class='dropdown-content show'>
+            <div id='post-edit-${storyId}' class='dropdown-content show'>
                 
                 <a class="btn" style="margin-bottom:5px" href="/feed/edit/${storyId}"><i class="fas fa-edit fa-small"></i></a>
                 
@@ -149,6 +149,13 @@ module.exports = {
           }
           
       },
+      validDisplayImage: function (image_name) {
+        if (image_name) {     
+            return `<img src="/uploads/posts/${image_name}" alt="" height="400px" width="100%" />
+            `;
+        }
+        
+    },
       validCoverImage: function (image_name) {
         if (image_name) {     
             return `<img src="/uploads/user/cover/${image_name}" alt="" height="500px" width="100%" />
@@ -267,12 +274,12 @@ module.exports = {
 
         for(let i = 0; i<likes.length;i++){
           if (likes[i]._id.toString() == loggedUser._id.toString()) { 
-            return `<input type="submit" class="btn-small blue material-icons round" value="thumb_up"/> Unlike
+            return `<input type="submit" class="btn-small material-icons round blue" value="thumb_up"> Unlike 
             `;
           }
        
         }
-        return `<input type="submit" class="btn-small htp material-icons round" value="thumb_up"/> Like
+        return `<input type="submit" class="btn-small material-icons round htp" value="thumb_up"/> Like
         `;
         
         
@@ -280,12 +287,12 @@ module.exports = {
       checkLikedStateforsingle: function (likes, loggedUser) {
         for(let i = 0; i<likes.length;i++){
           if (likes[i]._id.toString() == loggedUser._id.toString()) { 
-            return `<input type="submit" class="btn-small blue material-icons round-1 " value="thumb_up"/> Unlike
+            return `<input type="submit" class="btn-small material-icons round-1 blue" value="thumb_up"> Unlike 
             `;
           }
        
         }
-        return `<input type="submit" class="btn-small htp material-icons" value="thumb_up"/> Like
+        return `<input type="submit" class="btn-small material-icons round-1 htp" value="thumb_up"/> Like
         `;
       },
       checkRequeststate: function (requests, loggedUser, NextUser, LoggedUserRequests) {
@@ -559,7 +566,18 @@ module.exports = {
       </span>`;
         else
           return ``;
-      }
+      },
+
+      showBirthdays: function(firstName, lastName, image, dob) {
+       
+        const today = new Date(Date.now())
+        const birthday = new Date(dob)
+        if(birthday.getDate() == today.getDate()
+          && birthday.getMonth() == today.getMonth()) {
+            return `${firstName}`;
+          }
+        
+      },
 
 
 

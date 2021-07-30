@@ -61,6 +61,8 @@ router.get('/profile', ensureAuth, async (req,res) => {
         const stories = await Story.find({ user: req.user.id})
         .populate('user')
         .populate('likes')
+        .populate('getShared')
+        .populate('postUser')
         .sort({ createdAt: 'desc' })
         .lean()
 

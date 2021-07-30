@@ -2,29 +2,137 @@
     
     <div class="col s12 m1 l1"></div>
     <div class="col s12 m6 l6">
+        
         <div class="card story">
-            <div class="card-image right pad-23">
-                {{{editIcon story.user user story._id false}}}
-            </div>
+                        <div class="card-image">
+                            {{{editIcon story.user user story._id false}}}
+                           
+                        </div>
+                        <div class="chip res">
+                                <img src="/uploads/user/{{story.user.image}}" alt="">
+                                <a class="name-color" href="{{{validUser story.user user}}}"> {{story.user.firstName}} {{story.user.lastName}} </a>
+                                {{#if story.getShared}}
+                                    <span>{{story.body}}</span>
+                                {{else if story.isCover}}
+                                    <span>{{story.body}}</span>
+                                {{else if story.isProfile}}
+                                    <span>{{story.body}}</span>
+                                {{else}}
 
-            <div class="chip res">
-                <img src="/uploads/user/{{story.user.image}}" alt="">
-                <a class="name-color" href="{{{validUser story.user user}}}"> {{story.user.firstName}} {{story.user.lastName}} </a>
-            </div>
-            
-            <div class="card-content">
-                <span class="card-date">{{formatDate story.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
-                <span class="card-date">&bull; {{{getStatus story.status}}} </span>
+                                {{/if}}
+                        </div>
+                                   
 
-                <br>
-                {{{story.body}}}
-            </div>
+                        <div class="card-content">
+                            <span class="card-date">{{formatDate story.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                            <span class="card-date">&bull; {{{getStatus story.status}}} </span>
+                            {{#if story.getShared}}
 
-            {{{validImageEnlarge story.image}}}
-            
+                            {{else if story.isCover}}
+
+
+                            {{else if story.isProfile}}
+
+                            {{else}}
+                            <p> {{stripTags (truncate story.body 150)}} </p>
+                            {{/if}}
+                            <br>
+    
+                        </div>
+                        {{#if story.isCover}}
+                            {{{validCoverImage story.image}}}
+
+                        {{else if story.isProfile}}
+                            {{{validProfileImageStory story.image}}}
+
+                        {{else}}
+                        {{{validImage story.image}}}
+
+                        {{/if}}
+                        {{!-- share post  --}}
+                        {{#if story.getShared}}
+                            <div class="card story" 
+                                style="
+                                margin-left: 3%; 
+                                margin-right: 3%;
+                                margin-top: 0% !important;
+                                background-color:rgb(79, 80, 80);
+                                ">
+                                    <div class="chip res">
+                                            <img src="/uploads/user/{{story.postUser.image}}" alt="">
+                                            <a class="name-color" href="{{{validUser story.postUser user}}}"> {{story.postUser.firstName}} {{story.postUser.lastName}} </a>
+                                    </div>
+                                            
+
+                                    <div class="card-content">
+                                        <span class="card-date">{{formatDate story.getShared.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                                        <span class="card-date">&bull; {{{getStatus story.getShared.status}}} </span>
+                                        
+                                        <p> {{stripTags (truncate story.getShared.body 150)}} </p>
+                                        <a href="/feed/{{story.getShared._id}}" class="view-more">Show More</a>
+                                        <br>
                 
+                                    </div>
 
-            {{#if story.likes}}
+                                    {{{validImage story.getShared.image}}}
+                                    {{#if story.getShared.likes}}
+                                    <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                                        <li>
+                                        <div class="collapsible-header">
+                                            
+                                            <div class="col s4 m7 l9">
+                                                <div style="float: left !important;">
+                                                    <span><img src="/img/like.png" style="float: left;" height="25px" width="25px" alt=""></span>
+                                                    <span class="likedlook name-color">
+                                                       
+                                                        {{story.getShared.likes.length}}
+                                                </div>
+                                            </div>
+                                            <div class="col s5 m4 l5">
+                                                <a href="/feed/{{story.getShared._id}}" class="likedlook">{{story.getShared.comments.length}} comments </a>
+                                                {{#if story.isCover}}
+                                                
+                                                {{else if story.isProfile}}
+                                                
+                                                {{else}}
+                                                
+                                                 , {{story.getShared.share.length}} shares
+
+                                                 {{/if}}
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                        </li>
+                                    </ul>
+                                    {{else}}
+                                        Be the first to like
+                                        <div class="right"><a href="/feed/{{story._id}}" class="likedlook">
+                                            {{story.getShared.comments.length}} comments </a>
+                                            
+                                            {{#if isCover}}
+                                                
+                                                {{else if isProfile}}
+                                                
+                                                {{else}}
+                                                
+                                                 , {{story.getShared.share.length}} shares
+
+                                                 {{/if}}
+                                        </div>
+
+
+                                    {{/if}}
+                            </div>
+
+
+                        {{else}}
+
+                        {{/if}}
+                        
+
+                        {{!-- main-post-likes --}}
+                        {{#if story.likes}}
                         <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
                             <li>
                             <div class="collapsible-header">
@@ -37,69 +145,107 @@
                                             {{#iter story.likes}}
                                                 {{{validLikedUserTag _id ../story.likes ../user}}}
                                             {{/iter}}
-                                            {{{checkLikedLength story.likes user}}}
+                                                {{{checkLikedLength story.likes user}}}
                                     </div>
                                 </div>
                                 <div class="col s5 m4 l4">
-                                    {{story.comments.length}} comments , 0 share
+                                    <a href="/feed/{{story._id}}" class="likedlook">{{story.comments.length}} comments </a>
+                                {{#if story.isCover}}
+                                
+                                {{else if story.isProfile}}
+                                
+                                {{else}}
+                                , {{story.share.length}} shares 
+                                
+                                {{/if}}
                                 </div>
                             </div>
-                                <div class="collapsible-body likes-content">
-                                    <span> 
-                                        {{#iter story.likes}}
-                                            <div class="chip res">
-                                                    <img src="/uploads/user/{{image}}" alt="">
-                                                    <a class="name-color" href="{{{validLikedUser _id ../user}}}"> {{firstName}} {{lastName}} </a>
-                                            </div>
-                                            
-                                            
-                                        {{/iter}}
-                                    </span>
-                                </div>
-                            
-                                </li>
-                            </ul>
-                            {{else}}
-                                Be the first to like
-                                <div class="right">{{story.comments.length}} comments, 0 share </div>
+                            <div class="collapsible-body likes-content">
+                                <span> 
+                                    {{#iter story.likes}}
+                                        <div class="chip res">
+                                                <img src="/uploads/user/{{image}}" alt="">
+                                                <a class="name-color" href="{{{validLikedUser _id ../user}}}"> {{firstName}} {{lastName}} </a>
+                                        </div>
+                                        
+                                        
+                                    {{/iter}}
+                                </span>
+                            </div>
+                           
+                            </li>
+                        </ul>
+                        {{else}}
+                            Be the first to like
+                            <div class="right"><a href="/feed/{{story._id}}" class="likedlook">{{story.comments.length}} comments </a>
+                                
+                                {{#if story.isCover}}
+                                
+                                {{else if story.isProfile}}
+                                
+                                {{else}}
+                                , {{story.share.length}} shares 
+                                
+                                {{/if}}
+                            </div>
 
 
                         {{/if}}
-
-            <div class="card-action">
-                
-                <div class="row">
-                    <div class="col s12 m4 l4">
-                        <form action="/feed/{{story._id}}/{{story.user._id}}/like" method="POST">
-                                    <input type="hidden" name="_method" value="PUT">
+                        
+                        
+                        <div class="card-action">
+                            <div class="row" style="margin: 0% !important;">
+                                <div class="col s3 m4 l4">
+                                    <form action="/feed/{{story._id}}/{{story.user._id}}/like" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                {{{checkLikedState story.likes user}}}
+           
+                                    </form>
                                     
-                                   {{{checkLikedStateforsingle story.likes user}}}
-                                
-                        </form>
+                                    
+                               
+
+                                </div>
+                                <div class="col s12 m4 l4">
+                                       
+                                                <a href="/feed/{{story._id}}" class="btn-small htp material-icons round">message </a>
+                                                 Comment
+                                                        
+                                </div>
+                                <div class="col s12 m4 l4">
+                                    {{#if story.isCover}}
+                                        <form action="/chats/{{_id}}" method="POST">
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    
+                                                    <input type="submit" class="btn-small htp material-icons round" value="inbox"/>
+                                                    message
+                                                            
+                                        </form>
+                                    {{else if story.isProfile}}
+                                        <form action="/chats/{{_id}}" method="POST">
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    
+                                                    <input type="submit" class="btn-small htp material-icons round" value="inbox"/>
+                                                    message
+                                                            
+                                        </form>
+                                    {{else}}
+                                        <form action="/feed/share/{{story._id}}/{{story.user._id}}" method="POST">
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    
+                                                    <input type="submit" class="btn-small htp material-icons round" value="share"/>
+                                                    share
+                                                            
+                                        </form>
+                                    {{/if}}
+                                    
+                                </div>
+                            </div>
+                       
                         
                     </div>
-                    <div class="col s12 m4 l4">
-                        <form action="">
-                                    
-                                    <input type="submit" class="btn-small htp material-icons" value="message"/>
-                                     Comment
-                                            
-                        </form>
-                    </div>
-                    <div class="col s12 m4 l4">
-                        <form action="/share" method="POST">
-                                    <input type="hidden" name="_method" value="PUT">
-                                    
-                                    <input type="submit" class="btn-small htp material-icons" value="share"/>
-                                     Share
-                                            
-                        </form>
-                    </div>
                 </div>
-                
-             </div>
-            
-        </div>
     </div>
     <div class="col s12 m4 l5">
         <div class="card story">
@@ -153,6 +299,8 @@
                     </div>
                 </form>
 
+
+
             </div>
         </div>
     </div>
@@ -164,15 +312,4 @@
         
      
 </div>
-  {{!-- <div class="col s12 m4">
-        <div class="card center-align">
-            <div class="card-content">
-                <span class="card-title">{{story.user.displayName}}</span>
-                <img src="{{story.user.image}}" class="circle responsive-img img-small">
-            </div>
-            <div class="card-action">
-                <a href="/stories/user/{{story.user._id}}">More From {{story.user.firstName}}</a>
-            </div>
-        </div>
-    </div> --}}
-    
+ 

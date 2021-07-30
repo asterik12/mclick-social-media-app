@@ -1,6 +1,7 @@
 const path = require('path')
-const http = require('http').createServer();
 const express = require('express')
+const app = express()
+const http = require('http').createServer(app);
 const socketio = require('socket.io')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
@@ -26,7 +27,6 @@ require('./config/passport')(passport)
 
 connectDB()
 
-const app = express()
 
 
 //Body parser
@@ -55,7 +55,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validCoverImage,validVideo,validProfileImage,validProfileImageStory,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon,checkFriendsList,notify_Badge,UnreadNotify,getNotificationMethod,notify_Badge_friends } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validDisplayImage,validCoverImage,validVideo,validProfileImage,validProfileImageStory,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon,checkFriendsList,notify_Badge,UnreadNotify,getNotificationMethod,notify_Badge_friends,showBirthdays } = require('./helpers/hbs')
 
 
 
@@ -85,6 +85,7 @@ app.engine(
             select,
             checklength,
             validImage,
+            validDisplayImage,
             validCoverImage,
             validVideo,
             validProfileImage,
@@ -110,7 +111,8 @@ app.engine(
             notify_Badge,
             UnreadNotify,
             getNotificationMethod,
-            notify_Badge_friends
+            notify_Badge_friends,
+            showBirthdays
         },
         defaultLayout: 'main', 
         extname: '.hbs'
@@ -153,9 +155,15 @@ app.use('/search', require('./routes/search'))
 app.use('/find_friends', require('./routes/find_friends'))
 app.use('/videos', require('./routes/videos'))
 app.use('/notifications', require('./routes/notifications'))
+app.use('/events', require('./routes/events'))
 app.use('/chats', require('./routes/chat'))
 
 
+const io = require('socket.io')(http);
+
+io.on("connection", function (socket) {
+  console.log("Made Socket connection");
+});
 
 const PORT = process.env.PORT || 3000
 
@@ -168,15 +176,3 @@ app.listen(
 
 // connecting socket.io
 
-const io = socketio(http);
-
-io.on("connection", function (socket) {
-  console.log("Made Socket connection");
-  socket.on("disconnect", function () {
-    console.log("made socket disconnected")
-  });
-
-  socket.on("send-notificaition", function (data) {
-    socket.broadcast.emit("new-notification", data);
-  });
-});

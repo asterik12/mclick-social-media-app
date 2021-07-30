@@ -8,10 +8,14 @@ const Comment = require('../models/Comment')
 
 
 router.get('/', ensureAuth, async (req, res) => {
-    const users = await User.find({_id: req.user.id})
+    const users = await User.find({
+        _id: req.user.id,
+        
+    })
     .populate('user')
     .populate('followers')
     .populate('Notification.notifyId')
+    .sort({"Notification.notifyTime": -1})
     .lean()
     
     const notificationBadge = await User.findById(req.user.id).lean()

@@ -1,3 +1,50 @@
 
 
 <h1>Chat</h1>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <p id="your-name">Name</p>
+    </div>
+
+    {{!--  --}}
+    <div class="chat-section">
+        <div class="main-wrapper">
+            <div class="chat-content">
+                <div class="message">
+                    <div class="message-row other-message">
+                        <div class="message-title">
+                            <span>DEV </span>
+                        </div>
+                        <div class="message-text">
+                            Hey there!
+                        </div>
+                        <div class="message-time">
+                            April 20
+                        </div>
+                    </div>
+                    <div class="message-row you-message">
+                        <div class="message-title">
+                            <span>User 01 </span>
+                        </div>
+                        <div class="message-text">
+                            ok
+                        </div>
+                        <div class="message-time">
+                            April 20
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <form class="msg-text" action="">
+            <input type="text" name="msg" id="msg" placeholder="Type message" autocomplete="off">
+            <button>
+                <i class="fas fa-paper-plane"> Send</i>
+            </button>
+
+        </form>
+    </div>
+</div>
+

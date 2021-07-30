@@ -266,7 +266,7 @@
                             {{else}}
                             <p> {{stripTags (truncate body 150)}} </p>
                             {{/if}}
-                            <a href="/feed/{{_id}}" class="view-more">Show More</a>
+                            <a href="/feed/{{_id}}" class="view-more"> &nbsp;Show More</a>
                             <br>
     
                         </div>
@@ -311,7 +311,7 @@
                                         <li>
                                         <div class="collapsible-header">
                                             
-                                            <div class="col s4 m7 l10">
+                                            <div class="col s4 m7 l9">
                                                 <div style="float: left !important;">
                                                     <span><img src="/img/like.png" style="float: left;" height="25px" width="25px" alt=""></span>
                                                     <span class="likedlook name-color">
@@ -319,7 +319,7 @@
                                                         {{getShared.likes.length}}
                                                 </div>
                                             </div>
-                                            <div class="col s5 m4 l4">
+                                            <div class="col s5 m4 l5">
                                                 <a href="/feed/{{getShared._id}}" class="likedlook">{{getShared.comments.length}} comments </a>
                                                 {{#if isCover}}
                                                 
@@ -431,10 +431,11 @@
                                                 <input type="hidden" name="_method" value="PUT">
                                                 
                                                 {{{checkLikedState likes ../user}}}
-
-                                        
-                                                      
+           
                                     </form>
+                                    
+                                    
+                               
 
                                 </div>
                                 <div class="col s12 m4 l4">
@@ -527,7 +528,7 @@
                     <div class="slideshow-container">
                 
 
-                    {{#each timestories}}
+                    {{#each mytimestories}}
 
 
                         <div class="mySlides fade" >
@@ -548,7 +549,7 @@
                         <p class="mid-text">No stories to display</p>
 
                     {{/each}}
-                    {{#if timestories}}
+                    {{#if mytimestories}}
 
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                         <a class="next" onclick="plusSlides(1)">&#10095;</a>

@@ -65,7 +65,6 @@ router.post('/', upload.single('image'), ensureAuth, async (req, res) => {
         }
         else{
             req.body.user = req.user.id
-            req.body.image = req.file.filename,
             req.body.firstName = req.user.firstName,
             req.body.lastName = req.user.lastName,
             req.body.userImage = req.user.image,
@@ -74,7 +73,7 @@ router.post('/', upload.single('image'), ensureAuth, async (req, res) => {
         }
         
 
-        req.flash('info', 'Posted Successfully')
+        // req.flash('info', 'Posted Successfully')
         res.redirect('back')
     } catch (err) {
         console.error(err)
@@ -156,9 +155,7 @@ router.get('/', ensureAuth, async (req, res) => {
                    {user:req.user.following},
                     {user: req.user.friends},
                 {user: req.user.id}]
-        //    {
-        //        $in:[req.user.following, req.user.friends]
-        //     }
+        
         })
         .populate('user')
         .populate('likes')
@@ -174,7 +171,16 @@ router.get('/', ensureAuth, async (req, res) => {
         .populate('user')
        
 
-        const timestories = await UStory.find({})
+        const timestories = await UStory.find({
+            user: {
+                $ne: req.user.id
+            }
+        })
+        .populate('user')
+        .sort({createdAt: 'desc'})
+        .lean();
+
+        const mytimestories = await UStory.find({user: req.user.id})
         .populate('user')
         .sort({createdAt: 'desc'})
         .lean();
@@ -190,6 +196,7 @@ router.get('/', ensureAuth, async (req, res) => {
             activeUsers,
             stories,
             timestories,
+            mytimestories,
             profile_image,
             notificationBadge
         })
@@ -218,7 +225,10 @@ router.get('/:id', ensureAuth, async (req, res) => {
         const story = await Story.findById(req.params.id)
         .populate('user')
         .populate('likes')
+        .populate('getShared')
+        .populate('postUser')
         .lean()
+        
         
         
         const comment = await Comment.find({post: req.params.id})
@@ -307,7 +317,6 @@ router.put('/:id', ensureAuth, async (req, res) => {
     
 })
 
-
 //likes dislikes
 router.put('/:id/:userId/like', ensureAuth, async (req, res) => {
     try {
@@ -372,6 +381,8 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
         const stories = await Story.find({ user: req.params.userId, status:'public'})
         .populate('user')
         .populate('likes')
+        .populate('getShared')
+        .populate('postUser')
         .lean()
         const timestories = await UStory.find({user: req.params.userId})
         .populate('user')

@@ -10,10 +10,24 @@ const Comment = require('../models/Comment')
 router.get('/', ensureAuth, async (req, res) => {
     const search_name = req.query.name;
     const search_results = await User.find({
-        displayName: {
-            $regex: search_name, 
-            $options: '$i'
-        },
+        $or: [{firstName: {
+                $regex: search_name, 
+                $options: '$i'
+            }},
+            {lastName: {
+                $regex: search_name, 
+                $options: '$i'
+            }},
+            {current_city: {
+                $regex: search_name, 
+                $options: '$i'
+            }},
+            {work: {
+                $regex: search_name, 
+                $options: '$i'
+            }},
+
+        ]
         // _id: {
         //     $ne : req.user.id
         // }
