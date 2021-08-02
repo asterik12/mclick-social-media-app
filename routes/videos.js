@@ -9,6 +9,7 @@ const Comment = require('../models/Comment')
 
 const multer = require('multer')
 const { request } = require('express')
+const Story = require('../models/Story')
 
 const videostorage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -36,11 +37,14 @@ router.post('/', videoupload.single('video'), ensureAuth, async (req, res) => {
             req.body.user = req.user.id
             req.body.video = req.file.filename,
             await Videos.create(req.body)
+            req.body.body = "video post"
+            
+            await Story.create(req.body)
         }
-        else{
-            req.body.user = req.user.id
-            await Videos.create(req.body)
-        }
+        // else{
+        //     req.body.user = req.user.id
+        //     await Videos.create(req.body)
+        // }
         
 
         res.redirect('back')
@@ -51,7 +55,7 @@ router.post('/', videoupload.single('video'), ensureAuth, async (req, res) => {
 })
 
 router.get('/', ensureAuth, async (req,res) => {
-    const stories = await Videos.find({ status: 'public'})
+    const stories = await Story.find({ status: 'public'})
         .populate('user')
         .populate('likes')
         .sort({ createdAt: 'desc' })
@@ -69,5 +73,14 @@ router.get('/', ensureAuth, async (req,res) => {
     })
 })
 
-
+//delete videos
+router.delete('/:id', ensureAuth, async (req, res) => {
+    try {
+         await Videos.remove({_id: req.params.id})
+         res.redirect('back')
+    } catch (err) {
+        console.error(err)
+        return res.render('error/500')
+    }
+})
 module.exports = router;

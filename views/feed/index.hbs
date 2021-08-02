@@ -14,24 +14,68 @@
             <ul class="collapsible top-m-1">
             <li>
             <div class="collapsible-header"><i class="material-icons">groups</i>Pages</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-body"><span>Create Page</span></div>
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
-            <div class="collapsible-header"><i class="material-icons">groups</i>Friends</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-header"><i class="material-icons">groups</i>Friends &nbsp; 
+                <span style="background-color: rgb(22, 131, 131); 
+                    color:white; 
+                    padding:2px 9px 2px 9px; 
+                    border-radius:50%;
+                    font-size:small">{{notificationBadge.friends.length}}
+                </span>
+            </div>
+            <div class="collapsible-body likes-content">
+                <span>
+                    {{#each loggedUser}}
+                   
+                        {{#iter friends}}
+                        <div class="chip res">
+                                <img src="/uploads/user/{{image}}" alt="">
+                                <a class="name-color" href="{{{validLikedUser _id ../../user}}}"> {{firstName}} {{lastName}} </a>
+                        </div>
+                                        
+                                        
+                        {{/iter}}
+                    
+                    {{/each}}
+                </span>
+            </div>
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
-            <div class="collapsible-header"><i class="material-icons">add</i>Followers</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-header"><i class="material-icons">add</i>Followers &nbsp;
+                <span style="background-color: rgb(22, 131, 131); 
+                    color:white; 
+                    padding:2px 9px 2px 9px; 
+                    border-radius:50%;
+                    font-size:small">{{notificationBadge.followers.length}}
+                </span>
+            </div>
+            <div class="collapsible-body likes-content">
+                <span>
+                    {{#each loggedUser}}
+                   
+                        {{#iter followers}}
+                        <div class="chip res">
+                                <img src="/uploads/user/{{image}}" alt="">
+                                <a class="name-color" href="{{{validLikedUser _id ../../user}}}"> {{firstName}} {{lastName}} </a>
+                        </div>
+                                        
+                                        
+                        {{/iter}}
+                    
+                    {{/each}}
+                </span>
+            </div>
             </li>
             <li class="divider" tabindex="-1"></li>
 
             
         </ul>
         <br>
-        <div class="col s12 m4 l12">
+        {{!-- <div class="col s12 m4 l12">
             
            <div class="stories-container">
                     <div id="containerforpages">
@@ -59,7 +103,7 @@
             </div>
         
         
-        </div>
+        </div> --}}
         
     </div>
 
@@ -263,6 +307,8 @@
 
                             {{else if isProfile}}
 
+                            {{else if video}}
+
                             {{else}}
                             <p> {{stripTags (truncate body 150)}} </p>
                             {{/if}}
@@ -275,11 +321,16 @@
 
                         {{else if isProfile}}
                             {{{validProfileImageStory image}}}
+                        {{else if video}}
+                            {{{validVideo video}}}
+                           
 
                         {{else}}
                         {{{validImage image}}}
 
                         {{/if}}
+
+                        
                         {{!-- share post  --}}
                         {{#if getShared}}
                             <div class="card" 

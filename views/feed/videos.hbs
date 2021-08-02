@@ -33,6 +33,7 @@
     <div class="col s12 m4 l6">
         <div class="row">
             {{#each stories}}
+            {{#if video}}
             <div class="container">
                 <div class="card">
                             <div class="card-image">
@@ -53,81 +54,99 @@
                             </div>
 
                             {{{validVideo video}}}
-                            
                             {{#if likes}}
-                            <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
-                                <li>
-                                <div class="collapsible-header">
-                                    
-                                    <div class="col s4 m7 l10">
-                                        <div style="float: left !important;">
-                                            {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
-                                            <span><img src="/img/like.png" height="20px" width="20px"alt=""></span>
-                                            <span class="likedlook">{{likes.length}} likes <span>
+                        <ul class="collapsible" style="margin-top:-5px; margin-bottom:-5px">
+                            <li>
+                            <div class="collapsible-header">
+                                
+                                <div class="col s4 m7 l10">
+                                    <div style="float: left !important;">
+                                        {{!-- <span><img src="/uploads/user/{{likes.0.image}}" class="circle" height="20px" width="20px"  alt=""></span> --}}
+                                        <span><img src="/img/like.png" style="float: left;" height="25px" width="25px" alt=""></span>
+                                        <span class="likedlook name-color">
+                                            {{#iter likes}}
+                                                {{{validLikedUserTag _id ../likes ../../user}}}
+                                            {{/iter}}
+                                            {{{checkLikedLength likes ../user}}}
+                                    </div>
+                                </div>
+                                <div class="col s5 m4 l4">
+                                    <a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>
+                                
+                                , {{share.length}} shares 
+                                
+                                </div>
+                            </div>
+                            <div class="collapsible-body likes-content">
+                                <span> 
+                                    {{#iter likes}}
+                                        <div class="chip res">
+                                                <img src="/uploads/user/{{image}}" alt="">
+                                                <a class="name-color" href="{{{validLikedUser _id ../../user}}}"> {{firstName}} {{lastName}} </a>
                                         </div>
-                                    </div>
-                                    <div class="col s5 m4 l4">
-                                        <a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share
-                                    </div>
-                                </div>
-                                <div class="collapsible-body likes-content">
-                                    <span> 
-                                        {{#iter likes}}
-                                            <div class="chip res">
-                                                    <img src="/uploads/user/{{image}}" alt="">
-                                                    <a class="name-color" href="/feed/user/{{_id}}"> {{firstName}} {{lastName}} </a>
-                                            </div>
-                                            
-                                            
-                                        {{/iter}}
-                                    </span>
-                                </div>
-                            
-                                </li>
-                            </ul>
-                            {{else}}
-                                Be the first to like
-                                <div class="right"><a href="/video/{{_id}}" class="likedlook">{{comments.length}} comments </a>, 0 share </div>
-
-
-                            {{/if}}
-                            
-                            
-                            <div class="card-action">
-                                <div class="row" style="margin: 0% !important;">
-                                    <div class="col s3 m4 l4">
-                                        <form action="/video/{{_id}}/like" method="POST">
-                                                    <input type="hidden" name="_method" value="PUT">
-                                                    
-                                                    <input type="submit" class="btn-small material-icons round" value="thumb_up"/>
-                                                    Like
-                                            
-                                                        
-                                        </form>
-
-                                    </div>
-                                    <div class="col s12 m4 l4">
                                         
-                                                    <a href="/video/{{_id}}" class="btn-small material-icons round">message </a>
-                                                    Comment
-                                                            
-                                    </div>
-                                    <div class="col s12 m4 l4">
-                                        <form action="" method="POST">
+                                        
+                                    {{/iter}}
+                                </span>
+                            </div>
+                           
+                            </li>
+                        </ul>
+                        {{else}}
+                            Be the first to like
+                            <div class="right"><a href="/feed/{{_id}}" class="likedlook">{{comments.length}} comments </a>
+                                
+                                
+                                , {{share.length}} shares 
+                                
+                                
+                            </div>
+
+
+                        {{/if}}
+                        
+                        
+                        <div class="card-action">
+                            <div class="row" style="margin: 0% !important;">
+                                <div class="col s3 m4 l4">
+                                    <form action="/feed/{{_id}}/{{user._id}}/like" method="POST">
+                                                <input type="hidden" name="_method" value="PUT">
+                                                
+                                                {{{checkLikedState likes ../user}}}
+           
+                                    </form>
+                                    
+                                    
+                               
+
+                                </div>
+                                <div class="col s12 m4 l4">
+                                       
+                                                <a href="/feed/{{_id}}" class="btn-small htp material-icons round">message </a>
+                                                 Comment
+                                                        
+                                </div>
+                                <div class="col s12 m4 l4">
+                                    
+                                        <form action="/feed/share/{{_id}}/{{user._id}}" method="POST">
                                                     <input type="hidden" name="_method" value="PUT">
                                                     
-                                                    <input type="submit" class="btn-small material-icons round" value="share"/>
+                                                    <input type="submit" class="btn-small htp material-icons round" value="share"/>
                                                     share
                                                             
                                         </form>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
+                                  
+                      
+                            
+                         </div>
+                    </div>
                 {{else}}
-                    <p>No videos to display</p>
+                {{/if}}
+                {{else}}
+                    <div class="container">
+                        <p>No videos to display</p>
+
+                    </div>
 
                 {{/each}}
             </div>

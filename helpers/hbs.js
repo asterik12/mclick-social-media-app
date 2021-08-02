@@ -63,6 +63,34 @@ module.exports = {
           return ''
         }
       },
+      editIconforVideos: function (storyUser, loggedUser, VideoId,) {
+        if (storyUser._id.toString() == loggedUser._id.toString()) {
+           
+          return `<!-- Dropdown Trigger -->
+          <a class='dropdown-trigger btn right' href='#' data-target='post-edit-${VideoId}'><i class="material-icons">more_horiz</i></a>
+
+          <!-- Dropdown Structure -->
+          <div id='post-edit-${VideoId}' class='dropdown-content show'>
+              
+              <a class="btn" style="margin-bottom:5px" href="/videos/edit/${VideoId}"><i class="fas fa-edit fa-small"></i></a>
+              
+              
+                  <form action="/videos/${VideoId}" method="POST" id="delete-form">
+                      <input type="hidden" name="_method" value="DELETE">
+                     
+                      
+                      <button type="submit" class="btn">
+                        <i class="fas fa-trash fa-small"></i> 
+                      </button> 
+                     
+                  </form>
+                  
+          </div>`
+        
+      }  else {
+          return ''
+        }
+      },
       editIconfeed: function (storyUser, loggedUser, storyId) {
         if (storyUser._id.toString() == loggedUser._id.toString()) {
            
@@ -179,8 +207,11 @@ module.exports = {
     },
     validVideo: function (video_name) {
       if (video_name) {     
-          return `<video src="/uploads/videos/${video_name}" type=""video/mp4" alt="" height="400px" width="100%" controls/>
-          `;
+          return `
+          <div>
+            <video src="/uploads/videos/${video_name}" type=""video/mp4" alt="" height="400px" width="100%" controls/>
+          </div>
+            `;
       }
       
   },
@@ -568,13 +599,41 @@ module.exports = {
           return ``;
       },
 
-      showBirthdays: function(firstName, lastName, image, dob) {
+      showBirthdays: function(firstName, lastName, image, dob, loggedUser) {
        
         const today = new Date(Date.now())
         const birthday = new Date(dob)
+        var age = today.getFullYear() - birthday.getFullYear();
+        const month = birthday.getMonth() - today.getMonth() 
+        if (month < 0 || (month === 0 && today.getDate() < birthday.getDate())) {
+          age--;
+      }
         if(birthday.getDate() == today.getDate()
           && birthday.getMonth() == today.getMonth()) {
-            return `${firstName}`;
+            return `
+            <div class="unread" style=" padding:5px;">
+              <div class="row">
+                <div class="col s12 m4 l1 " >
+                    <span style="position:relative">
+                        <img src="/uploads/user/${image}" 
+                        style="
+                            height:50px; 
+                            width:50px; 
+                            border-radius:50%; 
+                            float:left;
+                            margin-right:5px;
+                            margin-bottom:15px;" 
+                            alt="">
+                    </span>
+                </div>
+                <div class="col s12 m4 l11 mid-text">
+                      Today is <a class="name-color" href="{{validFollowedUser _id ../user}}" style="font-size: 15px !important;"><b>${firstName} ${lastName}'s</b></a> birthday. Wish on timeline.
+                      <br>
+                      ${age} years old
+                </div>
+               </div> 
+            </div>
+            `;
           }
         
       },

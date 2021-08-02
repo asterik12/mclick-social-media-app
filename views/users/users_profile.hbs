@@ -289,6 +289,9 @@
 
                             {{else if isProfile}}
 
+                            {{else if video}}
+
+
                             {{else}}
                             <p> {{stripTags (truncate body 150)}} </p>
                             {{/if}}
@@ -301,6 +304,9 @@
 
                         {{else if isProfile}}
                             {{{validProfileImageStory image}}}
+
+                        {{else if video}}
+                            {{{validVideo video}}}
 
                         {{else}}
                         {{{validImage image}}}

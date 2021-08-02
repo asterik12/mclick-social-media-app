@@ -185,6 +185,11 @@ router.get('/', ensureAuth, async (req, res) => {
         .sort({createdAt: 'desc'})
         .lean();
 
+        const loggedUser = await User.find({_id: req.user.id})
+        .populate('followers')
+        .populate('friends')
+        .lean()
+
         res.render('feed/index', {
             name: req.user.firstName,
             profileimage:req.user.image,
@@ -198,7 +203,8 @@ router.get('/', ensureAuth, async (req, res) => {
             timestories,
             mytimestories,
             profile_image,
-            notificationBadge
+            notificationBadge,
+            loggedUser
         })
    } catch (err) {
        console.error(err)
@@ -336,6 +342,7 @@ router.put('/:id/:userId/like', ensureAuth, async (req, res) => {
                             postId: req.params.id,
                             status: "unread",
                             method: "like",
+                            
                         },
                         
                     }

@@ -25,6 +25,9 @@ const StorySchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  video: {
+    type: String,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -70,6 +73,8 @@ const StorySchema = new mongoose.Schema({
   isGroupUser: {
     type: String
   },
+
+ 
 
 })
 

@@ -55,7 +55,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //handlebar helpers
-const { formatDate, stripTags, truncate, editIcon,editIconfeed, select, checklength, validImage,validDisplayImage,validCoverImage,validVideo,validProfileImage,validProfileImageStory,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon,checkFriendsList,notify_Badge,UnreadNotify,getNotificationMethod,notify_Badge_friends,showBirthdays } = require('./helpers/hbs')
+const { formatDate, stripTags, truncate, editIcon,editIconfeed,editIconforVideos, select, checklength, validImage,validDisplayImage,validCoverImage,validVideo,validProfileImage,validProfileImageStory,validImageEnlarge,TimeStatus,featured,checkLikes,checkComments,checkstate, validUser,validLikedUser,validFollowedUser,validLikedUserTag,checkLikedLength,checkLikedState,checkLikedStateforsingle,checkRequeststate,sendRequest,getStatus,showMessageIcon,checkFriendsList,notify_Badge,UnreadNotify,getNotificationMethod,notify_Badge_friends,showBirthdays } = require('./helpers/hbs')
 
 
 
@@ -82,6 +82,7 @@ app.engine(
             truncate,
             editIcon,
             editIconfeed,
+            editIconforVideos,
             select,
             checklength,
             validImage,

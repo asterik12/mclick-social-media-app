@@ -243,7 +243,7 @@ sdf
 
 /* profile */
 .poster-profile{
-    height:40vh;
+    height:35vh;
     width: 117vh;
     text-align: center;
     border-radius: 5px;
@@ -1021,4 +1021,5 @@ img {vertical-align: middle;}
 .toggle-text{
     font-size: 29px;
 }
+
 

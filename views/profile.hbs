@@ -8,7 +8,7 @@
                  
                     </div>
                     
-                         <div style="padding-top: 15%;">
+                         <div style="padding-top: 16%;">
                              <div class="content">
                             
                             <div class="content-overlay circle"></div>
@@ -284,6 +284,9 @@
 
                             {{else if isProfile}}
 
+                            {{else if video}}
+
+
                             {{else}}
                             <p> {{stripTags (truncate body 150)}} </p>
                             {{/if}}
@@ -296,6 +299,8 @@
 
                         {{else if isProfile}}
                             {{{validProfileImageStory image}}}
+                        {{else if video}}
+                            {{{validVideo video}}}
 
                         {{else}}
                         {{{validImage image}}}

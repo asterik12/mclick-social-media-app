@@ -33,6 +33,9 @@
 
                             {{else if story.isProfile}}
 
+                            {{else if story.video}}
+
+
                             {{else}}
                             <p> {{stripTags (truncate story.body 150)}} </p>
                             {{/if}}
@@ -44,6 +47,8 @@
 
                         {{else if story.isProfile}}
                             {{{validProfileImageStory story.image}}}
+                        {{else if story.video}}
+                            {{{validVideo story.video}}}
 
                         {{else}}
                         {{{validImage story.image}}}

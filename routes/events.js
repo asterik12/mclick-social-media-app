@@ -11,7 +11,10 @@ router.get('/', ensureAuth, async (req, res) => {
     
     const notificationBadge = await User.findById(req.user.id).lean()
 
-    const allusers = await User.find({}).lean()
+    const allusers = await User.find({
+        _id: {$ne: req.user.id
+        }
+    }).lean()
     
 
 
